@@ -8,7 +8,7 @@ import { FieldValues } from "react-hook-form";
 export const registerUser = async (userData: FieldValues) => {
 
     try {
-        const { data } = await axiosInstance.post('/auth/register', userData);
+        const { data } = await axiosInstance.post('/auth/signUp', userData);
         if (data.success) {
             cookies().set("accessToken", data?.data?.accessToken);
             cookies().set("refreshToken", data?.data?.refreshToken);
