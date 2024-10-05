@@ -11,8 +11,7 @@ const CommentButton = ({ icon: Icon, count }: { icon: ReactNode, count: number }
 
         <div className="flex items-center bg-black rounded-full">
 
-
-            <Tooltip content='Comment This Recipe!'  >
+            <Tooltip content='Total Comment'  >
                 <Button className="bg-black text-white" radius="full" size="sm">
                     {Icon}
                 </Button>

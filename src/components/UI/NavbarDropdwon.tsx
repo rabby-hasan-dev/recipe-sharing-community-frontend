@@ -1,7 +1,8 @@
 'use client'
 
 import { protectedRoutes } from '@/src/constant';
-import { useUser } from '@/src/context/user.provider';
+import { useUser } from '@/src/context/cureentUser';
+
 import { logOut } from '@/src/services/AuthService';
 import { Avatar } from '@nextui-org/avatar';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/dropdown';

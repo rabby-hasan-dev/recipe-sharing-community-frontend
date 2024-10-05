@@ -20,7 +20,8 @@ import {
 } from "@/src/components/icons";
 import NavbarDropdwon from "./NavbarDropdwon";
 import { Button } from "@nextui-org/button";
-import { useUser } from "@/src/context/user.provider";
+import { useUser } from "@/src/context/cureentUser";
+
 
 
 

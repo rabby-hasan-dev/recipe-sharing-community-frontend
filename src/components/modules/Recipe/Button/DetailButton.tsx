@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 
 
-const RSButton = ({ id }: { id: string }) => {
+const DetailButton = ({ id }: { id: string }) => {
     return (
         <Link href={`/${id}`} >
             <Button
@@ -21,4 +21,4 @@ const RSButton = ({ id }: { id: string }) => {
     );
 };
 
-export default RSButton;
+export default DetailButton;

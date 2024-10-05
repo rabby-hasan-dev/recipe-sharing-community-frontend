@@ -10,10 +10,11 @@ import { useUserLogin } from "@/src/hooks/authHooks";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { useUser } from "@/src/context/user.provider";
+
 import Loading from "@/src/components/UI/Loading";
 import RSForm from "@/src/components/form/RSForm";
 import RSInput from "@/src/components/form/RSInput";
+import { useUser } from "@/src/context/cureentUser";
 
 const LoginPage = () => {
     const searchParams = useSearchParams();
