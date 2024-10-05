@@ -2,18 +2,22 @@
 
 
 import { Button } from '@nextui-org/button';
+import Link from 'next/link';
 import React from 'react';
 
 
-const RSButton = () => {
+const RSButton = ({ id }: { id: string }) => {
     return (
-        <Button
-            className="bg-black text-tiny text-white"
-            radius="full"
-            size="sm"
-        >
-            Details
-        </Button>
+        <Link href={`/${id}`} >
+            <Button
+                className="bg-black text-tiny text-white"
+                radius="full"
+                size="sm"
+
+            >
+                Details
+            </Button>
+        </Link>
     );
 };
 

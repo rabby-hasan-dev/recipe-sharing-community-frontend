@@ -17,6 +17,8 @@ axiosInstance.interceptors.request.use(
     const cookieStore = cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
 
+    // console.log('inside axious instance==>', accessToken);
+
     if (accessToken) {
       config.headers.Authorization = accessToken;
     }

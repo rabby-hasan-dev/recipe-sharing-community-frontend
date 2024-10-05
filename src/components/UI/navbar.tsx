@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -16,9 +18,15 @@ import { ThemeSwitch } from "@/src/components/UI/theme-switch";
 import {
   Logo,
 } from "@/src/components/icons";
+import NavbarDropdwon from "./NavbarDropdwon";
+import { Button } from "@nextui-org/button";
+import { useUser } from "@/src/context/user.provider";
+
 
 
 export const Navbar = () => {
+  const { user } = useUser();
+  console.log('inside navbar ==>', user)
 
 
   return (
@@ -55,17 +63,33 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-     
+        {
+          user?.email ? (
+            <NavbarItem className="hidden sm:flex gap-2">
+
+              <NavbarDropdwon></NavbarDropdwon>
+            </NavbarItem>
+          )
+            : (<NavbarItem className="hidden sm:flex gap-2">
+              <Link href="/login" >
+                <Button>Login</Button>
+              </Link>
+            </NavbarItem>
+            )
+
+
+        }
+
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        
+
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
 
       <NavbarMenu>
-  
+
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>

@@ -21,8 +21,6 @@ const Card = ({ recipe }: { recipe: any }) => {
                 <p className="absolute -top-0 right-1 rounded-full bg-black px-2 text-tiny uppercase text-white/90">
                     <div className="absolute top-1 right-2 flex">
                         {/* Average Rating Display */}
-                        {/* <Heart /> {averageRating} */}
-                        {/* <RatingComponent key={_id} recipeId={_id} averageRating={averageRating} /> */}
                         <Rating key={_id} recipeId={_id} averageRating={averageRating} ></Rating>
                     </div>
                 </p>
@@ -44,7 +42,7 @@ const Card = ({ recipe }: { recipe: any }) => {
                     <CommentButton icon={<MessageSquare />} count={totalComment} />
                     <ShareButton icon={<Forward />} count={0} />
                 </div>
-                <RSButton></RSButton>
+                <RSButton id={_id} ></RSButton>
             </CardFooter>
         </NextUiCard >
     );
