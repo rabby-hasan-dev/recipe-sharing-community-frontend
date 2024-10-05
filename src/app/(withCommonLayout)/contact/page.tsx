@@ -1,4 +1,4 @@
-import RSForm from "@/src/components/form/RSForm";
+
 import { Button } from "@nextui-org/button";
 import { Card } from "@nextui-org/card";
 import { Input, Textarea } from "@nextui-org/input";
@@ -7,11 +7,11 @@ import { Input, Textarea } from "@nextui-org/input";
 
 const ContactUsPage = () => {
     return (
-        <div className="bg-gray-100 py-10">
+        <div className="">
             {/* Header */}
             <div className="text-center mb-12">
-                <h1 className="text-4xl font-semibold text-gray-800">Contact Us</h1>
-                <p className="text-gray-500 mt-4">
+                <h1 className="text-4xl font-bold ">Contact Us</h1>
+                <p className="mt-4">
                     We're here to help! Send us your questions or feedback.
                 </p>
             </div>
@@ -19,34 +19,34 @@ const ContactUsPage = () => {
             {/* Form Section */}
             <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {/* Contact Form */}
-                <Card className="p-8 shadow-lg bg-white">
-                    <h2 className="text-2xl font-medium text-gray-700 mb-6">Get In Touch</h2>
+                <Card className="p-8 shadow-lg ">
+                    <h2 className="text-2xl font-medium mb-6">Get In Touch</h2>
                     <form className="space-y-6">
                         <Input
                             fullWidth
-
-                            placeholder="Your Name"
+                            variant="bordered"
+                            label="Your Name"
                             type="text"
                             className="border-gray-300"
                         />
                         <Input
                             fullWidth
-
-                            placeholder="Your Email"
+                            variant="bordered"
+                            label="Your Email"
                             type="email"
                             className="border-gray-300"
                         />
                         <Input
                             fullWidth
-
-                            placeholder="Subject"
+                            variant="bordered"
+                            label="Subject"
                             type="text"
                             className="border-gray-300"
                         />
                         <Textarea
                             fullWidth
-
-                            placeholder="Message"
+                            variant="bordered"
+                            label="Message"
                             rows={6}
                             className="border-gray-300"
                         />
@@ -63,15 +63,15 @@ const ContactUsPage = () => {
                 {/* Contact Information and Map */}
                 <div className="space-y-8">
                     {/* Contact Info */}
-                    <Card className="p-8 shadow-lg bg-white">
-                        <h2 className="text-2xl font-medium text-gray-700 mb-4">Our Contact Details</h2>
-                        <p className="text-gray-500 mb-2">
+                    <Card className="p-8 shadow-lg ">
+                        <h2 className="text-2xl font-medium mb-4">Our Contact Details</h2>
+                        <p className=" mb-2">
                             <span className="font-semibold">Phone:</span> +123-456-7890
                         </p>
-                        <p className="text-gray-500 mb-2">
+                        <p className=" mb-2">
                             <span className="font-semibold">Email:</span> support@recipecommunity.com
                         </p>
-                        <p className="text-gray-500">
+                        <p className="">
                             <span className="font-semibold">Address:</span> 123 Culinary Street, Flavor Town, USA
                         </p>
                     </Card>
