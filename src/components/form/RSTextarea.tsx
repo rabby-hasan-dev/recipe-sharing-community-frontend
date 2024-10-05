@@ -5,12 +5,18 @@ import { IInput } from "@/src/types";
 
 interface IProps extends IInput {
   type?: string;
+  value?: string;
+
+
 }
 
 export default function RSTextarea({
   name,
   label,
   variant = "bordered",
+  placeholder,
+  value,
+
 }: IProps) {
   const {
     register,
@@ -19,6 +25,11 @@ export default function RSTextarea({
 
   const currentValue = useWatch({ name });
   return (
-    <Textarea {...register(name)} label={label} minRows={6} variant={variant} value={currentValue || ''} />
+    <Textarea {...register(name)}
+      label={label}
+      placeholder={placeholder}
+      minRows={6}
+      variant={variant}
+      value={currentValue || ''} />
   );
 }

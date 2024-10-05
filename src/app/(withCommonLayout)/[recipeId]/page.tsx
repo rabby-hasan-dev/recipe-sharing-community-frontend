@@ -31,7 +31,7 @@ const RecipeDetailPage = async ({ params }: { params: any }) => {
                     </ul>
                 </CardBody>
             </Card>
-            <RecipeComment></RecipeComment>
+            <RecipeComment recipeId={recipe?._id} ></RecipeComment>
             <div>
                 <h3 className="text-xl font-semibold mb-2">Rate this Recipe:</h3>
 

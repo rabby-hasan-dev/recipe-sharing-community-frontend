@@ -27,8 +27,6 @@ import { useUser } from "@/src/context/cureentUser";
 
 export const Navbar = () => {
   const { user } = useUser();
-  console.log('inside navbar ==>', user)
-
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">

@@ -15,6 +15,8 @@ export default function RSInput({
   type = "text",
   label,
   name,
+  placeholder
+
 }: IProps) {
 
   const {
@@ -32,6 +34,7 @@ export default function RSInput({
       required={required}
       type={type}
       label={label}
+      placeholder={placeholder}
     />
   );
 }

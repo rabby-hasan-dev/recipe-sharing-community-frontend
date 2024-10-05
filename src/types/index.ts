@@ -53,7 +53,8 @@ export interface IInput {
   size?: "sm" | "md" | "lg";
   required?: boolean;
   type?: string;
-  label: string;
+  label?: string;
   name: string;
   disabled?: boolean;
+  placeholder?: string;
 }
