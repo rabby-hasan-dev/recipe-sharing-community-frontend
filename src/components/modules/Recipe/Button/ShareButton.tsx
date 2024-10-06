@@ -11,10 +11,9 @@ const ShareButton = ({ icon: Icon, count }: { icon: ReactNode, count: number }) 
         <div className="flex items-center bg-black rounded-full">
             <Tooltip content='Share This Recipe!'  >
                 <Button className="bg-black text-white" radius="full" size="sm">
-                    {Icon}
+                    {Icon}{count}
                 </Button>
             </Tooltip>
-            <p className="text-white px-1 mr-4">{count}</p>
         </div>
 
 

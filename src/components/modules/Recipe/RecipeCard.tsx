@@ -1,45 +1,59 @@
 
 import { IRecipe } from "@/src/types/recipe.types";
-import { Card as NextUiCard, CardHeader, CardFooter, } from "@nextui-org/card";
+import { Card as NextUiCard, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
-import { Heart, MessageSquare, } from "lucide-react";
+import { Heart, MessageSquare } from "lucide-react";
+import { Avatar } from "@nextui-org/avatar";
 import VoteButton from "./Button/VoteButton";
 import CommentButton from "./Button/CommentButton";
 import DetailButton from "./Button/DetailButton";
-
-
-
 const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
     const { title, upVoteCount, downVoteCount, averageRating, totalComment, image, _id } = recipe || {};
 
     return (
-        <NextUiCard isFooterBlurred className="h-[300px] w-full">
-            <CardHeader className="absolute top-1 z-10 flex-col items-start">
-                <p className="absolute -top-0 right-1 rounded-full bg-black/30 px-2 text-tiny uppercase text-white/90">
-                    <div className="absolute top-1 right-2 flex items-center">
-                        {averageRating} <Heart className="ml-1" />
+        <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
+            {/* Main Content Section */}
+            <div className="flex-1 p-4">
+                <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center">
+                        <Avatar
+                            src={recipe?.author?.profilePicture}
+                            alt={recipe?.author?.username}
+                            className="w-8 h-8 rounded-full mr-2"
+                        />
+                        <span className="text-sm font-semibold">{recipe?.author?.username}</span>
                     </div>
-                </p>
-                <h4 className="mt-2 rounded bg-black /30 p-1 text-2xl font-medium text-white">
-                    {title}
-                </h4>
-            </CardHeader>
-
-            <Image
-                removeWrapper
-                alt="Card example background"
-                className="scale-120 z-0 h-full w-full -translate-y-6 object-cover"
-                src={image}
-            />
-            <CardFooter className="absolute bottom-0 z-10 justify-between border-t-1 border-zinc-100/50 bg-white/30">
-                <div className="flex items-center space-x-5">
-                    <VoteButton recipeId={_id} upVote={upVoteCount} downVote={downVoteCount} />
-                    <CommentButton icon={<MessageSquare />} count={totalComment} />
+                    <span className="text-xs text-gray-500">{new Date(recipe?.createdAt).toLocaleString()}</span>
                 </div>
-                <DetailButton id={_id} ></DetailButton>
-            </CardFooter>
-        </NextUiCard >
+                <div className="flex justify-between  items-center space-x-1">
+                    <h2 className="text-lg font-bold mb-1">{title}</h2>
+
+                    <div className="flex items-center justify-center">
+                        <span className="text-sm">{averageRating}</span>
+                        <Heart className="text-red-500" />
+                    </div>
+                </div>
+                <p className="text-gray-700 mb-4 hidden lg:block">{recipe?.description.slice(0, 100)}...</p>
+
+                {image && (
+                    <Image
+                        alt="Recipe Image"
+                        src={image}
+                        className="w-full h-48 object-cover rounded-lg mb-4"
+                    />
+                )}
+
+                <CardFooter className="flex justify-between items-center pt-4">
+                    <div className="flex items-center space-x-4">
+                        <VoteButton recipeId={_id} upVote={upVoteCount} downVote={downVoteCount} />
+                        <CommentButton icon={<MessageSquare />} count={totalComment} />
+                    </div>
+                    <DetailButton id={_id} />
+                </CardFooter>
+            </div>
+        </NextUiCard>
     );
 };
 
 export default RecipeCard;
+

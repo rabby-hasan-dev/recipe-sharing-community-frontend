@@ -21,16 +21,15 @@ const VoteButton = ({ recipeId, upVote, downVote }: { recipeId: string, upVote: 
         <div className="flex items-center bg-black rounded-full">
             <Tooltip content='UpVote'  >
                 <Button onClick={() => hadnleVote(recipeId, 'upvote')} className="bg-black text-white" radius="full" size="sm">
-                    <ArrowBigUp />
+                    <ArrowBigUp className='mr-2' />{upVote}
                 </Button>
             </Tooltip>
-            <p className="text-white px-1 mr-4">{upVote}</p>
             <Tooltip content='DownVote '  >
                 <Button onClick={() => hadnleVote(recipeId, 'downvote')} className="bg-black text-white" radius="full" size="sm">
-                    <ArrowBigDown />
+                    <ArrowBigDown className='mr-2' />{downVote}
                 </Button>
             </Tooltip>
-            <p className="text-white px-1 mr-4">{downVote}</p>
+
         </div>
 
 

@@ -13,7 +13,6 @@ const DetailButton = ({ id }: { id: string }) => {
                 className="bg-black text-tiny text-white"
                 radius="full"
                 size="sm"
-
             >
                 Details
             </Button>

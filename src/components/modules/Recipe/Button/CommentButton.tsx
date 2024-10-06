@@ -13,11 +13,9 @@ const CommentButton = ({ icon: Icon, count }: { icon: ReactNode, count: number }
 
             <Tooltip content='Total Comment'  >
                 <Button className="bg-black text-white" radius="full" size="sm">
-                    {Icon}
+                    {Icon}{count}
                 </Button>
             </Tooltip>
-
-            <p className="text-white px-1 mr-4">{count}</p>
         </div>
 
 

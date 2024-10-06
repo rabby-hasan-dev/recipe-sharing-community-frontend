@@ -1,3 +1,5 @@
+import { IUser } from "."
+
 export interface IRecipe {
     _id: string
     title: string
@@ -5,7 +7,7 @@ export interface IRecipe {
     image: string
     ingredients: string[]
     cookingTime: number
-    author: string
+    author: IUser
     totalRatings: number
     averageRating: number
     upVoteCount: number
