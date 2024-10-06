@@ -7,23 +7,25 @@ import { Avatar } from "@nextui-org/avatar";
 import VoteButton from "./Button/VoteButton";
 import CommentButton from "./Button/CommentButton";
 import DetailButton from "./Button/DetailButton";
+import Link from "next/link";
 const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
-    const { title, upVoteCount, downVoteCount, averageRating, totalComment, image, _id } = recipe || {};
-
+    const { title, description, author, upVoteCount, downVoteCount, averageRating, totalComment, image, _id } = recipe || {};
     return (
         <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
             {/* Main Content Section */}
             <div className="flex-1 p-4">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center">
-                        <Avatar
-                            src={recipe?.author?.profilePicture}
-                            alt={recipe?.author?.username}
-                            className="w-8 h-8 rounded-full mr-2"
-                        />
+                        <Link href={`/profiles/${author}`}>
+                            <Avatar
+                                src={author?.profilePicture}
+                                alt={author?.username}
+                                className="w-8 h-8 rounded-full mr-2"
+                            />
+                        </Link>
                         <span className="text-sm font-semibold">{recipe?.author?.username}</span>
                     </div>
-                    <span className="text-xs text-gray-500">{new Date(recipe?.createdAt).toLocaleString()}</span>
+                    <span className="text-xs ">{new Date(recipe?.createdAt).toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between  items-center space-x-1">
                     <h2 className="text-lg font-bold mb-1">{title}</h2>
@@ -33,7 +35,7 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
                         <Heart className="text-red-500" />
                     </div>
                 </div>
-                <p className="text-gray-700 mb-4 hidden lg:block">{recipe?.description.slice(0, 100)}...</p>
+                <p className=" mb-4 hidden lg:block">{description.slice(0, 100)}...</p>
 
                 {image && (
                     <Image

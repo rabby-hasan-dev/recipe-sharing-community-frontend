@@ -9,8 +9,6 @@ import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
 const VoteButton = ({ recipeId, upVote, downVote }: { recipeId: string, upVote: number, downVote: number }) => {
     const { mutate: createVote, data } = useCreateVote();
 
-    console.log("votes==>", data)
-
     const hadnleVote = (recipeId: string, voteType: string) => {
         createVote({ id: recipeId, voteData: { type: voteType } })
 

@@ -17,6 +17,19 @@ export const getRecipe = async () => {
 
 }
 
+export const getUserMatchAllRecipe = async (userId: string) => {
+    let fetchOptions = {};
+
+    fetchOptions = {
+        cache: "no-cache",
+    };
+
+    const res = await fetch(`${envConfig.baseApi}/recipes?author=${userId}`, fetchOptions);
+
+    return res.json();
+
+}
+
 export const geSingleRecipe = async (recipeId: string) => {
     let fetchOptions = {};
 
