@@ -14,7 +14,7 @@ export default function RecipeFeed({ initialData }: RecipeFeedProps) {
 
     return (
         <div className="max-w-4xl mx-auto py-8">
-            <h1 className="text-4xl text-center font-bold mb-8">Recipe Feed</h1>
+            {/* <h1 className="text-4xl text-center font-bold mb-8">Recipe Feed</h1> */}
 
             <div className="space-y-6">
                 {recipes.map((recipe: IRecipe) => (
