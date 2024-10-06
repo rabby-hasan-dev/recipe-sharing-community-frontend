@@ -1,5 +1,3 @@
-
-import { useUser } from '@/src/context/cureentUser';
 import { IUser } from '@/src/types';
 import { IRecipe } from '@/src/types/recipe.types';
 import { Avatar } from '@nextui-org/avatar';
@@ -8,11 +6,10 @@ import { Card, CardBody, CardFooter } from '@nextui-org/card';
 import React from 'react';
 
 
-const UserDashboard = ({ user }: { user: IUser }) => {
-    // const { user } = useUser();
-
+const ProfilePage = ({ user }: { user: IUser }) => {
     const { username, profilePicture, bio, followerCount, followingCount } = user || {};
     const recipes: IRecipe[] = []
+
     return (
         <div className="container mx-auto p-6">
             {/* Profile Header */}
@@ -33,12 +30,12 @@ const UserDashboard = ({ user }: { user: IUser }) => {
                 </div>
             </div>
 
-            {/* Recipe Section */}
+            {/* Recipes Section */}
             <h3 className="text-xl font-semibold mb-4">My Recipes</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                {recipes?.length > 0 ? (
-                    recipes?.map((recipe) => (
-                        <Card isHoverable={true} key={recipe._id}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {recipes.length > 0 ? (
+                    recipes.map((recipe) => (
+                        <Card isHoverable key={recipe._id}>
                             <CardBody>
                                 <img
                                     src={recipe.image}
@@ -59,28 +56,8 @@ const UserDashboard = ({ user }: { user: IUser }) => {
                     <p>No recipes found. Start adding some!</p>
                 )}
             </div>
-
-            {/* Membership Section */}
-            <div className="bg-gray-100 p-4 rounded-lg">
-                <h3 className="text-xl font-semibold mb-2">Get Membership</h3>
-                <p className="mb-4">
-                    Join our premium membership for exclusive content and features!
-                </p>
-                <Button color="success" className="w-full">
-                    Get Membership
-                </Button>
-            </div>
-
-            {/* Profile Management Section */}
-            <div className="mt-6">
-                <h3 className="text-xl font-semibold mb-2">Manage Profile</h3>
-                <Button color="primary" className="mr-2">
-                    Edit Profile
-                </Button>
-                <Button color="danger">Delete Account</Button>
-            </div>
         </div>
     );
 };
 
-export default UserDashboard;
+export default ProfilePage;

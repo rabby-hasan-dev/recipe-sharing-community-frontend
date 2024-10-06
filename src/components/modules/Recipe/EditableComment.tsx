@@ -38,8 +38,8 @@ const EditableComment: React.FC<EditableCommentProps> = ({ comment, onUpdate, on
     return (
         <article className="border-b border-gray-300 py-2">
             <div className="flex justify-between">
-                <p className="text-sm font-medium text-gray-800">{comment.userId.username}</p>
-                <p className="text-xs text-gray-500">{new Date(comment.createdAt).toLocaleDateString()}</p>
+                <p className="text-sm font-medium ">{comment.userId.username}</p>
+                <p className="text-xs ">{new Date(comment.createdAt).toLocaleDateString()}</p>
             </div>
 
             {isEditing ? (
@@ -53,7 +53,7 @@ const EditableComment: React.FC<EditableCommentProps> = ({ comment, onUpdate, on
                 </>
             ) : (
                 <div className="flex justify-between items-center">
-                    <p className="text-sm text-gray-800">{comment.comment}</p>
+                    <p className="text-sm ">{comment.comment}</p>
                     <div className="flex space-x-2">
                         <Button className="text-blue-500" onClick={() => setIsEditing(true)}>Edit</Button>
                         <Button className="text-red-500" onClick={() => onDelete(comment._id)}>Delete</Button>

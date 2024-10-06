@@ -1,6 +1,7 @@
 "use server"
 
 import envConfig from "@/src/config/envConfig"
+import { revalidateTag } from "next/cache";
 
 
 export const getRecipe = async () => {
@@ -11,6 +12,7 @@ export const getRecipe = async () => {
     };
 
     const res = await fetch(`${envConfig.baseApi}/recipes`, fetchOptions);
+
     return res.json();
 
 }

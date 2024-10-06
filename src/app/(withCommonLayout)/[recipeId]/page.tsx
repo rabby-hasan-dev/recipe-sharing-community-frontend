@@ -22,6 +22,9 @@ const RecipeDetailPage = async ({ params }: { params: any }) => {
                         height={600}
                         className='w-full h-full object-cover mb-4 rounded-lg'
                     />
+                </CardBody>
+
+                <CardBody>
                     <p className=" mb-4">{recipe?.description}</p>
                     <h3 className="text-xl font-semibold">Ingredients:</h3>
                     <ul className="list-disc list-inside mb-4">

@@ -33,7 +33,7 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
             />
             <CardFooter className="absolute bottom-0 z-10 justify-between border-t-1 border-zinc-100/50 bg-white/30">
                 <div className="flex items-center space-x-5">
-                    <VoteButton upVote={upVoteCount} downVote={downVoteCount} />
+                    <VoteButton recipeId={_id} upVote={upVoteCount} downVote={downVoteCount} />
                     <CommentButton icon={<MessageSquare />} count={totalComment} />
                 </div>
                 <DetailButton id={_id} ></DetailButton>
