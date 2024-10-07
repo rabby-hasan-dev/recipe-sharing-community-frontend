@@ -1,15 +1,27 @@
 'use client'
 
+import { useChangeUserStatus, useDeleteUser } from "@/src/hooks/adminHooks";
 import { IUser } from "@/src/types";
 import { Badge } from "@nextui-org/badge";
 import { Button } from "@nextui-org/button";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
 
+const userStatus = {
+    ACTIVE: 'active',
+    IN_PROGRESS: 'in-progress',
+    BLOCKED: 'blocked',
+}
 const UserTable = ({ users }: { users: IUser[] }) => {
-    // const users = [
-    //     { name: 'John Doe', email: 'john@example.com', status: 'Active' },
-    //     { name: 'Jane Smith', email: 'jane@example.com', status: 'Blocked' },
-    // ];
+    const { mutate: changUserStatus } = useChangeUserStatus();
+    const { mutate: deleteUser } = useDeleteUser();
+
+    const handleChangeUserStatus = (userId: string) => {
+        changUserStatus({ userId, status: { status: userStatus.BLOCKED } })
+    }
+    const handleDeleteUser = (userId: string) => {
+        deleteUser(userId)
+    }
+
 
     return (
         <div className="p-6">
@@ -39,8 +51,8 @@ const UserTable = ({ users }: { users: IUser[] }) => {
                                 </Badge>
                             </TableCell>
                             <TableCell>
-                                <Button color="warning" size="sm">Block</Button>
-                                <Button color="danger" size="sm" className="lg:ml-2">Delete</Button>
+                                <Button onClick={() => handleChangeUserStatus(user._id)} color="warning" size="sm">Block</Button>
+                                <Button onClick={() => handleDeleteUser(user._id)} color="danger" size="sm" className="lg:ml-2">Delete</Button>
                             </TableCell>
                         </TableRow>
                     ))}

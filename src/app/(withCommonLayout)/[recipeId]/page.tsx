@@ -3,15 +3,11 @@ import RecipeComment from '@/src/components/modules/Recipe/RecipeComment';
 import RecipeRating from '@/src/components/modules/Recipe/RecipeRatings';
 import Container from '@/src/components/UI/Container';
 import { geSingleRecipe } from '@/src/services/Recipe';
-
-import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import Image from 'next/image';
 
 const RecipeDetailPage = async ({ params }: { params: any }) => {
-
     const { data: recipe } = await geSingleRecipe(params?.recipeId);
-
 
     return (
         <Container>

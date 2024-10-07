@@ -1,7 +1,8 @@
 'use client';
 import { ReactNode, useState } from 'react';
-import { usePathname } from 'next/navigation'; // Get the current path
+import { usePathname, useRouter } from 'next/navigation'; // Get the current path
 import Link from 'next/link';
+
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -21,23 +22,23 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
                 {/* Sidebar Links */}
                 <ul className="flex flex-col p-4 flex-grow">
-                    <li className={`mb-4 ${pathname === '/dashboard/admin' ? 'text-white' : 'text-gray-300'}`}>
-                        <Link href="/dashboard/admin" className="hover:text-white transition-colors">
+                    <li className={`mb-4 ${pathname === '/admin' ? 'text-white' : 'text-gray-300'}`}>
+                        <Link href="/admin" className="hover:text-white transition-colors">
                             Dashboard
                         </Link>
                     </li>
-                    <li className={`mb-4 ${pathname === '/dashboard/admin/users' ? 'text-white' : 'text-gray-300'}`}>
-                        <Link href="/dashboard/admin/users" className="hover:text-white transition-colors">
+                    <li className={`mb-4 ${pathname === '/admin/users' ? 'text-white' : 'text-gray-300'}`}>
+                        <Link href="/admin/users" className="hover:text-white transition-colors">
                             Users
                         </Link>
                     </li>
-                    <li className={`mb-4 ${pathname === '/dashboard/admin/recipes' ? 'text-white' : 'text-gray-300'}`}>
-                        <Link href="/dashboard/admin/recipes" className="hover:text-white transition-colors">
+                    <li className={`mb-4 ${pathname === '/admin/recipes' ? 'text-white' : 'text-gray-300'}`}>
+                        <Link href="/admin/recipes" className="hover:text-white transition-colors">
                             Recipes
                         </Link>
                     </li>
-                    <li className={`mb-4 ${pathname === '/dashboard/admin/subscriptions' ? 'text-white' : 'text-gray-300'}`}>
-                        <Link href="/dashboard/admin/subscriptions" className="hover:text-white transition-colors">
+                    <li className={`mb-4 ${pathname === '/admin/subscriptions' ? 'text-white' : 'text-gray-300'}`}>
+                        <Link href="/admin/subscriptions" className="hover:text-white transition-colors">
                             Subscriptions
                         </Link>
                     </li>

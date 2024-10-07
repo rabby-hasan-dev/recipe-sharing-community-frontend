@@ -3,7 +3,10 @@ import { ChangeUserStatus, CreateAdmin, DelteSingleUserByAdmin, GetAllPrimiumUse
 import { toast } from "sonner"
 import { FieldValues } from "react-hook-form"
 
-
+type ChangeUserStatusMutation = {
+    userId: string;
+    status: FieldValues;
+}
 
 
 export const useGetAllUser = () => {
@@ -16,12 +19,12 @@ export const useGetAllUser = () => {
     })
 }
 
+
 export const useGetAllPremiumUser = () => {
 
     return useQuery<any, Error, any, string[]>({
-        queryKey: ["GET_USERS"],
+        queryKey: ["GET_PRIMIUM_USERS"],
         queryFn: async () => await GetAllPrimiumUser(),
-
 
     })
 }
@@ -29,8 +32,8 @@ export const useGetAllPremiumUser = () => {
 
 export const useChangeUserStatus = () => {
 
-    return useMutation<any, Error, FieldValues>({
-        mutationKey: ["USER_RAGISTRATION"],
+    return useMutation<any, Error, ChangeUserStatusMutation>({
+        mutationKey: ["USER_STATUS"],
         mutationFn: async ({ userId, status }) => await ChangeUserStatus(userId, status),
         onSuccess: () => {
             toast.success(' Change Status User  Successful')
@@ -45,7 +48,7 @@ export const useChangeUserStatus = () => {
 export const useCreateAdmin = () => {
 
     return useMutation<any, Error, FieldValues>({
-        mutationKey: ["USER_RAGISTRATION"],
+        mutationKey: ["CREATE_ADMIN"],
         mutationFn: async (adminData) => await CreateAdmin(adminData),
         onSuccess: () => {
             toast.success('Create Admin Successful')
@@ -59,7 +62,7 @@ export const useCreateAdmin = () => {
 export const useDeleteUser = () => {
 
     return useMutation<any, Error, string>({
-        mutationKey: ["USER_RAGISTRATION"],
+        mutationKey: ["DELETE_USER"],
         mutationFn: async (userId) => await DelteSingleUserByAdmin(userId),
         onSuccess: () => {
             toast.success('User Delete Successful')
@@ -70,6 +73,8 @@ export const useDeleteUser = () => {
     })
 
 }
+
+
 export const usePublishRecipe = () => {
 
     return useMutation<any, Error, FieldValues>({

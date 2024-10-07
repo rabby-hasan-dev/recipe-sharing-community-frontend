@@ -2,6 +2,7 @@
 
 
 import axiosInstance from "@/src/lib/AxiosInstance";
+import { revalidateTag } from "next/cache";
 import { FieldValues } from "react-hook-form";
 
 
@@ -35,6 +36,7 @@ export const GetAllPrimiumUser = async () => {
 export const ChangeUserStatus = async (userId: string, status: FieldValues) => {
     try {
         const { data } = await axiosInstance.put(`/admin/users/${userId}/block`, status);
+        revalidateTag('CHANGE_STUTAS')
         return data;
     } catch (error: any) {
 
@@ -49,6 +51,7 @@ export const DelteSingleUserByAdmin = async (userId: string,) => {
 
     try {
         const { data } = await axiosInstance.delete(`/admin/users/${userId}`);
+        revalidateTag('DELTE_USER')
         return data;
     } catch (error: any) {
 
@@ -72,8 +75,11 @@ export const CreateAdmin = async (adminData: FieldValues) => {
 
 
 export const PublishRecipe = async (recipeData: FieldValues) => {
+
     try {
+
         const { data } = await axiosInstance.put(`/admin/recipes/publish`, recipeData);
+        revalidateTag('PUBLISH')
         return data;
     } catch (error: any) {
 

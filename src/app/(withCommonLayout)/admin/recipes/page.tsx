@@ -7,6 +7,7 @@ import React from 'react';
 
 const page = () => {
     const { data: recipes, isPending, isSuccess } = useGetRecipe();
+
     return (
         <div className="min-h-screen bg-gray-100 p-8">
             {/* Page Title */}

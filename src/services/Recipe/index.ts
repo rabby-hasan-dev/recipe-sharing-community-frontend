@@ -60,7 +60,7 @@ export const UpdateRecipe = async (recipeId: string, recipeData: FieldValues) =>
 
 export const DeleteRecipe = async (recipeId: string,) => {
 
-    const { data } = await axiosInstance.put(`${envConfig.baseApi}/recipes/${recipeId}`);
+    const { data } = await axiosInstance.delete(`${envConfig.baseApi}/recipes/${recipeId}`);
     return data;
 };
 

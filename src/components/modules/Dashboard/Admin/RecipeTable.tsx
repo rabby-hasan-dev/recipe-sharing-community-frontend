@@ -1,13 +1,24 @@
 'use client'
 
+import { usePublishRecipe } from "@/src/hooks/adminHooks";
+import { useDeleteRecipe } from "@/src/hooks/receipeHooks";
 import { IRecipe } from "@/src/types/recipe.types";
 import { Button } from "@nextui-org/button";
 import { Switch } from "@nextui-org/switch";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
 
 
-const RecipeTable = ({ recipes }: { recipes: IRecipe[] }) => {
 
+const RecipeTable = ({ recipes }: { recipes: IRecipe[] }) => {
+    const { mutate: deleteRecipe } = useDeleteRecipe();
+    const { mutate: publishReipe } = usePublishRecipe();
+    const handleDeleteRecipe = (recipeId: string) => {
+        deleteRecipe(recipeId);
+    }
+
+    const handlePublishRecipe = (recipeId: string) => {
+        publishReipe({ recipeId: recipeId })
+    }
 
     return (
         <div className="p-6">
@@ -26,14 +37,14 @@ const RecipeTable = ({ recipes }: { recipes: IRecipe[] }) => {
                 </TableHeader>
                 <TableBody>
                     {recipes?.map((recipe: IRecipe, index) => (
-                        <TableRow key={index}>
+                        <TableRow key={recipe._id}>
                             <TableCell>{recipe?.title}</TableCell>
-                            <TableCell>{recipe?.author.username}</TableCell>
+                            <TableCell>{recipe?.author?.username}</TableCell>
                             <TableCell>
-                                <Switch checked={recipe?.isPublished} />
+                                <Switch key={recipe._id} isSelected={recipe.isPublished} onValueChange={() => handlePublishRecipe(recipe._id)} />
                             </TableCell>
                             <TableCell>
-                                <Button color="danger" size="sm">Delete</Button>
+                                <Button onClick={() => handleDeleteRecipe(recipe._id)} color="danger" size="sm">Delete</Button>
                             </TableCell>
                         </TableRow>
                     ))}
@@ -45,3 +56,4 @@ const RecipeTable = ({ recipes }: { recipes: IRecipe[] }) => {
 
 
 export default RecipeTable;
+
