@@ -10,13 +10,14 @@ import DetailButton from "./Button/DetailButton";
 import Link from "next/link";
 const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
     const { title, description, author, upVoteCount, downVoteCount, averageRating, totalComment, image, _id } = recipe || {};
+
     return (
         <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
             {/* Main Content Section */}
             <div className="flex-1 p-4">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center">
-                        <Link href={`/profiles/${author}`}>
+                        <Link href={`/profiles/${author?._id}`}>
                             <Avatar
                                 src={author?.profilePicture}
                                 alt={author?.username}

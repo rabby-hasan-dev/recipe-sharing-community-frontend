@@ -1,14 +1,15 @@
 'use client'
 
+import { IUser } from "@/src/types";
 import { Badge } from "@nextui-org/badge";
 import { Button } from "@nextui-org/button";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
 
-const UserTable = () => {
-    const users = [
-        { name: 'John Doe', email: 'john@example.com', status: 'Active' },
-        { name: 'Jane Smith', email: 'jane@example.com', status: 'Blocked' },
-    ];
+const UserTable = ({ users }: { users: IUser[] }) => {
+    // const users = [
+    //     { name: 'John Doe', email: 'john@example.com', status: 'Active' },
+    //     { name: 'Jane Smith', email: 'jane@example.com', status: 'Blocked' },
+    // ];
 
     return (
         <div className="p-6">
@@ -20,16 +21,18 @@ const UserTable = () => {
                 }}
             >
                 <TableHeader>
-                    <TableColumn>Name</TableColumn>
+                    <TableColumn>Name/username</TableColumn>
                     <TableColumn>Email</TableColumn>
+                    <TableColumn>Role</TableColumn>
                     <TableColumn>Status</TableColumn>
                     <TableColumn>Actions</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {users.map((user, index) => (
+                    {users?.map((user: IUser, index) => (
                         <TableRow key={index}>
-                            <TableCell>{user.name}</TableCell>
-                            <TableCell>{user.email}</TableCell>
+                            <TableCell>{user?.name || user?.username}</TableCell>
+                            <TableCell>{user?.email}</TableCell>
+                            <TableCell>{user?.role}</TableCell>
                             <TableCell>
                                 <Badge color={user.status === 'Active' ? 'success' : 'danger'}>
                                     {user.status}
@@ -37,7 +40,7 @@ const UserTable = () => {
                             </TableCell>
                             <TableCell>
                                 <Button color="warning" size="sm">Block</Button>
-                                <Button color="danger" size="sm" className="ml-2">Delete</Button>
+                                <Button color="danger" size="sm" className="lg:ml-2">Delete</Button>
                             </TableCell>
                         </TableRow>
                     ))}

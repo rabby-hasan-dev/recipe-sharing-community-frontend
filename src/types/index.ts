@@ -39,7 +39,7 @@ export interface IUser {
   followerCount: number;
   followingCount: number;
   isPremium: boolean;
-  membershipExpiration: Date;
+  premiumExpiresAt: Date;
   isDeleted: boolean;
   createdAt: string;
   updatedAt: string;

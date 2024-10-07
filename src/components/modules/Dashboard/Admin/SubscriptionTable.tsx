@@ -1,15 +1,21 @@
 'use client'
 
+import { IUser } from "@/src/types";
 import { Badge } from "@nextui-org/badge";
 import { Button } from "@nextui-org/button";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
 
 
-const SubscriptionTable = () => {
-    const subscriptions = [
-        { user: 'John Doe', status: 'Active', expiry: '12/31/2024' },
-        { user: 'Jane Smith', status: 'Expired', expiry: '07/15/2023' },
-    ];
+const SubscriptionTable = ({ subscriptions }: { subscriptions: IUser[] }) => {
+    // const subscriptions = [
+    //     { user: 'John Doe', status: 'Active', expiry: '12/31/2024' },
+    //     { user: 'Jane Smith', status: 'Expired', expiry: '07/15/2023' },
+    // ];
+    const expiredDate = (date) => {
+        return new Date(date).toString().slice(0, 16)
+    }
+
+    // console.log(expiredDate())
 
     return (
         <div className="p-6">
@@ -28,15 +34,15 @@ const SubscriptionTable = () => {
                     <TableColumn>Actions</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {subscriptions.map((subscription, index) => (
+                    {subscriptions?.map((subscription, index) => (
                         <TableRow key={index}>
-                            <TableCell>{subscription.user}</TableCell>
+                            <TableCell>{subscription?.username}</TableCell>
                             <TableCell>
                                 <Badge color={subscription.status === 'Active' ? 'success' : 'danger'}>
                                     {subscription.status}
                                 </Badge>
                             </TableCell>
-                            <TableCell>{subscription.expiry}</TableCell>
+                            <TableCell>{expiredDate(subscription?.premiumExpiresAt)}</TableCell>
                             <TableCell>
                                 <Button color="warning" size="sm">Renew</Button>
                             </TableCell>

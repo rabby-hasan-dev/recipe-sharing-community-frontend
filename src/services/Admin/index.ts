@@ -18,6 +18,18 @@ export const GetAllUserByAdmin = async () => {
 
 }
 
+export const GetAllPrimiumUser = async () => {
+    try {
+        const { data } = await axiosInstance.get(`/admin/premium-users`);
+        return data;
+    } catch (error: any) {
+
+        throw new Error(error)
+    }
+
+
+}
+
 
 
 export const ChangeUserStatus = async (userId: string, status: FieldValues) => {

@@ -1,15 +1,13 @@
 'use client'
 
+import { IRecipe } from "@/src/types/recipe.types";
 import { Button } from "@nextui-org/button";
 import { Switch } from "@nextui-org/switch";
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/table";
 
 
-const RecipeTable = () => {
-    const recipes = [
-        { title: 'Spaghetti Carbonara', author: 'John Doe', status: 'Published' },
-        { title: 'Chicken Tikka', author: 'Jane Smith', status: 'Unpublished' },
-    ];
+const RecipeTable = ({ recipes }: { recipes: IRecipe[] }) => {
+
 
     return (
         <div className="p-6">
@@ -27,12 +25,12 @@ const RecipeTable = () => {
                     <TableColumn>Actions</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {recipes.map((recipe, index) => (
+                    {recipes?.map((recipe: IRecipe, index) => (
                         <TableRow key={index}>
-                            <TableCell>{recipe.title}</TableCell>
-                            <TableCell>{recipe.author}</TableCell>
+                            <TableCell>{recipe?.title}</TableCell>
+                            <TableCell>{recipe?.author.username}</TableCell>
                             <TableCell>
-                                <Switch checked={recipe.status === 'Published'} />
+                                <Switch checked={recipe?.isPublished} />
                             </TableCell>
                             <TableCell>
                                 <Button color="danger" size="sm">Delete</Button>
