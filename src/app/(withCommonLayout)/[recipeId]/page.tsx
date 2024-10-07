@@ -1,14 +1,17 @@
 
 import RecipeComment from '@/src/components/modules/Recipe/RecipeComment';
+import RecipeRating from '@/src/components/modules/Recipe/RecipeRatings';
 import Container from '@/src/components/UI/Container';
 import { geSingleRecipe } from '@/src/services/Recipe';
+
 import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import Image from 'next/image';
 
 const RecipeDetailPage = async ({ params }: { params: any }) => {
-    const { data: recipe } = await geSingleRecipe(params.recipeId);
-    console.log(recipe);
+
+    const { data: recipe } = await geSingleRecipe(params?.recipeId);
+
 
     return (
         <Container>
@@ -35,15 +38,8 @@ const RecipeDetailPage = async ({ params }: { params: any }) => {
             </Card>
             <RecipeComment recipeId={recipe?._id} />
             <div className="mt-8">
-                <h3 className="text-xl font-semibold mb-4">Rate this Recipe:</h3>
-                {/* Rating component goes here */}
-                <div className="flex items-center">
-                    <Button className="mr-2" color="primary">⭐</Button>
-                    <Button className="mr-2" color="primary">⭐</Button>
-                    <Button className="mr-2" color="primary">⭐</Button>
-                    <Button className="mr-2" color="primary">⭐</Button>
-                    <Button color="primary">⭐</Button>
-                </div>
+                <RecipeRating recipe={recipe} />
+
             </div>
         </Container>
     );

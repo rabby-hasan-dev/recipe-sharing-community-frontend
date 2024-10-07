@@ -1,7 +1,6 @@
 
 import { useState } from 'react';
 import { Button } from '@nextui-org/button';
-import RSTextarea from '../../form/RSTextarea';
 import { IComment } from '@/src/types/comment.types';
 import { Textarea } from '@nextui-org/input';
 

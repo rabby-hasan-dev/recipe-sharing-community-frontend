@@ -38,12 +38,9 @@ export const geSingleRecipe = async (recipeId: string) => {
     fetchOptions = {
         cache: "no-store",
     };
-    const res = await fetch(`${envConfig.baseApi}/recipes/${recipeId}`, fetchOptions);
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
+    const { data } = await axiosInstance.get(`${envConfig.baseApi}/recipes/${recipeId}`, fetchOptions);
 
-    return res.json();
+    return data;
 };
 
 
