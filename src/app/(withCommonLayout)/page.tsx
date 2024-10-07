@@ -12,7 +12,7 @@ const HomePage = async () => {
     return (
         <Container>
             {/* Sticky Header with Search and Filter */}
-            <div className="max-w-4xl mx-auto mb-8 p-6  bg-white shadow-lg rounded-lg sticky top-0 z-20 border border-gray-200">
+            <div className=" mb-8 p-6  bg-white shadow-lg rounded-lg sticky top-0 z-20 border border-gray-200">
                 <h2 className="text-4xl font-bold  text-center mb-4">Discover Delicious Recipes</h2>
                 <div className="flex justify-between items-center mt-4">
                     <Searchbar />
@@ -28,8 +28,8 @@ const HomePage = async () => {
                             ]}
                         />
                         <Button
-                            className="bg-blue-600 hover:bg-blue-700 text-white"
-                            size="lg"
+                            className=" hover:bg-blue-700 text-white"
+                            size="md"
                         >
                             Filter
                         </Button>
