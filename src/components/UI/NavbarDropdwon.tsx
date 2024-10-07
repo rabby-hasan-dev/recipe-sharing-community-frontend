@@ -34,7 +34,7 @@ const NavbarDropdwon = () => {
         <Avatar src={user?.profilePicture || undefined} />
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
-        <DropdownItem onClick={() => handleNavigation('/user')} >My Profile</DropdownItem>
+        <DropdownItem onClick={() => handleNavigation('/user/my-recipes')} >My Profile</DropdownItem>
         <DropdownItem onClick={() => handleNavigation("/user/settings")} >Settings</DropdownItem>
         <DropdownItem onClick={() => handleNavigation('/user/create-recipe')} >Create Recipe</DropdownItem>
         <DropdownItem onClick={handleLogout} className="text-danger" color="danger">
