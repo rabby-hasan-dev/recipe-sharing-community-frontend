@@ -48,7 +48,9 @@ export const GetMe = async () => {
 }
 export const GetMeAnUpdate = async (meUpdateData: FieldValues) => {
     try {
+        console.log(meUpdateData);
         const { data } = await axiosInstance.put(`/users/me`, meUpdateData);
+
         return data;
     } catch (error: any) {
 

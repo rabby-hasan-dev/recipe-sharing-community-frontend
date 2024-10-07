@@ -43,9 +43,11 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                         <p className="mb-4">
                             Enjoy exclusive content and features by joining our membership!
                         </p>
-                        <Button color="success" className="w-full">
-                            Get Membership
-                        </Button>
+                        <Link href="/user/membership" >
+                            <Button color="success" className="w-full">
+                                Get Membership
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* Create Recipe Section */}

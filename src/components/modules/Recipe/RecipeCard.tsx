@@ -60,3 +60,5 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
 
 export default RecipeCard;
 
+
+

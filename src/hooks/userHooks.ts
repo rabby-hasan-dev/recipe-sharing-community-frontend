@@ -26,9 +26,11 @@ export const useGetMe = () => {
 
 export const useGetMeAnUpdate = () => {
 
-    return useMutation<any, Error, FieldValues>({
-        mutationKey: ["USER_RAGISTRATION"],
-        mutationFn: async (meUpdateData) => await GetMeAnUpdate(meUpdateData),
+    return useMutation<any, Error, FormData>({
+        mutationKey: ["USER_PROFILE_UPDATE"],
+        mutationFn: async (meUpdateData) => {
+            return await GetMeAnUpdate(meUpdateData)
+        },
         onSuccess: () => {
             toast.success('Update My Profile  Successful')
         },
