@@ -2,6 +2,7 @@
 
 import envConfig from "@/src/config/envConfig"
 import axiosInstance from "@/src/lib/AxiosInstance";
+import axios from "axios";
 import { revalidateTag } from "next/cache";
 
 import { FieldValues } from "react-hook-form";
@@ -52,21 +53,23 @@ export const geSingleRecipe = async (recipeId: string) => {
 
 export const CreateRecipe = async (recipeData: FormData): Promise<any> => {
 
+
     try {
         const data = await axiosInstance.post("/recipes", recipeData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         });
-        console.log(data);
 
         revalidateTag("recipes");
 
-
+        console.log(data);
         return data;
     } catch (error: any) {
+        console.log(error);
         throw new Error(error.message);
     }
+
 
 };
 

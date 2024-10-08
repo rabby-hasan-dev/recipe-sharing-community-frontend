@@ -1,6 +1,9 @@
 
 'use client'
 
+import Loading from "@/src/components/UI/Loading";
+import { usePurcaseSubscriptions } from "@/src/hooks/subscriptionHooks";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 // Define types for the plan object
@@ -11,21 +14,30 @@ interface Plan {
     duration: string;
 }
 
+interface MembershipPlan {
+    membershipType: "monthly" | "yearly";
+    price: number;
+}
+
+
 const MembershipPlans = () => {
 
     const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+    const { mutate: createSubscription, isPending, isError, isSuccess, error } = usePurcaseSubscriptions();
+
+    const router = useRouter();
 
     // Define the plans array with the Plan type
     const plans: Plan[] = [
         {
             title: "Monthly Plan",
-            price: "$10",
+            price: "10",
             description: "Access all premium features for 1 month.",
             duration: "month",
         },
         {
             title: "Yearly Plan",
-            price: "$100",
+            price: "100",
             description: "Get a full year of premium access with a discount!",
             duration: "year",
         },
@@ -33,11 +45,35 @@ const MembershipPlans = () => {
 
     const handleSelectPlan = (plan: Plan) => {
         setSelectedPlan(plan);
-        console.log("Proceeding to AmarPay for:", plan);
+
+
     };
+
+    const handlePayment = () => {
+        if (selectedPlan) {
+
+            const membershipPlan: MembershipPlan = {
+                membershipType: selectedPlan.title === "Monthly Plan" ? "monthly" : "yearly",
+                price: Number(selectedPlan.price),
+            };
+
+
+            createSubscription(membershipPlan);
+        }
+    }
+
+    if (!isPending && isSuccess) {
+        router.push("/user/profile/my-recipes");
+    }
 
     return (
         <>
+            {
+                isPending && !isSuccess && <Loading />
+            }
+            {
+                isError && <p>{error.message}</p>
+            }
             <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 py-16 px-8 flex flex-col items-center">
                 <h2 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-14 text-center leading-tight">
                     Choose Your Membership Plan
@@ -55,7 +91,7 @@ const MembershipPlans = () => {
                         >
                             <div className="p-8">
                                 <h4 className="text-3xl font-semibold text-gray-900 dark:text-white mb-6">{plan.title}</h4>
-                                <p className="text-4xl font-bold text-gray-900 dark:text-white mb-6">{plan.price}</p>
+                                <p className="text-4xl font-bold text-gray-900 dark:text-white mb-6">${plan.price}</p>
                                 <p className="text-base text-gray-700 dark:text-gray-300 mb-6">{plan.description}</p>
 
                                 <div
@@ -74,12 +110,12 @@ const MembershipPlans = () => {
                 {selectedPlan && (
                     <div className="mt-14 w-full max-w-md">
                         <button
-                            onClick={() => {
-                                console.log("Proceeding to payment with AmarPay for:", selectedPlan);
-                            }}
-                            className="w-full py-4 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-md text-lg font-semibold hover:bg-indigo-700 transition-all duration-300 ease-in-out"
+                            onClick={handlePayment}
+                            disabled={isPending}
+                            className={`w-full py-4 ${isPending ? 'bg-gray-400' : 'bg-gradient-to-r from-indigo-600 to-indigo-800'} text-white rounded-md text-lg font-semibold hover:bg-indigo-700 transition-all duration-300 ease-in-out`}
+                        // className="w-full py-4 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-md text-lg font-semibold hover:bg-indigo-700 transition-all duration-300 ease-in-out"
                         >
-                            Proceed to Payment with AmarPay
+                            {isPending ? 'Processing Payment...' : 'Proceed to Payment with AmarPay'}
                         </button>
                     </div>
                 )}

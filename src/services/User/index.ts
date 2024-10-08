@@ -51,7 +51,7 @@ export const GetMe = async () => {
 export const GetMeAnUpdate = async (meUpdateData: FormData) => {
     try {
 
-        const { data } = await axiosInstance.post("/users/me", meUpdateData, {
+        const { data } = await axiosInstance.put("/users/me", meUpdateData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -60,6 +60,7 @@ export const GetMeAnUpdate = async (meUpdateData: FormData) => {
 
         return data;
     } catch (error: any) {
+        console.log(error);
 
         throw new Error(error)
     }

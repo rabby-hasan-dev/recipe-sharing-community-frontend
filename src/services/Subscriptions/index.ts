@@ -6,12 +6,14 @@ import { FieldValues } from "react-hook-form";
 
 export const PurcaseSubscriptions = async (subcriptionDAta: FieldValues) => {
 
+
     try {
         const { data } = await axiosInstance.post(`/premium-membership/purchase`, subcriptionDAta);
 
         return data;
     } catch (error: any) {
 
+        console.log(error)
         throw new Error(error)
     }
 }

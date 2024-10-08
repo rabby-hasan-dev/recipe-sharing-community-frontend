@@ -10,6 +10,7 @@ import RSForm from "@/src/components/form/RSForm";
 import RSInput from "@/src/components/form/RSInput";
 import RSTextarea from "@/src/components/form/RSTextarea";
 import { ChangeEvent, useState } from "react";
+import { useUser } from "@/src/context/cureentUser";
 
 
 // Define the validation schema with Zod
@@ -25,10 +26,10 @@ const EditMyProfilePage = () => {
     const [imageFiles, setImageFiles] = useState<File | null>(null)
     const { mutate: updateProfile, isPending } = useGetMeAnUpdate();
     const { data } = useGetMe();
+    const { setIsLoading } = useUser();
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-
 
         const formData = new FormData();
 
@@ -37,7 +38,12 @@ const EditMyProfilePage = () => {
         }
 
         formData.append('data', JSON.stringify(data));
+
+        console.log(formData.getAll('data'))
+
         updateProfile(formData);
+
+        setIsLoading(true)
 
 
     };
