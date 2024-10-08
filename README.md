@@ -1,86 +1,126 @@
-# Recipe Sharing Community - Frontend Documentation
+# Recipe Sharing Community  - Project Overview
 
-## Project Overview
+The **Recipe Sharing Community** is a full-stack web application designed to bring together cooking enthusiasts. The platform allows users to share, discover, and organize recipes, targeting home cooks, culinary students, and anyone passionate about cooking. 
 
-The Recipe Sharing Community is a full-stack web application where users can share, discover, and manage recipes. The platform allows users to submit recipes, interact with ingredient checklists, use a cooking timer, and engage with the community through comments, ratings, and upvotes/downvotes.
+The platform offers an environment for users to:
+- Post their favorite recipes
+- Contribute interactive ingredient checklists
+- Share cooking time estimates
 
-### Key Features:
-- **User registration and login** with JWT authentication
-- **Recipe management** (create, update, delete)
-- **Ingredient checklists** and cooking timers
-- **Social features** (follow users, comments, ratings, upvote/downvote system)
-- **Premium content** for subscribed users
-- **Search and filter** functionality for recipes
-- **Infinite scroll** for recipe feed
+The community encourages the exchange of culinary knowledge and fosters social engagement, with various interactive and social features.
 
----
+## Key Features
+
+### **User Registration**
+- Users can register on the platform to create a personal account.
+
+### **Recipe Submission**
+- Users can submit their favorite recipes with detailed ingredient lists.
+
+### **Cooking Timer**
+- A built-in cooking timer allows users to track cooking time for each recipe.
+
+### **Social Features**
+- **Commenting**: Users can comment on recipes.
+- **Rating**: Users can rate recipes they try.
+- **Following**: Users can follow other users.
+- **Upvoting/Downvoting**: Users can upvote or downvote recipes.
+
+### **Premium Features**
+- Exclusive content is available through a subscription-based model. 
+- Users with a premium subscription can access premium-only recipes.
+
+The **Recipe Sharing Community** serves as a collaborative platform for culinary exploration and social connection in the cooking world.
 
 
-## Key Components
 
-### 1. **Authentication**
-- **LoginPage.js**: Allows users to log in with JWT authentication.
-- **RegisterPage.js**: Allows users to create an account.
 
-### 2. **Recipe Management**
-- **RecipeCard.js**: Displays individual recipe details.
-- **RecipeForm.js**: Form for submitting or updating recipes.
-- **IngredientChecklist.js**: Interactive ingredient checklist for users.
-- **CookingTimer.js**: Built-in timer for cooking durations.
 
-### 3. **Social Features**
-- **FollowButton.js**: Allows users to follow or unfollow others.
-- **CommentSection.js**: Enables commenting on recipes.
-- **UpvoteDownvote.js**: Lets users upvote or downvote recipes.
+# Recipe Sharing Community - API Endpoints
 
-### 4. **Admin Features**
-- **AdminDashboard.js**: Admin view for managing recipes and users.
+## Authentication & User Management
 
----
+### **Authentication**
+- **POST** `/auth/login`: Login with email and password to receive a JWT token.
+- **POST** `/auth/refresh-token`: Refresh the JWT token.
+- **POST** `/auth/change-password`: Change the user's password.
+- **POST** `/auth/forgot-password`: Send a password reset link to the user's email.
+- **POST** `/auth/reset-password`: Reset the user's password using a token.
 
-## Functionality
+### **User Creation**
+- **POST** `/register/create-user`: Register a new user.
+- **POST** `/register/create-admin`: Register a new admin user.
 
-### Authentication & Authorization
-- **JWT-based login**: Secure user authentication and token-based sessions.
-- **Password reset**: Users can reset their password via email.
+## User Profile Management
+- **GET** `/profile/me`: Get the current user's profile.
+- **PATCH** `/profile/me`: Update the current user's profile.
+- **GET** `/profile/:userId`: Get another user's profile.
+- **GET** `/profile/me/followers`: Get the current user's followers.
+- **GET** `/profile/me/following`: Get the current user's following.
+- **PUT** `/profile/:userId/follow`: Follow a user.
+- **PUT** `/profile/:userId/unfollow`: Unfollow a user.
 
-### Recipe Management
-- Users can **submit**, **update**, and **delete** recipes.
-- Recipe details page includes **ingredient checklists** and **cooking timers**.
+### **Admin Profile**
+- **GET** `/admins/profile/me`: Get the admin's profile.
+- **PATCH** `/admins/profile/me`: Update the admin's profile.
 
-### Social Features
-- Users can **follow/unfollow** others and see follower/following counts.
-- **Commenting** and **rating** options for each recipe.
-- **Upvote/downvote** system to rank recipes based on popularity.
+## Admin Controls
 
-### Premium Membership
-- Subscription system via **AAMARPAY/Stripe** for premium content access.
+### **Manage Users**
+- **GET** `/admin/users`: Get all users (only accessible to admins).
+- **PUT** `/admin/users/:id/block`: Block a user (only accessible to admins).
+- **DELETE** `/admin/users/:id`: Delete a user (only accessible to admins).
 
-### Search & Filter
-- **Advanced search** to find recipes by ingredients, cooking times, etc.
-- **Infinite scroll** for seamless recipe browsing.
+### **Manage Recipes**
+- **PUT** `/admin/recipes/:recipeId/publish`: Publish a recipe (only accessible to admins).
+- **DELETE** `/admin/recipes/:recipeId`: Delete a recipe (only accessible to admins).
 
----
+## Recipe Management
 
-## Libraries and Tools
-- **NextJs**: Frontend library for building UI components.
-- **Next Js App Router**: Routing for navigation between pages.
-- **Axios**: API calls to the backend server.
-- **React Hook Form**: For handling forms.
-- **Tailwind CSS**: Utility-first CSS framework for responsive design.
-- **JWT**: For secure user authentication.
-- **AMARPAY**: For handling premium membership payments.
+### **Recipe CRUD**
+- **POST** `/recipes`: Create a new recipe. (Requires JWT authentication).
+- **GET** `/recipes`: Fetch all recipes with optional filters (search, tags, etc.).
+  - **Query Params**: `?search=spaghetti&tag=Italian`
+- **GET** `/recipes/:recipeId`: Fetch a specific recipe by recipeId.
+- **PUT** `/recipes/:recipeId`: Update an existing recipe. (Requires JWT authentication - must be the author or an admin).
+- **DELETE** `/recipes/:recipeId`: Delete a recipe by recipeId. (Requires JWT authentication - must be the author or an admin).
 
----
 
-## 2. Install Dependencies
+## Social Features
 
--  cd recipe-sharing-community-frontend
--  yarn install
-## 3. Environment Variables
-Create a .env file in the root directory and add the following:
+### **Recipe Ratings**
+- **POST** `/recipes/:recipeId/rate`: Rate a recipe.
+- **GET** `/recipes/:recipeId/ratings`: Fetch all ratings for a recipe.
+- **GET** `/recipes/:recipeId/rating/average`: Fetch the average rating for a recipe.
 
--  NEXT_PUBLIC_BASE_API=http://localhost:5000/api   # Backend API URL
-## 4. Run the Development Server
-Start the app in development mode:
--  yarn dev
+### **Comments on Recipes**
+- **POST** `/recipes/:recipeId/comments`: Post a comment on a recipe. (Requires JWT authentication).
+  - **Request Body**: `{ "content": "Great recipe!" }`
+- **GET** `/recipes/:recipeId/comments`: Fetch all comments for a recipe.
+- **PUT** `/recipes/:recipeId/comments/:commentId`: Edit a comment. (Requires JWT authentication - must be the author).
+- **DELETE** `/recipes/:recipeId/comments/:commentId`: Delete a comment. (Requires JWT authentication - must be the author).
+
+### **Upvote/Downvote System**
+- **PUT** `/recipes/:recipeId/upvote`: Upvote a recipe. (Requires JWT authentication).
+- **PUT** `/recipes/:recipeId/downvote`: Downvote a recipe. (Requires JWT authentication).
+- **GET** `/recipes/:recipeId/votes`: Fetch the total upvotes/downvotes for a recipe.
+
+## Recipe Feed
+
+### **Public Recipe Feed**
+- **GET** `/feed`: Fetch a feed of public recipes. Includes infinite scroll and optional filters (tags, ratings, etc.).
+  - **Query Params**: `?tag=vegan&sort=rating`
+
+### **Premium Content Feed**
+- **GET** `/feed/premium`: Fetch recipes that are exclusive to premium users. Requires JWT authentication and a valid premium subscription.
+
+## Premium Membership
+
+### **Premium Subscription**
+- **POST** `/premium/subscribe`: Subscribe to premium membership using payment (AAMARPAY/Stripe). Requires JWT authentication.
+  - **Request Body**: `{ "paymentMethod": "stripe", "plan": "monthly" }`
+- **GET** `/premium/status`: Check the current user's premium membership status.
+
+### **Premium Content Access**
+- **GET** `/premium/recipes`: Fetch premium-only recipes. Requires JWT authentication and premium membership.
+
