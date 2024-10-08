@@ -1,11 +1,12 @@
 "use client"
+import MyProfile from "@/src/components/modules/Dashboard/User/MyProfile/MyProfile";
 import { useGetMe } from "@/src/hooks/userHooks";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { ReactNode } from "react";
-import MyProfile from "./@myprofile/page";
 
-const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
+
+const UserDashboardLayout = ({ children, }: { children: ReactNode }) => {
     const { data: user, isPending, isSuccess } = useGetMe();
 
     return (

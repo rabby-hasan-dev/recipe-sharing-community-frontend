@@ -1,3 +1,4 @@
+
 'use client'
 
 import Loading from "@/src/components/UI/Loading";
@@ -5,7 +6,7 @@ import { IUser } from "@/src/types";
 import { Avatar } from "@nextui-org/avatar";
 
 
-const MyProfile = ({ user, isPending, isSuccess }: { user: IUser, isPending: boolean, isSuccess: boolean }) => {
+const MyProfile = ({ user, isPending, isSuccess }: { user: any, isPending: boolean, isSuccess: boolean }) => {
 
 
     return (

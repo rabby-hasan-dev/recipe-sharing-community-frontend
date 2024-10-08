@@ -1,10 +1,10 @@
 
 'use client'
 
+
 import Loading from "@/src/components/UI/Loading";
 import { usePurcaseSubscriptions } from "@/src/hooks/subscriptionHooks";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Define types for the plan object
 interface Plan {
@@ -20,14 +20,26 @@ interface MembershipPlan {
 }
 
 
+
 const MembershipPlans = () => {
 
     const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
-    const { mutate: createSubscription, isPending, isError, isSuccess, error } = usePurcaseSubscriptions();
+    const { mutate: createSubscription, data, isPending, isError, isSuccess, error } = usePurcaseSubscriptions();
 
-    const router = useRouter();
 
-    // Define the plans array with the Plan type
+
+    useEffect(() => {
+        if (!isPending && data?.data?.payment_url && isSuccess) {
+            window.location.href = data.data.payment_url;
+        } else if (isError) {
+
+            console.error("Error:", error);
+        }
+    }, [isPending, data, isSuccess, isError, error]);
+
+
+
+
     const plans: Plan[] = [
         {
             title: "Monthly Plan",
@@ -62,9 +74,7 @@ const MembershipPlans = () => {
         }
     }
 
-    if (!isPending && isSuccess) {
-        router.push("/user/profile/my-recipes");
-    }
+
 
     return (
         <>
@@ -113,7 +123,6 @@ const MembershipPlans = () => {
                             onClick={handlePayment}
                             disabled={isPending}
                             className={`w-full py-4 ${isPending ? 'bg-gray-400' : 'bg-gradient-to-r from-indigo-600 to-indigo-800'} text-white rounded-md text-lg font-semibold hover:bg-indigo-700 transition-all duration-300 ease-in-out`}
-                        // className="w-full py-4 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white rounded-md text-lg font-semibold hover:bg-indigo-700 transition-all duration-300 ease-in-out"
                         >
                             {isPending ? 'Processing Payment...' : 'Proceed to Payment with AmarPay'}
                         </button>

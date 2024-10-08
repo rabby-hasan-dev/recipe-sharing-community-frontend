@@ -9,7 +9,7 @@ import CommentButton from "./Button/CommentButton";
 import DetailButton from "./Button/DetailButton";
 import Link from "next/link";
 const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
-    const { title, description, author, upVoteCount, downVoteCount, totalRatings, totalComment, image, _id } = recipe || {};
+    const { title, description, author, upVoteCount, downVoteCount, totalRatings, totalComment, images, _id } = recipe || {};
 
     return (
         <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
@@ -38,10 +38,10 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
                 </div>
                 <p className=" mb-4 hidden lg:block">{description.slice(0, 100)}...</p>
 
-                {image && (
+                {images.length && (
                     <Image
                         alt="Recipe Image"
-                        src={image}
+                        src={images[0]}
                         className="w-full h-48 object-cover rounded-lg mb-4"
                     />
                 )}

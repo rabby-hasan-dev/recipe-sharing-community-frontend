@@ -4,7 +4,7 @@ export interface IRecipe {
     _id: string
     title: string
     description: string
-    image: string
+    images: string[]
     ingredients: string[]
     cookingTime: number
     author: IUser

@@ -21,6 +21,8 @@ import {
 import NavbarDropdwon from "./NavbarDropdwon";
 import { Button } from "@nextui-org/button";
 import { useUser } from "@/src/context/cureentUser";
+import { Cookie } from "lucide-react";
+
 
 
 
@@ -33,8 +35,8 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+            <Cookie />
+            <p className="font-bold text-inherit">Recipe Sharing Community</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">

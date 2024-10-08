@@ -1,61 +1,60 @@
 
 import RecipeFeed from "@/src/components/modules/Recipe/RecipeFeed";
-import Searchbar from "@/src/components/modules/Recipe/Searchbar";
 import Container from "@/src/components/UI/Container";
 import { getRecipe } from "@/src/services/Recipe";
 import { Button } from "@nextui-org/button";
-import { Select } from "@nextui-org/select";
+
 
 const HomePage = async () => {
     const { data } = await getRecipe();
 
-
     return (
         <Container>
-            {/* Sticky Header with Search and Filter */}
-            <div className=" mb-8 p-6  bg-white shadow-lg rounded-lg sticky top-0 z-20 border border-gray-200">
-                <h2 className="text-4xl font-bold  text-center mb-4">Discover Delicious Recipes</h2>
-                <div className="flex justify-between items-center mt-4">
-                    <Searchbar />
-                    <div className="flex items-center">
-                        <Select
-                            placeholder="Filter by category"
-                            className="mr-2"
-                            options={[
-                                { value: "all", label: "All" },
-                                { value: "vegan", label: "Vegan" },
-                                { value: "vegetarian", label: "Vegetarian" },
-                                { value: "gluten-free", label: "Gluten-Free" },
-                            ]}
-                        />
+            <div className="mb-8 p-6 bg-white shadow-lg rounded-lg sticky top-0 z-20 border border-gray-200 dark:bg-black dark:border-gray-700 dark:text-white">
+                <h2 className="text-4xl font-bold text-center mb-4 text-dark dark:text-light">
+                    Discover Delicious Recipes
+                </h2>
+                <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
+                    <input
+                        className="p-2 mb-4 sm:mb-0 w-full sm:w-auto border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                        placeholder="Search Recipes"
+                    />
+                    <div className="flex items-center w-full sm:w-auto">
+                        <select
+                            name="filter"
+                            className="p-2 w-full sm:w-auto border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                        >
+                            <option disabled value="">Filter Recipe</option>
+                            <option value="premium">Recent Recipe</option>
+                            <option value="freemium">Ancient Recipe</option>
+                        </select>
                         <Button
-                            className=" hover:bg-blue-700 text-white"
+                            className=" sm:mt-0 sm:ml-4  w-full rounded-md bg-default-900 font-semibold text-default"
                             size="md"
+
                         >
                             Filter
                         </Button>
+
                     </div>
                 </div>
             </div>
 
             {/* Main Layout */}
-            <div className="flex flex-wrap justify-between">
+            <div className="flex flex-col md:flex-row justify-between">
                 {/* Sidebar for additional filters/categories */}
-                <aside className="w-full md:w-1/4 ">
-                    <div className="border sticky top-40 z-20 border-gray-200 rounded-lg shadow-md p-4">
+                <aside className="w-full md:w-1/4 mb-8 md:mb-0">
+                    <div className="border sticky top-40 z-20 border-gray-200 rounded-lg shadow-md p-4 dark:bg-gray-800 dark:border-gray-600 dark:text-white">
                         <h3 className="text-lg font-semibold mb-2">Categories</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Button className="w-full text-left">All</Button>
+                                <Button className="w-full text-left dark:text-white">All Recipes</Button>
                             </li>
                             <li>
-                                <Button className="w-full text-left">Vegan</Button>
+                                <Button className="w-full text-left dark:text-white">Premium Recipe</Button>
                             </li>
                             <li>
-                                <Button className="w-full text-left">Vegetarian</Button>
-                            </li>
-                            <li>
-                                <Button className="w-full text-left">Gluten-Free</Button>
+                                <Button className="w-full text-left dark:text-white">Freemium</Button>
                             </li>
                         </ul>
                     </div>
