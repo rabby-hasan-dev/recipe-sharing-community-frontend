@@ -117,3 +117,15 @@ export const resetPassword = async (userData: FieldValues) => {
 }
 
 
+
+export const changePassword = async (passwordData: FieldValues) => {
+    try {
+        const { data } = await axiosInstance.post('/auth/change-password', passwordData);
+        return data;
+    } catch (error: any) {
+
+        throw new Error(error)
+    }
+}
+
+

@@ -26,7 +26,6 @@ const ResetPassword = () => {
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log({ ...data, email, token });
         handleResetPassword({ ...data, email, token });
     };
 

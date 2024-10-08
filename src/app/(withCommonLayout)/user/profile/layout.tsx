@@ -15,7 +15,7 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
             {/* Profile Navigation Bar */}
             <div className="bg-gray-100 rounded-lg shadow-md flex justify-center mb-6">
 
-                <Link href="/user/my-recipes">
+                <Link href="/user/profile/my-recipes">
                     <Button className="py-4 px-6 rounded-none">My Recipes</Button>
                 </Link>
                 <Link href="#">
@@ -24,7 +24,7 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                 <Link href="#">
                     <Button className="py-4 px-6 rounded-none">Following</Button>
                 </Link>
-                <Link href="/user/edit-profile">
+                <Link href="/user/profile/edit-profile">
                     <Button className="py-4 px-6 rounded-none">Edit Profile</Button>
                 </Link>
 
@@ -43,7 +43,7 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                         <p className="mb-4">
                             Enjoy exclusive content and features by joining our membership!
                         </p>
-                        <Link href="/user/membership" >
+                        <Link href="/user/profile/membership" >
                             <Button color="success" className="w-full">
                                 Get Membership
                             </Button>
@@ -56,7 +56,7 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                         <p className="mb-4">
                             Share your culinary creativity by adding a new recipe to your collection.
                         </p>
-                        <Link href="/user/create-recipe">
+                        <Link href="/user/profile/create-recipe">
                             <Button color="primary" className="text-white w-full">
                                 Create Recipe
                             </Button>
