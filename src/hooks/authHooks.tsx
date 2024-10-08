@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 
 import { FieldValues } from "react-hook-form"
 import { toast } from "sonner"
-import { forgotPassword, loginUser, registerUser } from "../services/AuthService"
+import { forgotPassword, loginUser, registerUser, resetPassword } from "../services/AuthService"
 
 
 export const useUserRagistration = () => {
@@ -42,6 +42,20 @@ export const useForgotPassword = () => {
         mutationFn: async (userData) => await forgotPassword(userData),
         onSuccess: () => {
             toast.success('Send Recovery token to user email Successful')
+        },
+        onError: (error) => {
+            toast.error(error.message)
+        }
+    })
+
+}
+export const useResetPassword = () => {
+
+    return useMutation<any, Error, FieldValues>({
+        mutationKey: ["RESET_PASSWORD"],
+        mutationFn: async (userData) => await resetPassword(userData),
+        onSuccess: () => {
+            toast.success('Password Change  Successfully')
         },
         onError: (error) => {
             toast.error(error.message)

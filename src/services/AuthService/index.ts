@@ -2,7 +2,7 @@
 
 import axiosInstance from "@/src/lib/AxiosInstance";
 import { jwtDecode } from "jwt-decode";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
 export const registerUser = async (userData: FieldValues) => {
@@ -88,6 +88,27 @@ export const getNewAccessToken = async () => {
 export const forgotPassword = async (userData: FieldValues) => {
     try {
         const { data } = await axiosInstance.post('/auth/forget-password', userData);
+        return data;
+    } catch (error: any) {
+
+        throw new Error(error)
+    }
+}
+
+
+
+export const resetPassword = async (userData: FieldValues) => {
+    try {
+        const { data } = await axiosInstance.post('/auth/reset-password',
+            {
+                newPassword: userData.newPassword
+                , email: userData.email
+            },
+            {
+                headers: {
+                    Authorization: userData.token,
+                }
+            });
         return data;
     } catch (error: any) {
 
