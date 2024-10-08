@@ -27,9 +27,7 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                 <Link href="/user/profile/edit-profile">
                     <Button className="py-4 px-6 rounded-none">Edit Profile</Button>
                 </Link>
-
             </div>
-
             <div className="lg:flex justify-between gap-8">
                 <div className="lg:w-1/2">
                     {/* Bio Section */}
@@ -43,7 +41,7 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                         <p className="mb-4">
                             Enjoy exclusive content and features by joining our membership!
                         </p>
-                        <Link href="/user/profile/membership" >
+                        <Link href="/membership" >
                             <Button color="success" className="w-full">
                                 Get Membership
                             </Button>
