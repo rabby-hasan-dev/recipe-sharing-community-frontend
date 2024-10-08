@@ -78,13 +78,21 @@ const LoginPage = () => {
                             Login
                         </Button>
                     </RSForm>
+                    <div className="flex justify-between items-center py-2">
+                        <Link href="/forgot-password" className="text-sm text-blue-500 hover:underline">
+                            Forgot Password?
+                        </Link>
+                    </div>
 
                     <div className="text-center">
                         Don&lsquo;t have account ? <Link href={"/register"}>Register</Link>
                     </div>
+
                 </div>
             </div>
         </>
+
+
     );
 };
 
