@@ -57,4 +57,5 @@ export interface IInput {
   name: string;
   disabled?: boolean;
   placeholder?: string;
+  className?: string;
 }

@@ -1,4 +1,6 @@
 
+import FollowUserButton from '@/src/components/modules/Profile/FollowUserButton';
+import UnFollowUserButton from '@/src/components/modules/Profile/UnFollowUserButton';
 import RecipeCard from '@/src/components/modules/Recipe/RecipeCard';
 import { getUserMatchAllRecipe } from '@/src/services/Recipe';
 import { GetSingleUser } from '@/src/services/User';
@@ -38,7 +40,8 @@ const ProfilePage = async ({ params }: { params: { userId: string } }) => {
                         </div>
                     </div>
                     <div className="flex justify-center mt-6 space-x-4">
-                        <Button className="py-2 px-6">Follow</Button>
+                        <FollowUserButton followUserId={params.userId} />
+                        <UnFollowUserButton unFollowUserId={params.userId} />
                         <Button color="primary" className="py-2 px-6">Message</Button>
                     </div>
                 </div>

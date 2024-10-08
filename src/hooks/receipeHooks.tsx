@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 interface MutationVariables {
     recipeId: string;
-    recipeData: FieldValues;
+    recipeData: FormData;
 }
 
 
@@ -19,7 +19,7 @@ interface CreateRecipeResponse {
 
 
 export const useCreateRecipe = () => {
-    return useMutation<CreateRecipeResponse, Error, FieldValues>({
+    return useMutation<CreateRecipeResponse, Error, FormData>({
         mutationKey: ["CREATE_RECIPE"],
         mutationFn: async (recipeData) => await CreateRecipe(recipeData),
         onSuccess: () => {

@@ -31,6 +31,7 @@ const EditMyProfilePage = () => {
 
 
         const formData = new FormData();
+
         if (imageFiles !== null) {
             formData.append('file', imageFiles)
         }
