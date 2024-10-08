@@ -2,7 +2,7 @@
 
 import axiosInstance from "@/src/lib/AxiosInstance";
 import { jwtDecode } from "jwt-decode";
-import { cookies, headers } from "next/headers";
+import { cookies, } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
 export const registerUser = async (userData: FieldValues) => {
