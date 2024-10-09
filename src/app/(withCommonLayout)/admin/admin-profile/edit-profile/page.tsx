@@ -24,7 +24,6 @@ const profileSchema = z.object({
 
 const EditMyProfilePage = () => {
     const { setIsLoading } = useUser();
-    setIsLoading(true);
     const [imageFiles, setImageFiles] = useState<File | null>(null)
     const { mutate: updateProfile, isPending } = useGetMeAnUpdate();
     const { data } = useGetMe();

@@ -1,34 +1,49 @@
-"use client"
+
+"use client";
 
 import { useState, useEffect } from 'react';
 import { IRecipe } from '../types/recipe.types';
 import envConfig from '../config/envConfig';
 import { toast } from 'sonner';
-export function useInfiniteScroll(initialData: any) {
+
+export function useInfiniteScroll(initialData: any, selectedFeed: string) {
     const [recipes, setRecipes] = useState<IRecipe[]>(initialData || []);
-    const [page, setPage] = useState(2); // Start from page 1
+    const [page, setPage] = useState(2); // Start from page 2
     const [hasMore, setHasMore] = useState(true);
-    const [loading, setLoading] = useState(false); // New loading state to prevent multiple calls
+    const [loading, setLoading] = useState(false); // Prevent multiple calls
+
+    // Reset state when feed type changes
+    useEffect(() => {
+        setRecipes(initialData || []);
+        setPage(2); // Reset to page 2 for the new feed
+        setHasMore(true); // Reset hasMore when switching feeds
+    }, [selectedFeed, initialData]);
 
     const loadMore = async () => {
         if (loading || !hasMore) return; // Prevent further calls if already loading or no more data
         setLoading(true); // Set loading to true to prevent duplicate calls
+
+        // Determine the correct API endpoint based on the selected feed
+        const apiUrl =
+            selectedFeed === 'premium'
+                ? `${envConfig.baseApi}/feed/premium?page=${page}`
+                : `${envConfig.baseApi}/feed?page=${page}`; // Default to public feed
+
         try {
-            const res = await fetch(`${envConfig.baseApi}/recipes?page=${page}`);
+            const res = await fetch(apiUrl);
             const data = await res.json();
 
             const newRecipes = Array.isArray(data?.data) ? data?.data : [];
 
             if (newRecipes.length === 0) {
-                toast.error("No more recipes!")
+                toast.error("No more recipes!");
                 setHasMore(false); // No more recipes to load
             } else {
-                setRecipes(prevRecipes => [...prevRecipes, ...newRecipes]);
-                setPage(prevPage => prevPage + 1); // Increment page number after loading
+                setRecipes((prevRecipes) => [...prevRecipes, ...newRecipes]);
+                setPage((prevPage) => prevPage + 1); // Increment page number after loading
             }
         } catch (error: any) {
-            toast.error(error.message || "Error fetching recipes:")
-            // Optionally handle errors (e.g., setHasMore(false) or notify the user)
+            toast.error(error.message || "Error fetching recipes:");
         } finally {
             setLoading(false); // Reset loading state after fetching
         }
@@ -38,7 +53,8 @@ export function useInfiniteScroll(initialData: any) {
     useEffect(() => {
         const handleScroll = () => {
             const bottom =
-                Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 1; // -1 to ensure accuracy
+                Math.ceil(window.innerHeight + window.scrollY) >=
+                document.documentElement.scrollHeight - 1; // -1 to ensure accuracy
 
             if (bottom) {
                 loadMore(); // Load more when scrolling to the bottom
@@ -51,4 +67,3 @@ export function useInfiniteScroll(initialData: any) {
 
     return { recipes, loadMore, hasMore };
 }
-

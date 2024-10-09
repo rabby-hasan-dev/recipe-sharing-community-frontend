@@ -19,7 +19,6 @@ import { useUser } from "@/src/context/cureentUser";
 const LoginPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
-
     const redirect = searchParams.get("redirect");
 
     const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();

@@ -58,8 +58,8 @@ const ProfilePage = async ({ params }: { params: { userId: string } }) => {
             {/* Recipes Section */}
             <h3 className="text-2xl font-semibold mb-4 text-center">Recipes</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {recipes.length > 0 ? (
-                    recipes.map((recipe: IRecipe) => (
+                {recipes?.length > 0 ? (
+                    recipes?.map((recipe: IRecipe) => (
                         <RecipeCard recipe={recipe} />
                     ))
                 ) : (
