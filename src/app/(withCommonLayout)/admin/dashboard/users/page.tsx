@@ -9,7 +9,7 @@ const page = () => {
     const { data: allUsers, isPending, isSuccess, error } = useGetAllUser();
 
     return (
-        <div className="min-h-screen bg-gray-50 p-8">
+        <div className="min-h-screen dark:bg-gray-900 bg-gray-50 p-8">
             {/* Page Title */}
             <div className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-gray-800">

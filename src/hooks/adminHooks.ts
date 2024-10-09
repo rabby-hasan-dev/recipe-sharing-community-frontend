@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { ChangeUserStatus, CreateAdmin, DelteSingleUserByAdmin, GetAllPrimiumUser, GetAllUserByAdmin, PublishRecipe } from "../services/Admin"
+import { ChangeUserStatus, CreateAdmin, DelteSingleUserByAdmin, GetAllPrimiumUser, getAllRecipeByAdmin, GetAllUserByAdmin, PublishRecipe } from "../services/Admin"
 import { toast } from "sonner"
 import { FieldValues } from "react-hook-form"
 
@@ -14,6 +14,16 @@ export const useGetAllUser = () => {
     return useQuery<any, Error, any, string[]>({
         queryKey: ["GET_USERS"],
         queryFn: async () => await GetAllUserByAdmin(),
+
+
+    })
+}
+
+export const useGetAllRecipeByAdmin = () => {
+
+    return useQuery<any, Error, any, string[]>({
+        queryKey: ["GET_AllRECIPE"],
+        queryFn: async () => await getAllRecipeByAdmin(),
 
 
     })

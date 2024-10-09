@@ -58,63 +58,74 @@ const EditMyProfilePage = () => {
 
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
+        <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Edit Profile</h2>
+
             <RSForm onSubmit={onSubmit}
                 resolver={zodResolver(profileSchema)}
                 defaultValues={data?.data}
             >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
                     {/* Personal Information Section */}
-                    <div className="border p-4 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-2">Personal Information</h3>
+                    <div className="border p-6 rounded-lg bg-white dark:bg-gray-700 shadow-md">
+                        <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Personal Information</h3>
+
                         <div className="py-3">
                             <RSInput
                                 name="firstName"
                                 label="First Name"
                                 type="text"
                                 placeholder="Enter your first name"
+                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
                             />
                         </div>
+
                         <div className="py-3">
                             <RSInput
                                 name="lastName"
                                 label="Last Name"
                                 type="text"
                                 placeholder="Enter your last name"
+                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
                             />
                         </div>
+
                         <div className="py-3">
                             <RSInput
                                 name="phone"
                                 label="Phone Number"
                                 type="number"
                                 placeholder="Enter your phone number"
+                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
                             />
                         </div>
+
                         <div className="py-3">
                             <RSInput
                                 name="address"
                                 label="Address"
                                 type="text"
                                 placeholder="Enter your address"
+                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
                             />
                         </div>
                     </div>
 
                     {/* Bio Section */}
-                    <div className="border p-4 rounded-lg">
-                        <h3 className="text-lg font-semibold mb-2">Bio</h3>
-                        <RSTextarea
+                    <div className="border p-6 rounded-lg bg-white dark:bg-gray-700 shadow-md">
+                        <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Bio</h3>
 
+                        <RSTextarea
                             name="bio"
                             label="Tell us about yourself"
                             placeholder="Write a brief bio..."
+                            className="bg-gray-100 dark:bg-gray-600 dark:text-white"
                         />
 
-                        <div className="py-3">
+                        <div className="py-3 ">
                             <label
-                                className="flex h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-default-200 text-default-500 shadow-sm transition-all duration-100 hover:border-default-400"
+                                className="flex border-dashed h-14 w-full cursor-pointer items-center justify-center rounded-xl border-2 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-300 shadow-sm transition-all duration-100 hover:border-gray-400 dark:hover:border-gray-500"
                                 htmlFor="image"
                             >
                                 Change Profile Picture
@@ -131,19 +142,22 @@ const EditMyProfilePage = () => {
 
                 </div>
 
+                {/* Submit Button */}
                 <div className="text-center">
                     <Button
-                        className="my-3 w-full rounded-md bg-blue-600 text-white font-semibold"
+                        className="my-3 w-full rounded-md bg-blue-600 text-white font-semibold transition-all duration-200 hover:bg-blue-700 disabled:bg-blue-300"
                         size="lg"
                         type="submit"
-                        disabled={isPending} // Disable button while loading
+                        disabled={isPending}
                     >
                         {isPending ? "Updating..." : "Update Profile"}
-
                     </Button>
                 </div>
             </RSForm>
         </div>
+
+
+
     );
 };
 

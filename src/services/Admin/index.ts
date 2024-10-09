@@ -89,3 +89,16 @@ export const PublishRecipe = async (recipeData: FieldValues) => {
 
 }
 
+
+
+export const getAllRecipeByAdmin = async () => {
+    let fetchOptions = {};
+
+    fetchOptions = {
+        cache: "no-store",
+    };
+    const { data } = await axiosInstance.get(`/recipes`, fetchOptions);
+
+    return data;
+};
+

@@ -12,10 +12,14 @@ export default function NotificationCenter() {
     return (
         <div className="p-6">
             {notifications.map((notification, index) => (
-                <Card key={index} className="mb-4 p-4">
-                    <h1>{notification.message}</h1>
-                    <p className="text-gray-500 text-sm">{notification.time}</p>
-                </Card>
+                <div
+                    key={index}
+                    className="mb-4 p-4 rounded-lg shadow-md transition-colors duration-300
+                       bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100"
+                >
+                    <h1 className="text-lg font-bold">{notification.message}</h1>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">{notification.time}</p>
+                </div>
             ))}
         </div>
     );

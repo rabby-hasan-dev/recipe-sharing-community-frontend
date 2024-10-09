@@ -6,15 +6,30 @@ import { Switch } from "@nextui-org/switch";
 
 export default function AdminSettings() {
     return (
-        <div className="p-6">
+        <div className="p-6 rounded-lg shadow-md bg-gray-800 text-gray-100">
             <form className="flex flex-col space-y-4">
-                <Input label="Payment Gateway (Aamarpay/Stripe)" placeholder="Enter API Key" />
+                {/* Input field */}
+                <Input
+                    label="Payment Gateway (Aamarpay/Stripe)"
+                    placeholder="Enter API Key"
+                    className="bg-gray-700 text-gray-100 border-gray-600"
+                />
+
+                {/* Switch field */}
                 <div className="flex items-center space-x-4">
-                    <h2>Enable Premium Features</h2>
-                    <Switch checked={true} />
+                    <h2 className="font-semibold">Enable Premium Features</h2>
+                    <Switch defaultChecked color="primary" />
                 </div>
-                <Button type="submit" color="success">Save Settings</Button>
+
+                {/* Submit Button */}
+                <Button
+                    type="submit"
+                    className="w-full py-2 text-lg font-semibold bg-blue-600 text-white rounded-md shadow-lg transition-all hover:opacity-90"
+                >
+                    Save Settings
+                </Button>
             </form>
         </div>
+
     );
 }
