@@ -26,8 +26,8 @@ export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: Re
     const searchTerm = useDebounce(watch('search'));
     const [selectedFilter, setSelectedFilter] = useState<string>('');
     const [feedData, setFeedData] = useState<IRecipe[]>(initialPublicFeed);
-    const { recipes, loadMore, hasMore } = useInfiniteScroll(feedData, selectedFilter);
     const [searchResults, setSearchResults] = useState<IRecipe[]>([]);
+    const { recipes, loadMore, hasMore } = useInfiniteScroll(feedData, selectedFilter);
 
     // Initialize feed data based on selected filter
     useEffect(() => {
@@ -139,7 +139,7 @@ export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: Re
                                             <div className="flex justify-center space-x-4">
 
 
-                                                <Link href='/membership' >
+                                                <Link href='/user/profile/my-recipes' >
 
                                                     <button
                                                         className="bg-yellow-400 text-indigo-900 font-semibold py-2 px-4 rounded-lg hover:bg-yellow-300 transition duration-300"

@@ -74,8 +74,6 @@ const RecipeForm = () => {
     }
 
 
-
-
     if (!createRecipePending && isSuccess) {
         router.push("/user/profile/my-recipes");
     }

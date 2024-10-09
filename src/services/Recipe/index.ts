@@ -2,7 +2,7 @@
 
 import envConfig from "@/src/config/envConfig"
 import axiosInstance from "@/src/lib/AxiosInstance";
-import axios from "axios";
+
 import { revalidateTag } from "next/cache";
 
 import { FieldValues } from "react-hook-form";
@@ -29,7 +29,7 @@ export const getUserMatchAllRecipe = async (userId: string) => {
         cache: "no-cache",
     };
 
-    const res = await fetch(`${envConfig.baseApi}/recipes?author=${userId}`, fetchOptions);
+    const res = await fetch(`${envConfig.baseApi}/recipes?author._id=${userId}`, fetchOptions);
 
     return res.json();
 
@@ -52,7 +52,6 @@ export const geSingleRecipe = async (recipeId: string) => {
 
 
 export const CreateRecipe = async (recipeData: FormData): Promise<any> => {
-
 
     try {
         const data = await axiosInstance.post("/recipes", recipeData, {
