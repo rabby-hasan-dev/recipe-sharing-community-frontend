@@ -19,12 +19,15 @@ export interface ICurrentUser {
 }
 
 
-
+interface IName {
+  firstName: string;
+  lastName: string;
+}
 
 export interface IUser {
   _id: string;
   username: string;
-  name: string;
+  name: IName;
   role: string;
   email: string;
   status: string;
@@ -35,6 +38,7 @@ export interface IUser {
   profilePicture: string;
   bio: string;
   phone: string;
+  fullName?: string;
   address: string;
   followerCount: number;
   followingCount: number;

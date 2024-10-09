@@ -42,7 +42,7 @@ const UserTable = ({ users }: { users: IUser[] }) => {
                 <TableBody>
                     {users?.map((user: IUser, index) => (
                         <TableRow key={index}>
-                            <TableCell>{user?.name || user?.username}</TableCell>
+                            <TableCell>{user?.name ? user.fullName : user?.username}</TableCell>
                             <TableCell>{user?.email}</TableCell>
                             <TableCell>{user?.role}</TableCell>
                             <TableCell>

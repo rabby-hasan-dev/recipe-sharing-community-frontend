@@ -2,7 +2,6 @@
 'use client'
 
 import Loading from "@/src/components/UI/Loading";
-import { IUser } from "@/src/types";
 import { Avatar } from "@nextui-org/avatar";
 
 
