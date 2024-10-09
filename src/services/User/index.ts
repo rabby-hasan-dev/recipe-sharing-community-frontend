@@ -60,7 +60,6 @@ export const GetMeAnUpdate = async (meUpdateData: FormData) => {
 
         return data;
     } catch (error: any) {
-        console.log(error);
 
         throw new Error(error)
     }

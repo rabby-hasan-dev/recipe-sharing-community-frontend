@@ -27,7 +27,7 @@ export const useCreateRating = () => {
             toast.success("Rating successfully");
         },
         onError: (error) => {
-            console.log(error.message)
+
             toast.error(error.message);
         },
     });

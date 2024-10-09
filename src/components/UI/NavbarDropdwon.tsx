@@ -33,14 +33,27 @@ const NavbarDropdwon = () => {
       <DropdownTrigger>
         <Avatar src={user?.profilePicture || undefined} />
       </DropdownTrigger>
-      <DropdownMenu aria-label="Static Actions">
-        <DropdownItem onClick={() => handleNavigation('/user/profile/my-recipes')} >My Profile</DropdownItem>
-        <DropdownItem onClick={() => handleNavigation('/user/profile/create-recipe')} >Create Recipe</DropdownItem>
-        <DropdownItem onClick={() => handleNavigation("/user/settings")} >Settings</DropdownItem>
-        <DropdownItem onClick={handleLogout} className="text-danger" color="danger">
-          Logout
-        </DropdownItem>
-      </DropdownMenu>
+      {
+        user?.role == 'user' ? <>
+          <DropdownMenu aria-label="Static Actions">
+            <DropdownItem onClick={() => handleNavigation('/user/profile/my-recipes')} >My Profile</DropdownItem>
+            <DropdownItem onClick={() => handleNavigation('/user/profile/create-recipe')} >Create Recipe</DropdownItem>
+            <DropdownItem onClick={() => handleNavigation("/user/settings")} >Settings</DropdownItem>
+            <DropdownItem onClick={handleLogout} className="text-danger" color="danger">
+              Logout
+            </DropdownItem>
+          </DropdownMenu>
+        </> : <>
+          <DropdownMenu aria-label="Static Actions">
+            <DropdownItem onClick={() => handleNavigation('/admin/profile')} >My Profile</DropdownItem>
+            <DropdownItem onClick={() => handleNavigation('/admin/profile/create-recipe')} >Create Recipe</DropdownItem>
+            <DropdownItem onClick={() => handleNavigation("/admin/settings")} >Settings</DropdownItem>
+            <DropdownItem onClick={handleLogout} className="text-danger" color="danger">
+              Logout
+            </DropdownItem>
+          </DropdownMenu>
+        </>
+      }
     </Dropdown>
   );
 };

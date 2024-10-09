@@ -63,10 +63,10 @@ export const CreateRecipe = async (recipeData: FormData): Promise<any> => {
 
         revalidateTag("recipes");
 
-        console.log(data);
+
         return data;
     } catch (error: any) {
-        console.log(error);
+
         throw new Error(error.message);
     }
 

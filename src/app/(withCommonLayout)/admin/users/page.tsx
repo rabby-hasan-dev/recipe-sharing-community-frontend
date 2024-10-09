@@ -7,7 +7,7 @@ import React from 'react';
 
 const page = () => {
     const { data: allUsers, isPending, isSuccess, error } = useGetAllUser();
-    console.log(error)
+
     return (
         <div className="min-h-screen bg-gray-50 p-8">
             {/* Page Title */}

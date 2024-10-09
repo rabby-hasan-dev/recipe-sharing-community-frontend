@@ -39,7 +39,7 @@ const EditMyProfilePage = () => {
 
         formData.append('data', JSON.stringify(data));
 
-        console.log(formData.getAll('data'))
+
 
         updateProfile(formData);
 

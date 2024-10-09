@@ -21,7 +21,7 @@ const EditableComment: React.FC<EditableCommentProps> = ({ comment, onUpdate, on
 
     const handleEdit = () => {
         if (newComment !== comment.comment) {
-            console.log('inside the edit comments', comment._id, newComment)
+
             onUpdate(comment._id, newComment);
         }
 

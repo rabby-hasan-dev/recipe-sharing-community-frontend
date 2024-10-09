@@ -8,20 +8,22 @@ type Role = keyof typeof roleBasedRoutes;
 const authRoutes = ['/login', '/register']
 
 const roleBasedRoutes = {
-    USER: [/^\/user/], // regular expreession after profile/ match
-    ADMIN: [/^\/admin/],
+    user: [/^\/user/], // regular expreession after profile/ match
+    admin: [/^\/admin/],
+    superAdmin: [/^\/admin/],
 }
+
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     const user = await getCurrentUser();
 
-
     if (!user) {
         if (authRoutes.includes(pathname)) {
             return NextResponse.next();
         } else {
+
             return NextResponse.redirect(new URL(`/login?redirect=${pathname}`, request.url))
         }
     }
@@ -36,7 +38,6 @@ export async function middleware(request: NextRequest) {
         }
     }
 
-
     return NextResponse.redirect(new URL('/', request.url))
 
 }
@@ -45,9 +46,8 @@ export async function middleware(request: NextRequest) {
 // See "Matching Paths" below to learn more
 
 export const config = {
-    matcher: ['/login', '/register'],
+    matcher: ['/login', '/register', '/user/:page*', '/admin/:page*'],
 
 }
 
 
-// ['/user/:page*', '/admin/:page*', '/login', '/register']

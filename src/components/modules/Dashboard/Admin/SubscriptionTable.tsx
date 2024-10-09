@@ -15,7 +15,7 @@ const SubscriptionTable = ({ subscriptions }: { subscriptions: IUser[] }) => {
         return new Date(date).toString().slice(0, 16)
     }
 
-    // console.log(expiredDate())
+
 
     return (
         <div className="p-6">

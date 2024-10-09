@@ -36,7 +36,7 @@ const RecipeComment: React.FC<RecipeCommentProps> = ({ recipeId }) => {
 
     const handleReplyComment = (id: string, reply: string) => {
         // Implement  reply functionality here
-        console.log(`Replying to comment ${id}: ${reply}`);
+
     };
 
 

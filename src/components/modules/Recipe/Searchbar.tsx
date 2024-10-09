@@ -15,7 +15,7 @@ const Searchbar = () => {
 
     useEffect(() => {
         if (searchTerm) {
-            console.log(searchTerm)
+
         }
     }, [searchTerm])
 

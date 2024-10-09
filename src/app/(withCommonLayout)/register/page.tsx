@@ -21,7 +21,7 @@ export default function RegisterPage() {
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
 
-        console.log('inside from register page userdata:', data);
+
 
         const formData = new FormData();
         if (imageFiles !== null) {

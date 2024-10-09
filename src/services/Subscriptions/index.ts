@@ -13,7 +13,7 @@ export const PurcaseSubscriptions = async (subcriptionDAta: FieldValues) => {
         return data;
     } catch (error: any) {
 
-        console.log(error)
+
         throw new Error(error)
     }
 }

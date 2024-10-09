@@ -30,7 +30,7 @@ export const useCreateVote = () => {
             toast.success("Vote successfully");
         },
         onError: (error) => {
-            console.log(error.message)
+
             toast.error(error.message);
         },
     });

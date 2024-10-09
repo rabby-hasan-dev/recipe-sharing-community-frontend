@@ -20,7 +20,7 @@ export const useFollowUser = () => {
             toast.success("Follow User successfully");
         },
         onError: (error) => {
-            console.log(error.message)
+
             toast.error(error.message);
         },
     });
@@ -34,7 +34,7 @@ export const useUnFollowUser = () => {
             toast.success(" UnFollow User successfully");
         },
         onError: (error) => {
-            console.log(error.message)
+
             toast.error(error.message);
         },
     });
