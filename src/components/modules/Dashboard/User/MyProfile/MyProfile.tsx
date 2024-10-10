@@ -8,6 +8,7 @@ import { Avatar } from "@nextui-org/avatar";
 const MyProfile = ({ user, isPending, isSuccess }: { user: any, isPending: boolean, isSuccess: boolean }) => {
 
 
+
     return (
         <>
             {isPending && !isSuccess && <Loading />}
@@ -21,7 +22,7 @@ const MyProfile = ({ user, isPending, isSuccess }: { user: any, isPending: boole
                 />
 
                 {/* Username Section */}
-                <h2 className="text-3xl font-bold mt-4 text-gray-900 dark:text-white">{user?.username}</h2>
+                <h2 className="text-3xl font-bold mt-4 text-gray-900 dark:text-white">{user?.name ? user.fullName : user?.username}</h2>
                 <p className="text-gray-500 dark:text-gray-300 mt-2">{user?.bio || 'No bio available.'}</p>
 
                 {/* Followers and Following Count Section */}

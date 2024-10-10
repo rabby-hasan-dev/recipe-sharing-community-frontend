@@ -2,6 +2,7 @@
 import { ReactNode, useState } from 'react';
 import { usePathname } from 'next/navigation'; // Get the current path
 import Link from 'next/link';
+import { Cookie, House, Podcast, ShieldCheck, Users } from 'lucide-react';
 
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -24,22 +25,28 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 <ul className="flex flex-col p-4 flex-grow">
                     <li className={`mb-4 ${pathname === '/admin' ? 'text-white' : 'text-gray-300'}`}>
                         <Link href="/admin/dashboard" className="hover:text-white transition-colors">
-                            Dashboard
+                            <p className='flex space-x-2'> <House /> <span> Dashboard</span> </p>
                         </Link>
                     </li>
                     <li className={`mb-4 ${pathname === '/admin/dashboard/users' ? 'text-white' : 'text-gray-300'}`}>
                         <Link href="/admin/dashboard/users" className="hover:text-white transition-colors">
-                            Users
+                            <p className='flex space-x-2'> <Users /> <span> Users Management</span> </p>
                         </Link>
                     </li>
                     <li className={`mb-4 ${pathname === '/admin/dashboard/recipes' ? 'text-white' : 'text-gray-300'}`}>
                         <Link href="/admin/dashboard/recipes" className="hover:text-white transition-colors">
-                            Recipes
+                            <p className='flex space-x-2'> <Cookie /> <span>Recipes Management</span> </p>
+
                         </Link>
                     </li>
                     <li className={`mb-4 ${pathname === '/admin/dashboard/subscriptions' ? 'text-white' : 'text-gray-300'}`}>
                         <Link href="/admin/dashboard/subscriptions" className="hover:text-white transition-colors">
-                            Subscriptions
+                            <p className='flex space-x-2'> <Podcast /> <span>Subscription Management</span> </p>
+                        </Link>
+                    </li>
+                    <li className={`mb-4 ${pathname === '/admin/dashboard/admin-management' ? 'text-white' : 'text-gray-300'}`}>
+                        <Link href="/admin/dashboard/admin-management" className="hover:text-white transition-colors">
+                            <p className='flex space-x-2'> <ShieldCheck /><span> Admin Management</span> </p>
                         </Link>
                     </li>
                 </ul>

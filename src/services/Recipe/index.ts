@@ -67,19 +67,21 @@ export const getSpecificRecipe = async (recipeId: string) => {
 
 
 export const CreateRecipe = async (recipeData: FormData): Promise<any> => {
-
     try {
         const data = await axiosInstance.post("/recipes", recipeData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
+
         });
+
 
         revalidateTag("recipes");
 
 
         return data;
     } catch (error: any) {
+
 
         throw new Error(error.message);
     }

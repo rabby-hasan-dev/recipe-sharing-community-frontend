@@ -29,6 +29,7 @@ export default function RSSelect({
       isDisabled={disabled}
       label={label}
       variant={variant}
+      errorMessage={errors.root?.message}
     >
       {options.map((option) => (
         <SelectItem key={option.key}>{option.label}</SelectItem>

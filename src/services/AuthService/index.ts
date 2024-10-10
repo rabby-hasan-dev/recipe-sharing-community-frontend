@@ -81,7 +81,7 @@ export const getNewAccessToken = async () => {
 
         return res.data;
     } catch (error) {
-
+        console.log('from access token =>', error)
         throw new Error("Failed to get new access token");
     }
 };

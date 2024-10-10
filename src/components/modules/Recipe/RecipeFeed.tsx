@@ -1,6 +1,5 @@
 
 "use client";
-import Cookies from 'js-cookie'
 import { IRecipe } from "@/src/types/recipe.types";
 import RecipeCard from "./RecipeCard";
 import { Spinner } from "@nextui-org/spinner";
@@ -19,6 +18,7 @@ import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { isPreemium } from '@/src/hooks/preemiumUserHook';
 import { toast } from 'sonner';
+import Cookies from "js-cookie";
 
 interface RecipeFeedProps {
     initialPublicFeed: IRecipe[];
@@ -49,7 +49,7 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [selectedSort, setSelectedSort] = useState<string>('createdAt');
+    const [selectedSort, setSelectedSort] = useState<string>('-upVoteCount');
     const [selectedFeed, setSelectedFeed] = useState<string>('');
     const router = useRouter()
 
@@ -171,7 +171,7 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
                         <Button
                             className="sm:mt-0 sm:ml-4 w-full rounded-md bg-default-900 font-semibold text-default"
                             size="md"
-                            onClick={() => setSelectedSort("-averageRating")}
+                            onClick={() => setSelectedSort("-upVoteCount")}
                         >
                             Popular Recipe
                         </Button>

@@ -72,7 +72,9 @@ const RecipeDetailPage = async ({ params }: { params: any }) => {
                         ))}
                     </ul>
 
-
+                    <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">
+                        Time: <span className='ml-2'>{recipe?.cookingTime}</span>
+                    </h3>
                     {/* Recipe Rating */}
                     <div className="mt-8">
                         <RecipeRating recipe={recipe} />

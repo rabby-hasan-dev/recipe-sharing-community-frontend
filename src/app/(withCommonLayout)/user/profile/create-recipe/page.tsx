@@ -15,8 +15,8 @@ const RecipeForm = () => {
 
     const [imageFiles, setImageFiles] = useState<File[] | []>([])
     const [imagePreviews, setImagePreviews] = useState<string[] | []>([])
-    const [isLoading, setIsLoading] = useState(false);
-    const { user } = useUser();
+
+    const { user, setIsLoading } = useUser();
     const router = useRouter();
 
 
@@ -35,11 +35,11 @@ const RecipeForm = () => {
 
         const recipeData = {
             ...data,
-            cookingTime: Number(data.cookingTime),
-            ingredients: data.ingredients.map((ingre: { value: string }) => ingre.value),
+            cookingTime: Number(data?.cookingTime),
+            ingredients: data?.ingredients?.map((ingre: { value: string }) => ingre.value),
 
         };
-
+        console.log("inside create recipe ==>", recipeData);
 
         formData.append('data', JSON.stringify(recipeData));
 
@@ -49,6 +49,7 @@ const RecipeForm = () => {
 
 
         handleCreateRecipe(formData);
+        setIsLoading(true)
     };
 
 
@@ -72,6 +73,8 @@ const RecipeForm = () => {
 
 
     }
+
+
 
 
     if (!createRecipePending && isSuccess) {

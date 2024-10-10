@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 const axiosInstance = axios.create({
   baseURL: `${envConfig.baseApi}`,
 
+
 });
 
 
@@ -34,6 +35,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async function (error) {
+
     const config = error.config;
     if (error?.response?.status === 401 && !config?.sent) {
       config.sent = true;
