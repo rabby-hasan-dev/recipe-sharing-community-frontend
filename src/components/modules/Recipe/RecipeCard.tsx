@@ -36,9 +36,9 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
                         <Heart className="text-red-500" />
                     </div>
                 </div>
-                <p className=" mb-4 hidden lg:block">{description.slice(0, 100)}...</p>
+                <p className=" mb-4 hidden lg:block">{description.slice(0, 100)} ...</p>
 
-                {images.length && (
+                {images?.length && (
                     <Image
                         alt="Recipe Image"
                         src={images[0]}

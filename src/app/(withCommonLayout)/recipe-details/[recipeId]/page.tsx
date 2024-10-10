@@ -2,12 +2,23 @@
 import RecipeComment from '@/src/components/modules/Recipe/RecipeComment';
 import RecipeRating from '@/src/components/modules/Recipe/RecipeRatings';
 import Container from '@/src/components/UI/Container';
-import { geSingleRecipe } from '@/src/services/Recipe';
+import { cureentUserChecker } from '@/src/services/AuthService';
+import { getSpecificRecipe } from '@/src/services/Recipe';
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
+
 
 const RecipeDetailPage = async ({ params }: { params: any }) => {
-    const { data: recipe } = await geSingleRecipe(params?.recipeId);
+    const token = await cureentUserChecker();
+
+    if (!token) {
+        return (redirect('/login'));
+    }
+
+    const { data: recipe } = await getSpecificRecipe(params?.recipeId);
+
+
 
     return (
         <Container>

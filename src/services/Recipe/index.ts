@@ -51,6 +51,21 @@ export const geSingleRecipe = async (recipeId: string) => {
 
 
 
+
+export const getSpecificRecipe = async (recipeId: string) => {
+    console.log(recipeId);
+    let fetchOptions = {};
+
+    fetchOptions = {
+        cache: "no-cache",
+    };
+    const res = await fetch(`${envConfig.baseApi}/recipes/${recipeId}`, fetchOptions);
+    return res.json();
+
+}
+
+
+
 export const CreateRecipe = async (recipeData: FormData): Promise<any> => {
 
     try {

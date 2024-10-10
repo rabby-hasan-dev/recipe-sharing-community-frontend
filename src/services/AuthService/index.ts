@@ -19,6 +19,7 @@ export const registerUser = async (userData: FieldValues) => {
         throw new Error(error)
     }
 }
+
 export const loginUser = async (userData: FieldValues) => {
 
     try {
@@ -130,3 +131,10 @@ export const changePassword = async (passwordData: FieldValues) => {
 }
 
 
+export const cureentUserChecker = async () => {
+
+    const token = cookies().get("accessToken")?.value;
+
+    return token;
+
+}

@@ -1,20 +1,34 @@
 
+'use client'
+
 import FollowUserButton from '@/src/components/modules/Profile/FollowUserButton';
 import UnFollowUserButton from '@/src/components/modules/Profile/UnFollowUserButton';
 import RecipeCard from '@/src/components/modules/Recipe/RecipeCard';
-import { getAllRecipe } from '@/src/services/Recipe';
-
-import { GetSingleUser } from '@/src/services/User';
+import { useUser } from '@/src/context/cureentUser';
+import { useGetRecipe } from '@/src/hooks/receipeHooks';
+import { useGetSingleUser } from '@/src/hooks/userHooks';
 import { IRecipe } from '@/src/types/recipe.types';
 import { Avatar } from '@nextui-org/avatar';
 import { Button } from '@nextui-org/button';
+import { useRouter } from 'next/navigation';
 
 
-const ProfilePage = async ({ params }: { params: { userId: string } }) => {
-    const { data: user } = await GetSingleUser(params.userId);
-    const { username, profilePicture, bio, followerCount, followingCount } = user || {};
-    const data = await getAllRecipe();
-    const recipes = data?.data?.filter((recipe: IRecipe) => recipe.author._id === params?.userId) || [];
+const ProfilePage = ({ params }: { params: { userId: string } }) => {
+    const { user: cureentUser } = useUser();
+    const router = useRouter()
+    const { data: user, isFetching: isUserFetching, isSuccess: isUserSuccess, isError: isUserError } = useGetSingleUser(params?.userId);
+
+    if (!cureentUser?.email) {
+        router.push('/login')
+
+    }
+    const { _id, username, profilePicture, bio, followerCount, followingCount } = user?.data || {};
+    const { data: recipesData, isFetching: isRecipesFetching, isSuccess: isRecipesSuccess, isError: isRecipesError } = useGetRecipe();
+
+    const recipes = recipesData?.data?.filter((recipe: IRecipe) => recipe?.author?._id === params?.userId) || [];
+
+
+
 
 
 
@@ -46,7 +60,7 @@ const ProfilePage = async ({ params }: { params: { userId: string } }) => {
                     <div className="flex justify-center mt-6 space-x-4">
                         <FollowUserButton followUserId={params.userId} />
                         <UnFollowUserButton unFollowUserId={params.userId} />
-                        <Button color="primary" className="py-2 px-6">Message</Button>
+                        {/* <Button color="primary" className="py-2 px-6">Message</Button> */}
                     </div>
                 </div>
             </div>

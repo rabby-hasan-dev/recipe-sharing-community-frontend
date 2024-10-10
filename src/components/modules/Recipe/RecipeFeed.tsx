@@ -90,7 +90,6 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
 
             // Handle the response
             const FeedData = response?.data;
-
             if (FeedData?.data) {
                 // Update the items with the fetched data
                 setItems((prevItems) => [...prevItems, ...FeedData.data]);
