@@ -3,6 +3,7 @@
 
 
 import Loading from "@/src/components/UI/Loading";
+import { useUser } from "@/src/context/cureentUser";
 import { usePurcaseSubscriptions } from "@/src/hooks/subscriptionHooks";
 import React, { useEffect, useState } from "react";
 
@@ -17,11 +18,13 @@ interface Plan {
 interface MembershipPlan {
     membershipType: "monthly" | "yearly";
     price: number;
+    userId: string | undefined;
 }
 
 
 
 const MembershipPlans = () => {
+    const { user } = useUser();
 
     const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
     const { mutate: createSubscription, data, isPending, isError, isSuccess, error } = usePurcaseSubscriptions();
@@ -62,11 +65,12 @@ const MembershipPlans = () => {
     };
 
     const handlePayment = () => {
-        if (selectedPlan) {
+        if (selectedPlan && user?.userId) {
 
             const membershipPlan: MembershipPlan = {
                 membershipType: selectedPlan.title === "Monthly Plan" ? "monthly" : "yearly",
                 price: Number(selectedPlan.price),
+                userId: user?.userId
             };
 
 

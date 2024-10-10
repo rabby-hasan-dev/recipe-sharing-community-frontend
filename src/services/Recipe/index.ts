@@ -9,18 +9,6 @@ import { FieldValues } from "react-hook-form";
 
 
 
-export const getRecipe = async () => {
-    let fetchOptions = {};
-
-    fetchOptions = {
-        cache: "no-cache",
-    };
-
-    const res = await fetch(`${envConfig.baseApi}/recipes`, fetchOptions);
-
-    return res.json();
-
-}
 
 export const getUserMatchAllRecipe = async (userId: string) => {
     let fetchOptions = {};
@@ -36,6 +24,18 @@ export const getUserMatchAllRecipe = async (userId: string) => {
 }
 
 
+
+
+export const getAllRecipe = async () => {
+    let fetchOptions = {};
+
+    fetchOptions = {
+        cache: "no-store",
+    };
+    const { data } = await axiosInstance.get(`/recipes`, fetchOptions);
+
+    return data;
+};
 
 
 export const geSingleRecipe = async (recipeId: string) => {

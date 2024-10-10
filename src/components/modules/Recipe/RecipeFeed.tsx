@@ -1,6 +1,6 @@
 
 "use client";
-
+import Cookies from 'js-cookie'
 import { IRecipe } from "@/src/types/recipe.types";
 import RecipeCard from "./RecipeCard";
 import { Spinner } from "@nextui-org/spinner";
@@ -8,55 +8,141 @@ import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/button";
 import Container from "../../UI/Container";
 import { Input } from "@nextui-org/input";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useDebounce from "@/src/hooks/debounceHooks";
 import { SearchIcon } from "lucide-react";
-import { useInfiniteScroll } from "@/src/hooks/useInfiniteScroll";
 import { useUser } from "@/src/context/cureentUser";
 import Link from "next/link";
+import envConfig from "@/src/config/envConfig";
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from 'next/navigation';
+import { isPreemium } from '@/src/hooks/preemiumUserHook';
+import { toast } from 'sonner';
 
 interface RecipeFeedProps {
     initialPublicFeed: IRecipe[];
-    initialPremiumFeed: IRecipe[];
+    initialPremiumFeed?: IRecipe[];
 }
 
-export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: RecipeFeedProps) {
+
+const getAuthToken = () => {
+    return Cookies.get('accessToken'); // Assuming the token is stored as 'authToken' in cookies
+};
+
+// Create a new Axios instance for client-side requests
+const axiosClient = axios.create({
+    baseURL: envConfig.baseApi,  // Set your API base URL
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+
+
+
+export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
     const { user } = useUser();
-    const { handleSubmit, register, watch } = useForm();
-    const searchTerm = useDebounce(watch('search'));
-    const [selectedFilter, setSelectedFilter] = useState<string>('');
-    const [feedData, setFeedData] = useState<IRecipe[]>(initialPublicFeed);
-    const [searchResults, setSearchResults] = useState<IRecipe[]>([]);
-    const { recipes, loadMore, hasMore } = useInfiniteScroll(feedData, selectedFilter);
+    const { register, watch } = useForm();
+    const searchTerm = useDebounce(watch('search'), 500);
+    const [items, setItems] = useState<IRecipe[]>([]);
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [selectedSort, setSelectedSort] = useState<string>('createdAt');
+    const [selectedFeed, setSelectedFeed] = useState<string>('');
+    const router = useRouter()
 
-    // Initialize feed data based on selected filter
-    useEffect(() => {
-        if (selectedFilter === 'premium') {
-            setFeedData(initialPremiumFeed); // Set premium recipes
-        } else if (selectedFilter === 'freemium') {
-            setFeedData(initialPublicFeed); // Set public recipes
-        } else {
-            setFeedData(initialPublicFeed); //default public
+
+    const fetchData = async () => {
+        if (loading) return;
+
+        setLoading(true);
+        try {
+            // Get the token from storage
+            const token = getAuthToken();
+
+            // Set token in Authorization header if available
+            if (token) {
+                axiosClient.defaults.headers['Authorization'] = token;
+            }
+
+            let response;
+
+            // Perform the API call depending on the selected feed
+            if (selectedFeed === 'premium') {
+                response = await axiosClient.get('/feed/premium', {
+                    params: {
+                        searchTerm,
+                        page,
+                        sort: selectedSort,
+                    },
+                });
+            } else {
+                response = await axiosClient.get('/feed', {
+                    params: {
+                        searchTerm,
+                        page,
+                        sort: selectedSort,
+                    },
+                });
+            }
+
+            // Handle the response
+            const FeedData = response?.data;
+
+            if (FeedData?.data) {
+                // Update the items with the fetched data
+                setItems((prevItems) => [...prevItems, ...FeedData.data]);
+
+                // Check if there are no more results
+                if (FeedData.data.length === 0) {
+                    setHasMore(false);
+                } else {
+                    // Increment the page number for pagination
+                    setPage((prevPage) => prevPage + 1);
+                }
+            } else {
+                console.error('Error: No data found in response');
+                setHasMore(false);  // Stop fetching if no data is found
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);  // Log errors for debugging
+        } finally {
+            setLoading(false);  // Set loading state to false after the request
         }
-    }, [selectedFilter, initialPublicFeed, initialPremiumFeed]);
-
-
-    // Handle Search
-    useEffect(() => {
-        if (searchTerm) {
-
-        }
-    }, [searchTerm, feedData]);
-
-
-    // Filter Handler
-    const handleFilterChange = (filter: string) => {
-        setSelectedFilter(filter);
     };
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log(data);
-    };
+    // Reset and fetch new data when search query changes
+    useEffect(() => {
+        setItems([]); // Reset items
+        setPage(1);   // Reset page
+        setHasMore(true); // Reset hasMore flag
+        if (searchTerm !== undefined) {
+            fetchData();  // Fetch data with new search query
+        }
+
+
+    }, [searchTerm, selectedSort, selectedFeed]);
+
+
+    const handleFilterPrimiumRecipe = async (feedType: string) => {
+
+        if (feedType === 'premium') {
+            const preemiumUser = await isPreemium(user?.userId as string)
+            if (!preemiumUser) {
+                toast.error("You are not a Preemium Member. Please! Got Preemium MemberShip")
+                router.push('/user/profile/my-recipes')
+            }
+
+        }
+
+        setSelectedFeed(feedType)
+    }
+
+
+
+
 
     return (
         <Container>
@@ -66,7 +152,7 @@ export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: Re
                 </h2>
                 <div className="flex flex-col sm:flex-row justify-between items-center mt-4">
                     {/* Search Bar */}
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form>
                         <Input
                             {...register('search')}
                             aria-label="Search"
@@ -82,20 +168,11 @@ export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: Re
                     </form>
 
                     <div className="flex items-center w-full sm:w-auto mt-4 sm:mt-0">
-                        <select
-                            name="filter"
-                            value={selectedFilter}
-                            onChange={(e) => handleFilterChange(e.target.value)}
-                            className="p-2 w-full sm:w-auto border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-                        >
-                            <option disabled value="">Filter Recipe</option>
-                            <option value="">Recent Recipe</option>
-                            <option value="">Ancient Recipe</option>
 
-                        </select>
                         <Button
                             className="sm:mt-0 sm:ml-4 w-full rounded-md bg-default-900 font-semibold text-default"
                             size="md"
+                            onClick={() => setSelectedSort("-averageRating")}
                         >
                             Popular Recipe
                         </Button>
@@ -111,7 +188,7 @@ export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: Re
                         <ul className="space-y-2">
                             <li>
                                 <Button
-                                    onClick={() => handleFilterChange('freemium')}
+                                    onClick={() => handleFilterPrimiumRecipe('freemium')}
                                     className="w-full text-left dark:text-white"
                                 >
                                     Freemium Recipes
@@ -121,7 +198,7 @@ export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: Re
                                 user?.email ? <>
                                     <li>
                                         <Button
-                                            onClick={() => handleFilterChange('premium')}
+                                            onClick={() => handleFilterPrimiumRecipe('premium')}
                                             className="w-full text-left dark:text-white"
                                         >
                                             Premium Recipes
@@ -164,19 +241,33 @@ export default function RecipeFeed({ initialPublicFeed, initialPremiumFeed }: Re
                     <div className="flex flex-wrap justify-center">
                         <div className="max-w-4xl mx-auto">
                             <div className="space-y-6">
-                                {recipes?.map((recipe: IRecipe) => (
-                                    <RecipeCard key={recipe?._id} recipe={recipe} />
-                                ))}
+
+
+                                <InfiniteScroll
+                                    dataLength={items?.length}
+                                    next={fetchData}
+                                    hasMore={hasMore}
+                                    loader={<div className="text-center"><Spinner /></div>}
+                                    endMessage={
+                                        <p className="text-2xl text-center font-bold text-gray-700 dark:text-gray-300 mb-2">
+                                            No more Recipes!
+                                        </p>
+                                    }
+                                >
+                                    {items?.map((recipe: IRecipe, index) => (
+                                        <RecipeCard key={`${recipe?._id}-${index}`} recipe={recipe} />
+                                    ))
+
+
+                                    }
+
+
+                                </InfiniteScroll>
+
+
                             </div>
 
-                            {/* Loading more button */}
-                            {hasMore && (
-                                <div className="flex justify-center my-10">
-                                    <button onClick={loadMore}>
-                                        <Spinner />
-                                    </button>
-                                </div>
-                            )}
+
                         </div>
                     </div>
                 </main>

@@ -11,7 +11,6 @@ interface CreateFollowResponse {
 
 
 
-
 export const useFollowUser = () => {
     return useMutation<CreateFollowResponse, Error, string>({
         mutationKey: ["CREATE_VOTE"],

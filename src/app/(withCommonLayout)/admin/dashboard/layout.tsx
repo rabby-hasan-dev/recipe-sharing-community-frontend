@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation'; // Get the current path
+import { usePathname } from 'next/navigation'; // Get the current path
 import Link from 'next/link';
 
 
@@ -9,7 +9,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname(); // Use App Router's usePathname hook
 
     return (
-        <div className="flex h-screen">
+        <div className="flex  h-screen">
             {/* Sidebar */}
             <div
                 className={`fixed z-20 inset-y-0 left-0 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
@@ -46,7 +46,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
                 {/* Footer */}
                 <div className="p-4 border-t border-gray-700 text-center text-gray-400 text-sm">
-                    © 2024 Admin Panel
+                    © <span>{new Date().getFullYear()}</span> Admin Panel
                 </div>
             </div>
 

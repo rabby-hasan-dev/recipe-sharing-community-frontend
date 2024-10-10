@@ -20,16 +20,15 @@ export default function RSInput({
 
 }: IProps) {
 
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register, formState: { errors }, } = useFormContext();
+  const errorMessage = errors ? (errors[name]?.message as string) : ''; // Get the error message for the specific field
+  const isInvalid = !!errorMessage; // Check if there's an error
 
   return (
     <Input
       {...register(name)}
-      errorMessage={errors[name] ? (errors[name].message as string) : ""}
-      isInvalid={!!errors[name]}
+      errorMessage={errorMessage}
+      isInvalid={isInvalid}
       variant={variant}
       size={size}
       required={required}

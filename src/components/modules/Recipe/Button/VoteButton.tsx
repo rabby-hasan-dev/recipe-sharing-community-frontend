@@ -7,8 +7,7 @@ import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
 
 
 const VoteButton = ({ recipeId, upVote, downVote }: { recipeId: string, upVote: number, downVote: number }) => {
-    const { mutate: createVote, data } = useCreateVote();
-
+    const { mutate: createVote, error } = useCreateVote();
     const hadnleVote = (recipeId: string, voteType: string) => {
         createVote({ id: recipeId, voteData: { type: voteType } })
 

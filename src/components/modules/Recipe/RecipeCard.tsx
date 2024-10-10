@@ -9,7 +9,7 @@ import CommentButton from "./Button/CommentButton";
 import DetailButton from "./Button/DetailButton";
 import Link from "next/link";
 const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
-    const { title, description, author, upVoteCount, downVoteCount, totalRatings, totalComment, images, _id } = recipe || {};
+    const { title, description, author, upVoteCount, downVoteCount, averageRating, totalComment, images, _id } = recipe || {};
 
     return (
         <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
@@ -32,7 +32,7 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
                     <h2 className="text-lg font-bold mb-1">{title}</h2>
 
                     <div className="flex items-center justify-center">
-                        <span className="text-sm">{totalRatings}</span>
+                        <span className="text-sm">{averageRating}</span>
                         <Heart className="text-red-500" />
                     </div>
                 </div>

@@ -11,9 +11,10 @@ const SubscriptionTable = ({ subscriptions }: { subscriptions: IUser[] }) => {
     //     { user: 'John Doe', status: 'Active', expiry: '12/31/2024' },
     //     { user: 'Jane Smith', status: 'Expired', expiry: '07/15/2023' },
     // ];
-    const expiredDate = (date) => {
+    const expiredDate = (date: any) => {
         return new Date(date).toString().slice(0, 16)
     }
+
 
 
 

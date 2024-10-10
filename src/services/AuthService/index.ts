@@ -80,6 +80,7 @@ export const getNewAccessToken = async () => {
 
         return res.data;
     } catch (error) {
+
         throw new Error("Failed to get new access token");
     }
 };

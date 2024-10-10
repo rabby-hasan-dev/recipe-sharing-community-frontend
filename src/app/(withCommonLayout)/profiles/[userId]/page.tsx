@@ -2,7 +2,8 @@
 import FollowUserButton from '@/src/components/modules/Profile/FollowUserButton';
 import UnFollowUserButton from '@/src/components/modules/Profile/UnFollowUserButton';
 import RecipeCard from '@/src/components/modules/Recipe/RecipeCard';
-import { getUserMatchAllRecipe } from '@/src/services/Recipe';
+import { getAllRecipe } from '@/src/services/Recipe';
+
 import { GetSingleUser } from '@/src/services/User';
 import { IRecipe } from '@/src/types/recipe.types';
 import { Avatar } from '@nextui-org/avatar';
@@ -12,7 +13,10 @@ import { Button } from '@nextui-org/button';
 const ProfilePage = async ({ params }: { params: { userId: string } }) => {
     const { data: user } = await GetSingleUser(params.userId);
     const { username, profilePicture, bio, followerCount, followingCount } = user || {};
-    const { data: recipes } = await getUserMatchAllRecipe(params.userId);
+    const data = await getAllRecipe();
+    const recipes = data?.data?.filter((recipe: IRecipe) => recipe.author._id === params?.userId) || [];
+
+
 
     return (
         <div className="container mx-auto p-6">
@@ -57,7 +61,7 @@ const ProfilePage = async ({ params }: { params: { userId: string } }) => {
 
             {/* Recipes Section */}
             <h3 className="text-2xl font-semibold mb-4 text-center text-gray-800 dark:text-white">Recipes</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
                 {recipes?.length > 0 ? (
                     recipes?.map((recipe: IRecipe) => (
                         <RecipeCard recipe={recipe} />

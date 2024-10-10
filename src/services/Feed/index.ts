@@ -24,7 +24,7 @@ export const getPrimiumRecipe = async () => {
         const { data } = await axiosInstance.get(`/feed/premium`);
         return data;
     } catch (error: any) {
-        console.log(error);
+
         throw new Error(error)
     }
 

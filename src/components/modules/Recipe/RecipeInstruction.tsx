@@ -22,7 +22,7 @@ const RecipeInstruction = ({ recipe }: { recipe: IRecipe }) => {
     return (
         <div>
             <h3 className="text-xl font-semibold">Instructions:</h3>
-            <p className=" mb-4">{recipe?.instructions}</p>
+            <p className=" mb-4">Instructions</p>
             <h3 className="text-xl font-semibold">Cooking Timer: {timeLeft}s</h3>
         </div>
     );
