@@ -1,5 +1,6 @@
 
 "use client";
+import Cookies from 'js-cookie'
 import { IRecipe } from "@/src/types/recipe.types";
 import RecipeCard from "./RecipeCard";
 import { Spinner } from "@nextui-org/spinner";
@@ -18,7 +19,6 @@ import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { isPreemium } from '@/src/hooks/preemiumUserHook';
 import { toast } from 'sonner';
-import Cookies from "js-cookie";
 
 interface RecipeFeedProps {
     initialPublicFeed: IRecipe[];
@@ -243,6 +243,8 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
 
 
                                 <InfiniteScroll
+                                    style={{ overflow: 'inherit', width: '100%' }}
+                                    className='space-y-5'
                                     dataLength={items?.length}
                                     next={fetchData}
                                     hasMore={hasMore}
@@ -253,12 +255,14 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
                                         </p>
                                     }
                                 >
+
                                     {items?.map((recipe: IRecipe, index) => (
                                         <RecipeCard key={`${recipe?._id}-${index}`} recipe={recipe} />
                                     ))
 
 
                                     }
+
 
 
                                 </InfiniteScroll>
@@ -269,8 +273,8 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
 
                         </div>
                     </div>
-                </main>
-            </div>
-        </Container>
+                </main >
+            </div >
+        </Container >
     );
 }

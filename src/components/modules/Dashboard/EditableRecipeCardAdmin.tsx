@@ -2,29 +2,21 @@
 import { IRecipe } from "@/src/types/recipe.types";
 import { Card as NextUiCard, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
-import { MessageSquare } from "lucide-react";
+import { Heart, MessageSquare } from "lucide-react";
 import { Avatar } from "@nextui-org/avatar";
-import VoteButton from "./Button/VoteButton";
-import CommentButton from "./Button/CommentButton";
-import DetailButton from "./Button/DetailButton";
 import Link from "next/link";
-import { Rating } from "@smastrom/react-rating";
-import "@smastrom/react-rating/style.css";
-import ImagePreview from "../../UI/ImagePreview";
-const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
-    const { title, isPremium, description, author, upVoteCount, downVoteCount, totalComment, images, _id } = recipe || {};
+
+import VoteButton from "../Recipe/Button/VoteButton";
+import CommentButton from "../Recipe/Button/CommentButton";
+import DetailButton from "../Recipe/Button/DetailButton";
+import EditRecipeButtonAdmin from "./EditRecipeButtonAdmin";
+const EditableRecipeCardAdmin = ({ recipe }: { recipe: IRecipe }) => {
+    const { title, description, author, upVoteCount, downVoteCount, averageRating, totalComment, images, _id } = recipe || {};
 
     return (
         <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
             {/* Main Content Section */}
-            {/* <div className="relative"> */}
-            {isPremium ? <span className="inline-block absolute right-0 top-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
-                Premium
-            </span> : <></>}
-            {/* </div> */}
-
-            <div className="flex-1 p-4 mt-2">
-
+            <div className="flex-1 p-4">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center">
                         <Link href={`/profiles/${author?._id}`}>
@@ -42,36 +34,34 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
                     <h2 className="text-lg font-bold mb-1">{title}</h2>
 
                     <div className="flex items-center justify-center">
-
-
-                        <div className="flex gap-2 items-center my-2">
-                            <Rating style={{ maxWidth: 120 }} value={recipe?.averageRating} readOnly />
-
-                        </div>
-
+                        <span className="text-sm">{averageRating}</span>
+                        <Heart className="text-red-500" />
                     </div>
                 </div>
                 <p className=" mb-4 hidden lg:block">{description.slice(0, 100)} ...</p>
 
-
-                <ImagePreview images={images} />
-
+                {images?.length && (
+                    <Image
+                        alt="Recipe Image"
+                        src={images[0]}
+                        className="w-full h-48 object-cover rounded-lg mb-4"
+                    />
+                )}
 
                 <CardFooter className="flex justify-between items-center pt-4">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 ">
                         <VoteButton recipeId={_id} upVote={upVoteCount} downVote={downVoteCount} />
                         <CommentButton icon={<MessageSquare />} count={totalComment} />
+                        <EditRecipeButtonAdmin recipeId={_id} />
+                        <DetailButton id={_id} />
                     </div>
-                    <DetailButton id={_id} />
                 </CardFooter>
             </div>
         </NextUiCard>
-
     );
-
 };
 
-export default RecipeCard;
+export default EditableRecipeCardAdmin;
 
 
 

@@ -2,8 +2,7 @@
 
 import RSInput from "@/src/components/form/RSInput";
 import Loading from "@/src/components/UI/Loading";
-import { useUser } from "@/src/context/cureentUser";
-import { useCreateRecipe } from "@/src/hooks/receipeHooks";
+import { useCreateRecipe, useGetSingleRecipe } from "@/src/hooks/receipeHooks";
 import { Button } from "@nextui-org/button";
 import { Plus, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -11,18 +10,18 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, FormProvider, SubmitHandler, useFieldArray, useForm, } from "react-hook-form";
 
-const RecipeForm = () => {
-
+const RecipeForm = ({ params }: { parmas: any }) => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([])
     const [imagePreviews, setImagePreviews] = useState<string[] | []>([])
-
-    const { user, setIsLoading } = useUser();
     const router = useRouter();
-
-
     const methods = useForm();
     const { control, handleSubmit } = methods;
     const { mutate: handleCreateRecipe, error: apiError, isError, isPending: createRecipePending, isSuccess } = useCreateRecipe();
+    const { data: getSingleRecipe, isPending: singleRecipePending, isSuccess: isSuccessRecipe } = useGetSingleRecipe(params?.recipeId);
+
+
+
+
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -39,7 +38,7 @@ const RecipeForm = () => {
             ingredients: data?.ingredients?.map((ingre: { value: string }) => ingre.value),
 
         };
-        console.log("inside create recipe ==>", recipeData);
+
 
         formData.append('data', JSON.stringify(recipeData));
 
@@ -49,7 +48,7 @@ const RecipeForm = () => {
 
 
         // handleCreateRecipe(formData);
-        setIsLoading(true)
+
     };
 
 
@@ -95,12 +94,15 @@ const RecipeForm = () => {
             <div className="flex flex-col items-center p-5 bg-gray-50 dark:bg-gray-900 min-h-screen">
                 <div className="bg-white dark:bg-gray-800 w-full max-w-3xl rounded-lg shadow-lg p-8 sm:p-10 lg:p-12">
                     <h2 className="mb-8 text-3xl font-semibold text-gray-800 dark:text-white text-center">
-                        Create a New Recipe
+                        Update Recipe
                     </h2>
                     <FormProvider {...methods}>
 
 
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form
+                            onSubmit={handleSubmit(onSubmit)
+
+                            }>
                             {/* Title */}
                             <div className="mb-6">
                                 <RSInput
@@ -228,7 +230,7 @@ const RecipeForm = () => {
                                 size="lg"
                                 type="submit"
                             >
-                                Submit Recipe
+                                Update Recipe
                             </Button>
                         </form>
                     </FormProvider>

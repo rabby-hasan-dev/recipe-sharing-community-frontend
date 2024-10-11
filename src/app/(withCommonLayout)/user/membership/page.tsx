@@ -27,7 +27,9 @@ interface MembershipPlan {
 const MembershipPlans = () => {
     const { user } = useUser();
     const router = useRouter();
-    if (!user?.email) router.push('/login')
+    // if (!user?.email) {
+    //     router.push('/login')
+    // }
 
     const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
     const { mutate: createSubscription, data, isPending, isError, isSuccess, error } = usePurcaseSubscriptions();

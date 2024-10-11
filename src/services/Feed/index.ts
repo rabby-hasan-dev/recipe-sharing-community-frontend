@@ -28,7 +28,39 @@ export const getPrimiumRecipe = async () => {
         throw new Error(error)
     }
 
-
-
-
 }
+
+
+
+import axios from "axios";
+import Cookies from "js-cookie";
+
+
+const axiosClient = axios.create({
+    baseURL: envConfig.baseApi,
+    headers: {
+        "Content-Type": "application/json",
+    },
+});
+
+
+export const fetchRecipes = async (searchTerm = "", page = 1, sort = "-upVoteCount", feedType = "") => {
+    try {
+        const token = Cookies.get("accessToken"); // Get token from cookie if available
+        if (token) {
+            axiosClient.defaults.headers["Authorization"] = token;
+        }
+
+        const response = await axiosClient.get(`/feed${feedType === "premium" ? "/premium" : ""}`, {
+            params: {
+                searchTerm,
+                page,
+                sort,
+            },
+        });
+        return response.data.data; // Return the list of recipes
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+        return [];
+    }
+};

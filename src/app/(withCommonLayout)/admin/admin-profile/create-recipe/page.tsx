@@ -2,7 +2,7 @@
 
 import RSInput from "@/src/components/form/RSInput";
 import Loading from "@/src/components/UI/Loading";
-import { useUser } from "@/src/context/cureentUser";
+
 import { useCreateRecipe } from "@/src/hooks/receipeHooks";
 import { Button } from "@nextui-org/button";
 import { Plus, TrashIcon } from "lucide-react";
@@ -16,7 +16,6 @@ const RecipeForm = () => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([])
     const [imagePreviews, setImagePreviews] = useState<string[] | []>([])
 
-    const { user, setIsLoading } = useUser();
     const router = useRouter();
 
 
@@ -39,7 +38,7 @@ const RecipeForm = () => {
             ingredients: data?.ingredients?.map((ingre: { value: string }) => ingre.value),
 
         };
-        console.log("inside create recipe ==>", recipeData);
+
 
         formData.append('data', JSON.stringify(recipeData));
 
@@ -49,7 +48,7 @@ const RecipeForm = () => {
 
 
         handleCreateRecipe(formData);
-        setIsLoading(true)
+
     };
 
 

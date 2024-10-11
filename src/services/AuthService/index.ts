@@ -9,6 +9,7 @@ export const registerUser = async (userData: FieldValues) => {
 
     try {
         const { data } = await axiosInstance.post('/auth/signUp', userData);
+
         if (data.success) {
             cookies().set("accessToken", data?.data?.accessToken);
             cookies().set("refreshToken", data?.data?.refreshToken);
@@ -27,6 +28,7 @@ export const loginUser = async (userData: FieldValues) => {
         if (data.success) {
             cookies().set("accessToken", data?.data?.accessToken);
             cookies().set("refreshToken", data?.data?.refreshToken);
+
         }
         return data;
     } catch (error: any) {
@@ -45,6 +47,7 @@ export const logOut = () => {
 export const getCurrentUser = async () => {
 
     const accessToken = cookies().get("accessToken")?.value;
+
 
     let decodedToken = null;
     if (accessToken) {
@@ -69,13 +72,15 @@ export const getCurrentUser = async () => {
 export const getNewAccessToken = async () => {
     try {
         const refreshToken = cookies().get("refreshToken")?.value;
-
         const res = await axiosInstance({
             url: "/auth/refresh-token",
             method: "POST",
+
             withCredentials: true,
+
             headers: {
                 cookies: `refreshToken=${refreshToken}`,
+                // cookie: `refreshToken=${refreshToken}`,
             },
         });
 

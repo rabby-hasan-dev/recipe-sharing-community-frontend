@@ -2,10 +2,10 @@
 import RecipeComment from '@/src/components/modules/Recipe/RecipeComment';
 import RecipeRating from '@/src/components/modules/Recipe/RecipeRatings';
 import Container from '@/src/components/UI/Container';
+import ImagePreview from '@/src/components/UI/ImagePreview';
 import { cureentUserChecker } from '@/src/services/AuthService';
 import { getSpecificRecipe } from '@/src/services/Recipe';
 import { Card, CardBody, CardHeader } from '@nextui-org/card';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 
@@ -34,27 +34,7 @@ const RecipeDetailPage = async ({ params }: { params: any }) => {
                 {/* Card Body */}
                 <CardBody className="p-6 bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200">
                     {/* Recipe Images */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                        <div className="rounded-lg border border-gray-200 overflow-hidden dark:border-gray-600">
-                            <Image
-                                src={recipe?.images[0]}
-                                alt={recipe?.title}
-                                width={1200}
-                                height={800}
-                                className="w-full h-64 object-cover"
-                            />
-                        </div>
-                        <div className="rounded-lg border border-gray-200 overflow-hidden dark:border-gray-600">
-                            <Image
-                                src={recipe?.images[1]}
-                                alt={recipe?.title}
-                                width={1200}
-                                height={800}
-                                className="w-full h-64 object-cover"
-                            />
-                        </div>
-                    </div>
-
+                    <ImagePreview images={recipe?.images} />
                     {/* Recipe Description */}
                     <p className="text-base text-gray-700 dark:text-gray-300 mb-6">
                         {recipe?.description}

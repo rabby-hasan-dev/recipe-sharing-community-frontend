@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { CreateRecipe, DeleteRecipe, getAllRecipe, UpdateRecipe } from "../services/Recipe"
+import { CreateRecipe, DeleteRecipe, getAllRecipe, getAllRecipeByAuthor, getSpecificRecipe, UpdateRecipe } from "../services/Recipe"
 
 import { toast } from "sonner";
 
@@ -67,6 +67,25 @@ export const useGetRecipe = () => {
     return useQuery<any, Error, any, string[]>({
         queryKey: ["GET_RECIPE"],
         queryFn: async () => await getAllRecipe(),
+
+    })
+}
+
+export const useGetSingleRecipe = (recipeId: string) => {
+
+    return useQuery<any, Error, any, string[]>({
+        queryKey: ["GET_SINGLE_RECIPE"],
+        queryFn: async () => await getSpecificRecipe(recipeId),
+
+    })
+}
+
+
+export const useGetAllRecipeByAuthor = (recipeId: string) => {
+
+    return useQuery<any, Error, any, string[]>({
+        queryKey: ["GET_All_RECIPE_BY_RECIPE"],
+        queryFn: async () => await getAllRecipeByAuthor(recipeId),
 
     })
 }

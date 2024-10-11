@@ -39,7 +39,7 @@ const RecipeForm = () => {
             ingredients: data?.ingredients?.map((ingre: { value: string }) => ingre.value),
 
         };
-        console.log("inside create recipe ==>", recipeData);
+
 
         formData.append('data', JSON.stringify(recipeData));
 

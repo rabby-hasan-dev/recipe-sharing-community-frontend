@@ -1,16 +1,17 @@
 
 "use client";
-import EditableRecipeCard from "@/src/components/modules/Recipe/EditableRecipeCard";
+import EditableRecipeCard from "@/src/components/modules/Dashboard/EditableRecipeCardUser";
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/cureentUser";
-import { useGetRecipe } from "@/src/hooks/receipeHooks";
+import { useGetAllRecipeByAuthor } from "@/src/hooks/receipeHooks";
+
 
 import { IRecipe } from "@/src/types/recipe.types";
 
 const MyRecipesPage = () => {
     const { user } = useUser();
-    const { data, isPending, isSuccess } = useGetRecipe();
-    const recipes = data?.data?.filter((recipe: IRecipe) => recipe?.author?._id === user?.userId) || [];
+    const { data, isPending, isSuccess } = useGetAllRecipeByAuthor(user?.userId as string);
+    const recipes: IRecipe[] = data?.data || [];
 
     return (
         <div>

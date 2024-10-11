@@ -4,12 +4,14 @@ import { Card as NextUiCard, CardFooter } from "@nextui-org/card";
 import { Image } from "@nextui-org/image";
 import { Heart, MessageSquare } from "lucide-react";
 import { Avatar } from "@nextui-org/avatar";
-import VoteButton from "./Button/VoteButton";
-import CommentButton from "./Button/CommentButton";
-import DetailButton from "./Button/DetailButton";
+
 import Link from "next/link";
-import EditRecipeButton from "./Button/EditRecipeButton";
-const EditableRecipeCard = ({ recipe }: { recipe: IRecipe }) => {
+import VoteButton from "../Recipe/Button/VoteButton";
+import CommentButton from "../Recipe/Button/CommentButton";
+import DetailButton from "../Recipe/Button/DetailButton";
+import EditRecipeButtonUser from "./EditRecipeButtonUser";
+
+const EditableRecipeCardUser = ({ recipe }: { recipe: IRecipe }) => {
     const { title, description, author, upVoteCount, downVoteCount, averageRating, totalComment, images, _id } = recipe || {};
 
     return (
@@ -51,7 +53,7 @@ const EditableRecipeCard = ({ recipe }: { recipe: IRecipe }) => {
                     <div className="flex items-center space-x-4 ">
                         <VoteButton recipeId={_id} upVote={upVoteCount} downVote={downVoteCount} />
                         <CommentButton icon={<MessageSquare />} count={totalComment} />
-                        <EditRecipeButton recipeId={_id} />
+                        <EditRecipeButtonUser recipeId={_id} />
                         <DetailButton id={_id} />
                     </div>
                 </CardFooter>
@@ -60,7 +62,7 @@ const EditableRecipeCard = ({ recipe }: { recipe: IRecipe }) => {
     );
 };
 
-export default EditableRecipeCard;
+export default EditableRecipeCardUser;
 
 
 

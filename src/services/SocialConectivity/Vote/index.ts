@@ -18,7 +18,7 @@ export const CreateVotes = async (recipeId: string, vote: FieldValues) => {
         return data;
     } catch (error: any) {
 
-        console.log(error);
+        toast.error(error.message);
         throw new Error(error)
     }
 }
