@@ -5,8 +5,7 @@ import FollowUserButton from '@/src/components/modules/Profile/FollowUserButton'
 import UnFollowUserButton from '@/src/components/modules/Profile/UnFollowUserButton';
 import RecipeCard from '@/src/components/modules/Recipe/RecipeCard';
 import { useUser } from '@/src/context/cureentUser';
-import { useGetRecipe } from '@/src/hooks/receipeHooks';
-import { useGetSingleUser } from '@/src/hooks/userHooks';
+import { useGetAllRecipeByAuthor } from '@/src/hooks/receipeHooks';
 import { IRecipe } from '@/src/types/recipe.types';
 import { Avatar } from '@nextui-org/avatar';
 import { Button } from '@nextui-org/button';
@@ -16,21 +15,18 @@ import { useRouter } from 'next/navigation';
 const ProfilePage = ({ params }: { params: { userId: string } }) => {
     const { user: cureentUser } = useUser();
     const router = useRouter()
-    const { data: user, isFetching: isUserFetching, isSuccess: isUserSuccess, isError: isUserError } = useGetSingleUser(params?.userId);
+    const { data, isPending, isSuccess } = useGetAllRecipeByAuthor(params?.userId as string);
+    const recipes: IRecipe[] = data?.data || [];
+
+    // const { data: user, isFetching: isUserFetching, isSuccess: isUserSuccess, isError: isUserError } = useGetSingleUser(params?.userId);
+    // const { _id, username, profilePicture, bio, followerCount, followingCount } = user?.data || {};
+
+    const { _id, username, profilePicture, bio, followerCount, followingCount } = recipes[0]?.author || {};
 
     if (!cureentUser?.email) {
         router.push('/login')
 
     }
-    const { _id, username, profilePicture, bio, followerCount, followingCount } = user?.data || {};
-    const { data: recipesData, isFetching: isRecipesFetching, isSuccess: isRecipesSuccess, isError: isRecipesError } = useGetRecipe();
-
-    const recipes = recipesData?.data?.filter((recipe: IRecipe) => recipe?.author?._id === params?.userId) || [];
-
-
-
-
-
 
     return (
         <div className="container mx-auto p-6">
@@ -58,8 +54,8 @@ const ProfilePage = ({ params }: { params: { userId: string } }) => {
                         </div>
                     </div>
                     <div className="flex justify-center mt-6 space-x-4">
-                        <FollowUserButton followUserId={params.userId} />
-                        <UnFollowUserButton unFollowUserId={params.userId} />
+                        <FollowUserButton followUserId={params?.userId} />
+                        <UnFollowUserButton unFollowUserId={params?.userId} />
                         {/* <Button color="primary" className="py-2 px-6">Message</Button> */}
                     </div>
                 </div>
