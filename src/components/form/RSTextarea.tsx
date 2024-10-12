@@ -26,6 +26,7 @@ export default function RSTextarea({
   const currentValue = useWatch({ name });
   return (
     <Textarea {...register(name)}
+
       label={label}
       placeholder={placeholder}
       minRows={6}

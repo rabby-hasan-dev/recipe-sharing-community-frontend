@@ -20,7 +20,6 @@ export const CreateVotes = async (recipeId: string, vote: FieldValues) => {
         return data;
     } catch (error) {
         const responseError = customErrorResponse(error as AxiosError);
-        console.log('from vote ==>', responseError);
         // Check if responseError has a 'data' property
         if (typeof responseError === "object" && "data" in responseError) {
             throw new Error(responseError.data.message);

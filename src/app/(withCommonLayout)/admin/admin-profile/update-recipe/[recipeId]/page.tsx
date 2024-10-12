@@ -2,12 +2,12 @@
 
 import RSInput from "@/src/components/form/RSInput";
 import Loading from "@/src/components/UI/Loading";
-import { useCreateRecipe, useGetSingleRecipe } from "@/src/hooks/receipeHooks";
+import { useGetSingleRecipe, useUpdateRecipe } from "@/src/hooks/receipeHooks";
 import { Button } from "@nextui-org/button";
 import { Plus, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FieldValues, FormProvider, SubmitHandler, useFieldArray, useForm, } from "react-hook-form";
 
 const RecipeForm = ({ params }: { params: { recipeId: string } }) => {
@@ -15,9 +15,26 @@ const RecipeForm = ({ params }: { params: { recipeId: string } }) => {
     const [imagePreviews, setImagePreviews] = useState<string[] | []>([])
     const router = useRouter();
     const methods = useForm();
-    const { control, handleSubmit } = methods;
-    const { mutate: handleCreateRecipe, error: apiError, isError, isPending: createRecipePending, isSuccess } = useCreateRecipe();
+    const { reset, control, handleSubmit } = methods;
+    const { mutate: handleUpdateRecipe, error: apiError, isError, isPending: createRecipePending, isSuccess } = useUpdateRecipe();
     const { data: getSingleRecipe, isPending: singleRecipePending, isSuccess: isSuccessRecipe } = useGetSingleRecipe(params?.recipeId);
+
+
+    // This effect will run when the recipe data is fetched
+    useEffect(() => {
+        if (isSuccessRecipe && getSingleRecipe) {
+            // Set default values from the fetched recipe data
+            reset({
+                title: getSingleRecipe.title || '',
+                description: getSingleRecipe.description || '',
+                cookingTime: getSingleRecipe.cookingTime || 0,
+                isPremium: getSingleRecipe.isPremium || false,
+                isPublished: getSingleRecipe.isPublished || false,
+                ingredients: getSingleRecipe?.ingredients?.map((ingredient: { value: string }) => ({ value: ingredient?.value })) || [],
+            });
+            setImagePreviews(getSingleRecipe.imageUrls || []); // Assuming `imageUrls` is part of the recipe data
+        }
+    }, [getSingleRecipe, isSuccessRecipe, reset]);
 
 
 
@@ -47,7 +64,7 @@ const RecipeForm = ({ params }: { params: { recipeId: string } }) => {
         }
 
 
-        // handleCreateRecipe(formData);
+        handleUpdateRecipe({ recipeId: params.recipeId, recipeData: formData });
 
     };
 

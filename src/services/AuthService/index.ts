@@ -112,7 +112,7 @@ export const getNewAccessToken = async () => {
         return res.data;
     } catch (error) {
         const responseError = customErrorResponse(error as AxiosError);
-        console.log('from get access token', responseError)
+        // console.log('from get access token', responseError)
         // Check if responseError has a 'data' property
         if (typeof responseError === "object" && "data" in responseError) {
             throw new Error(responseError.data.message);
