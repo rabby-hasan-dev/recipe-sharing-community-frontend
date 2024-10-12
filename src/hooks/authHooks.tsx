@@ -10,8 +10,8 @@ export const useUserRagistration = () => {
     return useMutation<any, Error, FieldValues>({
         mutationKey: ["USER_RAGISTRATION"],
         mutationFn: async (userData) => await registerUser(userData),
-        onSuccess: () => {
-            toast.success('User Registration Successful')
+        onSuccess: ({ message }) => {
+            toast.success(message || 'User Registration Successful')
         },
         onError: (error) => {
             toast.error(error.message)
@@ -25,8 +25,9 @@ export const useUserLogin = () => {
     return useMutation<any, Error, FieldValues>({
         mutationKey: ["USER_RAGISTRATION"],
         mutationFn: async (userData) => await loginUser(userData),
-        onSuccess: () => {
-            toast.success('User Login Successful')
+        onSuccess: ({ message }) => {
+
+            return (toast.success(message || 'User Login Successful'))
         },
         onError: (error) => {
             toast.error(error.message)
@@ -40,8 +41,8 @@ export const useForgotPassword = () => {
     return useMutation<any, Error, FieldValues>({
         mutationKey: ["FORGOT_PASSWORD"],
         mutationFn: async (userData) => await forgotPassword(userData),
-        onSuccess: () => {
-            toast.success('Send Recovery token to user email Successful')
+        onSuccess: ({ message }) => {
+            toast.success(message || 'Send Recovery token to user email Successful')
         },
         onError: (error) => {
             toast.error(error.message)
@@ -49,13 +50,14 @@ export const useForgotPassword = () => {
     })
 
 }
+
 export const useResetPassword = () => {
 
     return useMutation<any, Error, FieldValues>({
         mutationKey: ["RESET_PASSWORD"],
         mutationFn: async (userData) => await resetPassword(userData),
-        onSuccess: () => {
-            toast.success('Password Change  Successfully')
+        onSuccess: ({ message }) => {
+            toast.success(message || 'Password Change  Successfully')
         },
         onError: (error) => {
             toast.error(error.message)

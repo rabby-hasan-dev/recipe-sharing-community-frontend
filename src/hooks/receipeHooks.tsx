@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { CreateRecipe, DeleteRecipe, getAllRecipe, getAllRecipeByAuthor, getSpecificRecipe, UpdateRecipe } from "../services/Recipe"
 
 import { toast } from "sonner";
@@ -37,6 +37,7 @@ export const useUpdateRecipe = () => {
         mutationFn: async ({ recipeId, recipeData }) => await UpdateRecipe(recipeId, recipeData),
         onSuccess: () => {
             toast.success(" Update Recipe  successfully");
+
         },
         onError: (error) => {
             toast.error(error.message);
@@ -51,6 +52,7 @@ export const useDeleteRecipe = () => {
         mutationFn: async (recipeId) => await DeleteRecipe(recipeId),
         onSuccess: () => {
             toast.success(" Delete Recipe  successfully");
+
         },
         onError: (error) => {
             toast.error(error.message);

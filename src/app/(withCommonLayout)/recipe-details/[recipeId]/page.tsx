@@ -9,7 +9,8 @@ import { Card, CardBody, CardHeader } from '@nextui-org/card';
 import { redirect } from 'next/navigation';
 
 
-const RecipeDetailPage = async ({ params }: { params: any }) => {
+const RecipeDetailPage = async ({ params }: { params: { recipeId: string } }) => {
+
     const token = await cureentUserChecker();
 
     if (!token) {

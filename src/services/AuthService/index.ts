@@ -1,6 +1,8 @@
 "use server";
 
 import axiosInstance from "@/src/lib/AxiosInstance";
+import { customErrorResponse } from "@/src/utils/customErrorResponse";
+import { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
 import { cookies, } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -15,11 +17,22 @@ export const registerUser = async (userData: FieldValues) => {
             cookies().set("refreshToken", data?.data?.refreshToken);
         }
         return data;
-    } catch (error: any) {
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
 
-        throw new Error(error)
+
     }
+
 }
+
 
 export const loginUser = async (userData: FieldValues) => {
 
@@ -31,9 +44,21 @@ export const loginUser = async (userData: FieldValues) => {
 
         }
         return data;
-    } catch (error: any) {
+    } catch (error) {
 
-        throw new Error(error)
+        const responseError = customErrorResponse(error as AxiosError);
+
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+
+
+
     }
 }
 
@@ -86,8 +111,17 @@ export const getNewAccessToken = async () => {
 
         return res.data;
     } catch (error) {
-        console.log('from access token =>', error)
-        throw new Error("Failed to get new access token");
+        const responseError = customErrorResponse(error as AxiosError);
+        console.log('from get access token', responseError)
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+
     }
 };
 
@@ -96,9 +130,19 @@ export const forgotPassword = async (userData: FieldValues) => {
     try {
         const { data } = await axiosInstance.post('/auth/forget-password', userData);
         return data;
-    } catch (error: any) {
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
 
-        throw new Error(error)
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+
+
     }
 }
 
@@ -117,9 +161,19 @@ export const resetPassword = async (userData: FieldValues) => {
                 }
             });
         return data;
-    } catch (error: any) {
+    } catch (error) {
 
-        throw new Error(error)
+        const responseError = customErrorResponse(error as AxiosError);
+
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+
     }
 }
 
@@ -131,7 +185,17 @@ export const changePassword = async (passwordData: FieldValues) => {
         return data;
     } catch (error: any) {
 
-        throw new Error(error)
+        const responseError = customErrorResponse(error as AxiosError);
+
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+
     }
 }
 

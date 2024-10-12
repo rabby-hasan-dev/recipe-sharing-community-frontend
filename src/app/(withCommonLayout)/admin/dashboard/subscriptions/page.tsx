@@ -8,6 +8,8 @@ import { useGetAllPremiumUser } from '@/src/hooks/adminHooks';
 const page = () => {
     const { data: premiumUser, isPending, isSuccess, error } = useGetAllPremiumUser();
 
+
+
     return (
         <div className="min-h-screen p-8 bg-gray-50 dark:bg-gray-900">
             {/* Page Title */}

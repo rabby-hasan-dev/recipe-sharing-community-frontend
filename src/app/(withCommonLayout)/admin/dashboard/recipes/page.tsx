@@ -3,10 +3,20 @@
 import RecipeTable from '@/src/components/modules/Dashboard/Admin/RecipeTable';
 import Loading from '@/src/components/UI/Loading';
 import { useGetAllRecipeByAdmin } from '@/src/hooks/adminHooks';
+import { Pagination } from '@nextui-org/pagination';
+import { useState } from 'react';
 
 
 const page = () => {
-    const { data: recipes, isPending, isSuccess } = useGetAllRecipeByAdmin();
+    const [page, setPage] = useState(1);
+    const { data, isPending, isSuccess } = useGetAllRecipeByAdmin(page);
+    const recipes = data?.data;
+    const metaData = data?.meta;
+
+    const recipesHandler = (e: number) => {
+        setPage(e)
+
+    }
 
     return (
         <div className="min-h-screen p-8 bg-gray-100 dark:bg-gray-900">
@@ -27,13 +37,21 @@ const page = () => {
                         <Loading />
                     </div>
                 ) : isSuccess ? (
-                    <RecipeTable recipes={recipes?.data} />
+                    <RecipeTable recipes={recipes} />
                 ) : (
                     <div className="text-center text-red-500">
                         <p>Failed to load recipes. Please try again later.</p>
                     </div>
                 )}
+
+
+                <div className='ml-6'>
+                    <Pagination onChange={recipesHandler} total={metaData?.totalPage} initialPage={page} />
+                </div>
             </div>
+
+
+
         </div>
 
 

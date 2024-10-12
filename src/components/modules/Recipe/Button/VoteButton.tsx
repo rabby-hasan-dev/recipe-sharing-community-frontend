@@ -1,10 +1,10 @@
 "use client"
 
-import { useUser } from '@/src/context/cureentUser';
 import { useCreateVote } from '@/src/hooks/votesHooks';
 import { Button } from '@nextui-org/button';
 import { Tooltip } from '@nextui-org/tooltip';
 import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
+
 
 const VoteButton = ({ recipeId, upVote, downVote }: { recipeId: string, upVote: number, downVote: number }) => {
 

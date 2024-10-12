@@ -9,21 +9,21 @@ type ChangeUserStatusMutation = {
 }
 
 
-export const useGetAllUser = () => {
+export const useGetAllUser = (page: number) => {
 
     return useQuery<any, Error, any, string[]>({
         queryKey: ["GET_USERS"],
-        queryFn: async () => await GetAllUserByAdmin(),
+        queryFn: async () => await GetAllUserByAdmin(page),
 
 
     })
 }
 
-export const useGetAllRecipeByAdmin = () => {
+export const useGetAllRecipeByAdmin = (page: number) => {
 
     return useQuery<any, Error, any, string[]>({
         queryKey: ["GET_AllRECIPE"],
-        queryFn: async () => await getAllRecipeByAdmin(),
+        queryFn: async () => await getAllRecipeByAdmin(page),
 
 
     })

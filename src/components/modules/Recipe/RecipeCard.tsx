@@ -17,11 +17,9 @@ const RecipeCard = ({ recipe }: { recipe: IRecipe }) => {
     return (
         <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
             {/* Main Content Section */}
-            {/* <div className="relative"> */}
             {isPremium ? <span className="inline-block absolute right-0 top-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
                 Premium
             </span> : <></>}
-            {/* </div> */}
 
             <div className="flex-1 p-4 mt-2">
 

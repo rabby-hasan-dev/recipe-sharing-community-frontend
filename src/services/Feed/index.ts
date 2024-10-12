@@ -3,6 +3,8 @@
 
 import envConfig from "@/src/config/envConfig";
 import axiosInstance from "@/src/lib/AxiosInstance";
+import { customErrorResponse } from "@/src/utils/customErrorResponse";
+import { AxiosError } from "axios";
 
 
 export const getPublicRecipe = async () => {
@@ -23,44 +25,20 @@ export const getPrimiumRecipe = async () => {
     try {
         const { data } = await axiosInstance.get(`/feed/premium`);
         return data;
-    } catch (error: any) {
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
 
-        throw new Error(error)
     }
 
 }
 
 
 
-import axios from "axios";
-import Cookies from "js-cookie";
-
-
-const axiosClient = axios.create({
-    baseURL: envConfig.baseApi,
-    headers: {
-        "Content-Type": "application/json",
-    },
-});
-
-
-export const fetchRecipes = async (searchTerm = "", page = 1, sort = "-upVoteCount", feedType = "") => {
-    try {
-        const token = Cookies.get("accessToken"); // Get token from cookie if available
-        if (token) {
-            axiosClient.defaults.headers["Authorization"] = token;
-        }
-
-        const response = await axiosClient.get(`/feed${feedType === "premium" ? "/premium" : ""}`, {
-            params: {
-                searchTerm,
-                page,
-                sort,
-            },
-        });
-        return response.data.data; // Return the list of recipes
-    } catch (error) {
-        console.error("Error fetching recipes:", error);
-        return [];
-    }
-};

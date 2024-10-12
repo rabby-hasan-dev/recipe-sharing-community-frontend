@@ -1,22 +1,25 @@
 
 import { IRecipe } from "@/src/types/recipe.types";
 import { Card as NextUiCard, CardFooter } from "@nextui-org/card";
-import { Image } from "@nextui-org/image";
 import { Heart, MessageSquare } from "lucide-react";
 import { Avatar } from "@nextui-org/avatar";
 import Link from "next/link";
-
 import VoteButton from "../Recipe/Button/VoteButton";
 import CommentButton from "../Recipe/Button/CommentButton";
 import DetailButton from "../Recipe/Button/DetailButton";
 import EditRecipeButtonAdmin from "./EditRecipeButtonAdmin";
+import ImagePreview from "../../UI/ImagePreview";
+import EditableRecipeDelelteButton from "./EditableRecipeDelelteButton";
 const EditableRecipeCardAdmin = ({ recipe }: { recipe: IRecipe }) => {
-    const { title, description, author, upVoteCount, downVoteCount, averageRating, totalComment, images, _id } = recipe || {};
+    const { title, description, isPremium, author, upVoteCount, downVoteCount, totalRatings, totalComment, images, _id } = recipe || {};
 
     return (
         <NextUiCard className="relative w-full max-w-2xl mx-auto border border-gray-200 shadow-sm rounded-lg overflow-hidden lg:flex lg:flex-row">
             {/* Main Content Section */}
-            <div className="flex-1 p-4">
+            {isPremium ? <span className="inline-block absolute right-0 top-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
+                Premium
+            </span> : <></>}
+            <div className="flex-1 p-4 mt-2">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center">
                         <Link href={`/profiles/${author?._id}`}>
@@ -34,25 +37,20 @@ const EditableRecipeCardAdmin = ({ recipe }: { recipe: IRecipe }) => {
                     <h2 className="text-lg font-bold mb-1">{title}</h2>
 
                     <div className="flex items-center justify-center">
-                        <span className="text-sm">{averageRating}</span>
+                        <span className="text-sm">{totalRatings}</span>
                         <Heart className="text-red-500" />
                     </div>
                 </div>
                 <p className=" mb-4 hidden lg:block">{description.slice(0, 100)} ...</p>
 
-                {images?.length && (
-                    <Image
-                        alt="Recipe Image"
-                        src={images[0]}
-                        className="w-full h-48 object-cover rounded-lg mb-4"
-                    />
-                )}
+                <ImagePreview images={images} />
 
                 <CardFooter className="flex justify-between items-center pt-4">
                     <div className="flex items-center space-x-4 ">
                         <VoteButton recipeId={_id} upVote={upVoteCount} downVote={downVoteCount} />
                         <CommentButton icon={<MessageSquare />} count={totalComment} />
                         <EditRecipeButtonAdmin recipeId={_id} />
+                        <EditableRecipeDelelteButton recipeId={_id} />
                         <DetailButton id={_id} />
                     </div>
                 </CardFooter>

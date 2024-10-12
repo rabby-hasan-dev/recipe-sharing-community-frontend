@@ -15,7 +15,7 @@ const MyRecipesPage = () => {
         <div>
             {isPending && <Loading />}
             <h3 className="text-2xl font-bold mb-4">My Recipes</h3>
-            <div>
+            <div className="space-y-5" >
                 {!isPending && isSuccess && recipes?.length > 0 ? (
                     recipes.map((recipe: IRecipe) => <EditableRecipeCardAdmin key={recipe._id} recipe={recipe} />)
                 ) : (

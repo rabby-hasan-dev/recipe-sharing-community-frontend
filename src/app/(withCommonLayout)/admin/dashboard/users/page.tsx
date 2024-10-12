@@ -3,11 +3,18 @@
 import UserTable from '@/src/components/modules/Dashboard/Admin/UserTable';
 import Loading from '@/src/components/UI/Loading';
 import { useGetAllUser } from '@/src/hooks/adminHooks';
-import React from 'react';
+import { Pagination } from '@nextui-org/pagination';
+import React, { useState } from 'react';
 
 const page = () => {
-    const { data: allUsers, isPending, isSuccess, error } = useGetAllUser();
+    const [page, setPage] = useState(1);
+    const { data: allUsers, isPending, isSuccess, error } = useGetAllUser(page);
+    const metaData = allUsers?.meta;
 
+    const userHandler = (e: number) => {
+        setPage(e)
+
+    }
     return (
         <div className="min-h-screen dark:bg-gray-900 bg-gray-50 p-8">
             {/* Page Title */}
@@ -33,6 +40,10 @@ const page = () => {
                         <p>Failed to load users. Please try again later.</p>
                     </div>
                 )}
+
+                <div className='ml-6'>
+                    <Pagination onChange={userHandler} total={metaData?.totalPage} initialPage={page} />
+                </div>
             </div>
         </div>
     );

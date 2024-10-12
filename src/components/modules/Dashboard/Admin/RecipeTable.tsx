@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from 
 
 
 
+
 const RecipeTable = ({ recipes }: { recipes: IRecipe[] }) => {
     const { mutate: deleteRecipe } = useDeleteRecipe();
     const { mutate: publishReipe } = usePublishRecipe();
@@ -33,21 +34,29 @@ const RecipeTable = ({ recipes }: { recipes: IRecipe[] }) => {
                     <TableColumn>Title</TableColumn>
                     <TableColumn>Author</TableColumn>
                     <TableColumn>Status</TableColumn>
+                    <TableColumn>Publish/UnPublish</TableColumn>
                     <TableColumn>Actions</TableColumn>
                 </TableHeader>
                 <TableBody>
-                    {recipes?.map((recipe: IRecipe, index) => (
-                        <TableRow key={recipe._id}>
-                            <TableCell>{recipe?.title}</TableCell>
-                            <TableCell>{recipe?.author?.username}</TableCell>
-                            <TableCell>
-                                <Switch key={recipe._id} isSelected={recipe.isPublished} onValueChange={() => handlePublishRecipe(recipe._id)} />
-                            </TableCell>
-                            <TableCell>
-                                <Button onClick={() => handleDeleteRecipe(recipe._id)} color="danger" size="sm">Delete</Button>
-                            </TableCell>
-                        </TableRow>
-                    ))}
+                    {recipes?.map((recipe: IRecipe, index) => {
+
+                        return (
+                            <TableRow key={recipe._id + index}>
+
+                                <TableCell>{recipe?.title}</TableCell>
+                                <TableCell>{recipe?.author?.username}</TableCell>
+                                <TableCell>
+                                    <p>{recipe.isPremium === true ? 'Premium' : 'Freemium'}</p>
+                                </TableCell>
+                                <TableCell>
+                                    <Switch key={recipe._id + index} isSelected={!recipe?.isPublished} onValueChange={() => handlePublishRecipe(recipe._id)} />
+                                </TableCell>
+                                <TableCell>
+                                    <Button onClick={() => handleDeleteRecipe(recipe._id)} color="danger" size="sm">Delete</Button>
+                                </TableCell>
+                            </TableRow>
+                        )
+                    })}
                 </TableBody>
             </Table>
         </div>

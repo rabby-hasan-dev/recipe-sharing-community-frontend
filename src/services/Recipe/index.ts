@@ -2,6 +2,8 @@
 
 import envConfig from "@/src/config/envConfig"
 import axiosInstance from "@/src/lib/AxiosInstance";
+import { customErrorResponse } from "@/src/utils/customErrorResponse";
+import { AxiosError } from "axios";
 
 import { revalidateTag } from "next/cache";
 
@@ -12,9 +14,22 @@ import { FieldValues } from "react-hook-form";
 
 export const getAllRecipeByAuthor = async (userId: string) => {
 
+    try {
 
-    const { data } = await axiosInstance.get(`/recipes/author/${userId}`);
-    return data;
+        const { data } = await axiosInstance.get(`/recipes/author/${userId}`);
+        return data;
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+    }
+
 
 }
 
@@ -27,21 +42,46 @@ export const getAllRecipe = async () => {
     fetchOptions = {
         cache: "no-store",
     };
-    const { data } = await axiosInstance.get(`/recipes`, fetchOptions);
+    try {
+        const { data } = await axiosInstance.get(`/recipes`, fetchOptions);
+        return data;
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
 
-    return data;
+    }
 };
 
 
 export const geSingleRecipe = async (recipeId: string) => {
     let fetchOptions = {};
-
     fetchOptions = {
         cache: "no-store",
     };
-    const { data } = await axiosInstance.get(`/recipes/${recipeId}`, fetchOptions);
 
-    return data;
+    try {
+
+        const { data } = await axiosInstance.get(`/recipes/${recipeId}`, fetchOptions);
+
+        return data;
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+    }
 };
 
 
@@ -74,10 +114,19 @@ export const CreateRecipe = async (recipeData: FormData): Promise<any> => {
 
 
         return data;
-    } catch (error: any) {
+    } catch (error) {
 
 
-        throw new Error(error.message);
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+
     }
 
 
@@ -85,15 +134,44 @@ export const CreateRecipe = async (recipeData: FormData): Promise<any> => {
 
 
 export const UpdateRecipe = async (recipeId: string, recipeData: FieldValues) => {
+    try {
 
-    const { data } = await axiosInstance.put(`/recipes/${recipeId}`, recipeData);
-    return data;
+
+        const { data } = await axiosInstance.put(`/recipes/${recipeId}`, recipeData);
+        return data;
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+    }
 };
 
 
 export const DeleteRecipe = async (recipeId: string,) => {
 
-    const { data } = await axiosInstance.delete(`/recipes/${recipeId}`);
-    return data;
+    try {
+
+        const { data } = await axiosInstance.delete(`/recipes/${recipeId}`);
+        return data;
+    } catch (error) {
+        const responseError = customErrorResponse(error as AxiosError);
+        // Check if responseError has a 'data' property
+        if (typeof responseError === "object" && "data" in responseError) {
+            throw new Error(responseError.data.message);
+        } else if (typeof responseError === "string") {
+            throw new Error(responseError); // Throw string message directly
+        } else {
+            throw new Error("An unknown error occurred."); // Fallback error
+        }
+    }
+
 };
+
+
 

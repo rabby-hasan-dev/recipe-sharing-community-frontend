@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { FieldValues, FormProvider, SubmitHandler, useFieldArray, useForm, } from "react-hook-form";
 
-const RecipeForm = ({ params }: { parmas: any }) => {
+const RecipeForm = ({ params }: { params: { recipeId: string } }) => {
     const [imageFiles, setImageFiles] = useState<File[] | []>([])
     const [imagePreviews, setImagePreviews] = useState<string[] | []>([])
     const router = useRouter();
