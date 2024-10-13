@@ -20,24 +20,6 @@ const RecipeForm = ({ params }: { params: { recipeId: string } }) => {
     const { data: getSingleRecipe, isPending: singleRecipePending, isSuccess: isSuccessRecipe } = useGetSingleRecipe(params?.recipeId);
 
 
-    // This effect will run when the recipe data is fetched
-    useEffect(() => {
-        if (isSuccessRecipe && getSingleRecipe) {
-            // Set default values from the fetched recipe data
-            reset({
-                title: getSingleRecipe.title || '',
-                description: getSingleRecipe.description || '',
-                cookingTime: getSingleRecipe.cookingTime || 0,
-                isPremium: getSingleRecipe.isPremium || false,
-                isPublished: getSingleRecipe.isPublished || false,
-                ingredients: getSingleRecipe?.ingredients?.map((ingredient: { value: string }) => ({ value: ingredient?.value })) || [],
-            });
-            setImagePreviews(getSingleRecipe.imageUrls || []); // Assuming `imageUrls` is part of the recipe data
-        }
-    }, [getSingleRecipe, isSuccessRecipe, reset]);
-
-
-
 
 
     const { fields, append, remove } = useFieldArray({
@@ -93,19 +75,39 @@ const RecipeForm = ({ params }: { params: { recipeId: string } }) => {
 
 
 
+
     if (!createRecipePending && isSuccess) {
         router.push("/user/profile/my-recipes");
     }
 
+
+
+    useEffect(() => {
+        if (isSuccessRecipe && getSingleRecipe) {
+            // Reset form fields with fetched recipe data
+            reset({
+                title: getSingleRecipe.title || '',
+                description: getSingleRecipe.description || '',
+                cookingTime: getSingleRecipe.cookingTime || 0,
+                isPremium: getSingleRecipe.isPremium || false,
+                isPublished: getSingleRecipe.isPublished || false,
+                ingredients: getSingleRecipe.ingredients?.map((ingredient: { value: string }) => ({ value: ingredient })) || [], // assuming `ingredient` is a string
+            });
+
+            // Set image previews
+            setImagePreviews(getSingleRecipe.imageUrls || []); // assuming `imageUrls` is part of the fetched recipe data
+        }
+    }, [getSingleRecipe, isSuccessRecipe, reset]);
+
+    if (singleRecipePending) {
+        return <p>Loading ...</p>
+    }
 
     return (
 
         <>
             {
                 createRecipePending && !isSuccess && <Loading />
-            }
-            {
-                isError && <p>{apiError.message}</p>
             }
 
             <div className="flex flex-col items-center p-5 bg-gray-50 dark:bg-gray-900 min-h-screen">

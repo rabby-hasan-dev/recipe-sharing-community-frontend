@@ -104,9 +104,7 @@ const RecipeForm = ({ params }: { params: { recipeId: string } }) => {
             {
                 createRecipePending && !isSuccess && <Loading />
             }
-            {
-                isError && <p>{apiError.message}</p>
-            }
+
 
             <div className="flex flex-col items-center p-5 bg-gray-50 dark:bg-gray-900 min-h-screen">
                 <div className="bg-white dark:bg-gray-800 w-full max-w-3xl rounded-lg shadow-lg p-8 sm:p-10 lg:p-12">
