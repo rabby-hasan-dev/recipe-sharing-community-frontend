@@ -9,6 +9,8 @@ import RSTextarea from '../../form/RSTextarea';
 
 import EditableComment from './EditableComment';
 import { IComment } from '@/src/types/comment.types';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 interface RecipeCommentProps {
     recipeId: string;
@@ -18,9 +20,9 @@ interface RecipeCommentProps {
 
 const RecipeComment: React.FC<RecipeCommentProps> = ({ recipeId }) => {
     const { mutate: createComment } = useCreateComment();
-    const { data: comments, error, isPending } = useGetComments(recipeId);
-    const { mutate: updateComment } = useEditComment();
-    const { mutate: deleteComment } = useDeleteComments();
+    const { data: comments, error, isPending, data: createData } = useGetComments(recipeId);
+    const { mutate: updateComment, data: editData } = useEditComment();
+    const { mutate: deleteComment, data: deleteData } = useDeleteComments();
 
     const handleCommentSubmit: SubmitHandler<FieldValues> = (data) => {
         createComment({ id: recipeId, commentData: data });
@@ -39,6 +41,23 @@ const RecipeComment: React.FC<RecipeCommentProps> = ({ recipeId }) => {
 
     };
 
+    useEffect(() => {
+        if (createData && createData?.success) {
+            toast.success(createData?.message as string);
+        } else if (createData && !createData?.success) {
+            toast.error(createData?.message as string);
+        }
+        else if (editData && editData?.success) {
+            toast.success(editData?.message as string);
+        } else if (editData && !editData?.success) {
+            toast.error(editData?.message as string);
+        } else if (deleteData && deleteData?.success) {
+            toast.success(deleteData?.message as string);
+        } else if (deleteData && !deleteData?.success) {
+            toast.error(deleteData?.message as string);
+        }
+
+    }, [createData, editData, deleteData]);
 
 
     if (error) return <p className="text-red-500">Failed to load comments.</p>;

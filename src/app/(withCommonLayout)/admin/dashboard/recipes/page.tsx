@@ -4,7 +4,8 @@ import RecipeTable from '@/src/components/modules/Dashboard/Admin/RecipeTable';
 import Loading from '@/src/components/UI/Loading';
 import { useGetAllRecipeByAdmin } from '@/src/hooks/adminHooks';
 import { Pagination } from '@nextui-org/pagination';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 
 const page = () => {
@@ -17,6 +18,16 @@ const page = () => {
         setPage(e)
 
     }
+
+    useEffect(() => {
+        if (data && data?.success) {
+            toast.success(data?.message as string);
+        }
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+
+    }, [isSuccess, data, isPending]);
 
     return (
         <div className="min-h-screen p-8 bg-gray-100 dark:bg-gray-900">

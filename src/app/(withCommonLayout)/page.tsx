@@ -9,7 +9,7 @@ const HomePage = async () => {
 
 
     const publicFeedData = await getPublicRecipe();
-    const publicFeed = publicFeedData.data;
+    const publicFeed = publicFeedData?.data;
 
     return (
 

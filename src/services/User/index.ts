@@ -2,9 +2,6 @@
 
 
 import axiosInstance from "@/src/lib/AxiosInstance";
-import { customErrorResponse } from "@/src/utils/customErrorResponse";
-import { AxiosError } from "axios";
-
 
 
 //  delete this next time just for ui concept
@@ -12,17 +9,13 @@ export const GetAllUser = async () => {
     try {
         const { data } = await axiosInstance.get(`/users`);
         return data;
-    } catch (error) {
+    } catch (error: any) {
 
-        const responseError = customErrorResponse(error as AxiosError);
-        // Check if responseError has a 'data' property
-        if (typeof responseError === "object" && "data" in responseError) {
-            throw new Error(responseError.data.message);
-        } else if (typeof responseError === "string") {
-            throw new Error(responseError); // Throw string message directly
-        } else {
-            throw new Error("An unknown error occurred."); // Fallback error
-        }
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
+
     }
 
 
@@ -35,17 +28,12 @@ export const GetSingleUser = async (userId: string,) => {
     try {
         const { data } = await axiosInstance.get(`/users/${userId}`);
         return data;
-    } catch (error) {
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
 
-        const responseError = customErrorResponse(error as AxiosError);
-        // Check if responseError has a 'data' property
-        if (typeof responseError === "object" && "data" in responseError) {
-            throw new Error(responseError.data.message);
-        } else if (typeof responseError === "string") {
-            throw new Error(responseError); // Throw string message directly
-        } else {
-            throw new Error("An unknown error occurred."); // Fallback error
-        }
     }
 
 }
@@ -56,17 +44,12 @@ export const GetMe = async () => {
     try {
         const { data } = await axiosInstance.get(`/users/me`);
         return data;
-    } catch (error) {
+    } catch (error: any) {
 
-        const responseError = customErrorResponse(error as AxiosError);
-        // Check if responseError has a 'data' property
-        if (typeof responseError === "object" && "data" in responseError) {
-            throw new Error(responseError.data.message);
-        } else if (typeof responseError === "string") {
-            throw new Error(responseError); // Throw string message directly
-        } else {
-            throw new Error("An unknown error occurred."); // Fallback error
-        }
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
     }
 
 
@@ -83,17 +66,12 @@ export const GetMeAnUpdate = async (meUpdateData: FormData) => {
         });
 
         return data;
-    } catch (error) {
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
 
-        const responseError = customErrorResponse(error as AxiosError);
-        // Check if responseError has a 'data' property
-        if (typeof responseError === "object" && "data" in responseError) {
-            throw new Error(responseError.data.message);
-        } else if (typeof responseError === "string") {
-            throw new Error(responseError); // Throw string message directly
-        } else {
-            throw new Error("An unknown error occurred."); // Fallback error
-        }
     }
 
 

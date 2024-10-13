@@ -11,18 +11,25 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const ResetPassword = () => {
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
     const email = searchParams.get("email");
     const router = useRouter();
-    const { mutate: handleResetPassword, isPending, isSuccess } = useResetPassword();
+    const { mutate: handleResetPassword, isPending, isSuccess, data } = useResetPassword();
     useEffect(() => {
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+
+
         if (!isPending && isSuccess) {
+            toast.success(data?.message as string);
             router.push('/login');
         }
-    }, [isPending, isSuccess]);
+    }, [isPending, isSuccess, data]);
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {

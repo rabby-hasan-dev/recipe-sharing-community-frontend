@@ -15,19 +15,26 @@ import Loading from "@/src/components/UI/Loading";
 import RSForm from "@/src/components/form/RSForm";
 import RSInput from "@/src/components/form/RSInput";
 import { useUser } from "@/src/context/cureentUser";
+import { toast } from "sonner";
 
 const LoginPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const redirect = searchParams.get("redirect");
 
-    const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
+    const { mutate: handleUserLogin, isPending, isSuccess, data, } = useUserLogin();
     const { setIsLoading: userLoading } = useUser();
+
+
 
     useEffect(() => {
 
-        if (!isPending && isSuccess) {
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
 
+        if (!isPending && isSuccess) {
+            toast.success(data?.message as string);
             if (redirect) {
                 router.push(redirect)
 
@@ -37,7 +44,7 @@ const LoginPage = () => {
 
         }
 
-    }, [isPending, isSuccess])
+    }, [isPending, isSuccess, data])
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {

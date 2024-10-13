@@ -12,18 +12,24 @@ import { useForgotPassword } from "@/src/hooks/authHooks";
 import { useUser } from "@/src/context/cureentUser";
 import { useEffect } from "react";
 import Loading from "@/src/components/UI/Loading";
+import { toast } from "sonner";
 
 const ForgotPassword = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const redirect = searchParams.get("redirect");
-    const { mutate: handleforgotPassword, isPending, isSuccess } = useForgotPassword();
+    const { mutate: handleforgotPassword, isPending, isSuccess, data } = useForgotPassword();
     const { setIsLoading: userLoading } = useUser();
 
     useEffect(() => {
 
-        if (!isPending && isSuccess) {
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
 
+
+        if (!isPending && isSuccess && data?.success) {
+            toast.success(data?.message as string);
             if (redirect) {
                 router.push(redirect)
 
@@ -33,7 +39,7 @@ const ForgotPassword = () => {
 
         }
 
-    }, [isPending, isSuccess])
+    }, [isPending, isSuccess, data])
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {

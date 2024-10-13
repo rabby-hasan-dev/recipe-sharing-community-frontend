@@ -30,12 +30,7 @@ export const useCreateComment = () => {
     return useMutation<CreateCommentResponse, Error, MutationVariables>({
         mutationKey: ["CREATE_COMMENT"],
         mutationFn: async ({ id, commentData }) => await CreateComment(id, commentData),
-        onSuccess: () => {
-            toast.success("Comment created successfully");
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        },
+
     });
 };
 
@@ -53,12 +48,7 @@ export const useEditComment = () => {
     return useMutation<CreateCommentResponse, Error, MutationVariablesEdit>({
         mutationKey: ["EDIT_COMMENT"],
         mutationFn: async ({ id, editCommentData }) => await EditComment(id, editCommentData),
-        onSuccess: () => {
-            toast.success("Comment edit successfully");
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        },
+
     });
 };
 
@@ -67,12 +57,7 @@ export const useDeleteComments = () => {
     return useMutation<CreateCommentResponse, Error, MutationVariablesDelete>({
         mutationKey: ["DELETE_COMMENT"],
         mutationFn: async ({ recipeId, commentId }) => await deleteComments(recipeId, commentId),
-        onSuccess: () => {
-            toast.success("Comment Delete successfully");
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        },
+
     });
 };
 

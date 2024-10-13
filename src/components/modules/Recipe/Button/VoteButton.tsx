@@ -4,15 +4,29 @@ import { useCreateVote } from '@/src/hooks/votesHooks';
 import { Button } from '@nextui-org/button';
 import { Tooltip } from '@nextui-org/tooltip';
 import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 
 
 const VoteButton = ({ recipeId, upVote, downVote }: { recipeId: string, upVote: number, downVote: number }) => {
 
-    const { mutate: createVote, error } = useCreateVote();
+    const { mutate: createVote, data } = useCreateVote();
     const hadnleVote = (recipeId: string, voteType: string) => {
         createVote({ id: recipeId, voteData: { type: voteType } })
 
     }
+
+
+    useEffect(() => {
+        if (data && data?.success) {
+            toast.success(data?.message as string);
+        }
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+
+    }, [data]);
+
 
     return (
 

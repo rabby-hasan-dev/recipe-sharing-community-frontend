@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   async function (error) {
-    // console.log('inside axios instant==>', error?.response?.data?.message)
+
     const config = error.config;
     if (error?.response?.status === 401 && !config?.sent) {
       config.sent = true;
@@ -47,6 +47,7 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(config);
     } else {
+
       return Promise.reject(error);
     }
 

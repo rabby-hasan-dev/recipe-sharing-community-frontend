@@ -92,10 +92,10 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
             const FeedData = response?.data;
             if (FeedData?.data) {
                 // Update the items with the fetched data
-                setItems((prevItems) => [...prevItems, ...FeedData.data]);
+                setItems((prevItems) => [...prevItems, ...FeedData?.data]);
 
                 // Check if there are no more results
-                if (FeedData.data.length === 0) {
+                if (FeedData?.data?.length === 0) {
                     setHasMore(false);
                 } else {
                     // Increment the page number for pagination

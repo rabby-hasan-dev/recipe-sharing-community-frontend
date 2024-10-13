@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '@smastrom/react-rating/style.css';
 import { Button } from '@nextui-org/button';
 import { Rating } from '@smastrom/react-rating';
@@ -10,7 +10,7 @@ import { useCreateRating } from '@/src/hooks/ratingHooks';
 
 const RecipeRating: React.FC<{ recipe: IRecipe }> = ({ recipe }) => {
     const [userRating, setUserRating] = useState<number>(0);
-    const { mutate: creatRating, } = useCreateRating();
+    const { mutate: creatRating, data } = useCreateRating();
     // Handle rating submission
     const handleRating = (ratingNumber: number) => {
         if (ratingNumber < 1 || ratingNumber > 5) {
@@ -18,6 +18,16 @@ const RecipeRating: React.FC<{ recipe: IRecipe }> = ({ recipe }) => {
         }
         creatRating({ recipeId: recipe._id, ratingData: { rating: ratingNumber } })
     };
+
+    useEffect(() => {
+        if (data && data?.success) {
+            toast.success(data?.message as string);
+        }
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+
+    }, [data]);
 
     return (
         <div className="border border-gray-300 rounded-lg p-6  mx-auto shadow-lg ">

@@ -1,7 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { GetMe, GetMeAnUpdate, GetSingleUser } from "../services/User"
-import { FieldValues } from "react-hook-form"
-import { toast } from "sonner"
 
 
 
@@ -31,12 +29,7 @@ export const useGetMeAnUpdate = () => {
         mutationFn: async (meUpdateData) => {
             return await GetMeAnUpdate(meUpdateData)
         },
-        onSuccess: () => {
-            toast.success('Update My Profile  Successful')
-        },
-        onError: (error) => {
-            toast.error(error.message)
-        }
+
     })
 
 }

@@ -27,12 +27,7 @@ export const usePurcaseSubscriptions = () => {
     return useMutation<SubscriptionResponse, Error, FieldValues>({
         mutationKey: ["PURCASE_SUBSCRIPTIONS"],
         mutationFn: async (subcriptionData) => await PurcaseSubscriptions(subcriptionData),
-        onSuccess: () => {
-            toast.success(" Membership Subscription successfully");
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        },
+
     });
 };
 

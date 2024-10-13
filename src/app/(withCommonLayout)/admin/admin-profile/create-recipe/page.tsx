@@ -8,8 +8,9 @@ import { Button } from "@nextui-org/button";
 import { Plus, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FieldValues, FormProvider, SubmitHandler, useFieldArray, useForm, } from "react-hook-form";
+import { toast } from "sonner";
 
 const RecipeForm = () => {
 
@@ -21,7 +22,8 @@ const RecipeForm = () => {
 
     const methods = useForm();
     const { control, handleSubmit } = methods;
-    const { mutate: handleCreateRecipe, error: apiError, isError, isPending: createRecipePending, isSuccess } = useCreateRecipe();
+    const { mutate: handleCreateRecipe, error: apiError, data: mutateData, isError, isPending: createRecipePending, isSuccess } = useCreateRecipe();
+
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -75,8 +77,16 @@ const RecipeForm = () => {
 
 
 
+    useEffect(() => {
+        if (mutateData && !mutateData?.success) {
+            toast.error(mutateData?.message as string);
+        }
+    }, [mutateData]);
+
+
 
     if (!createRecipePending && isSuccess) {
+        toast.success(mutateData?.message as string);
         router.push("/user/profile/my-recipes");
     }
 
@@ -99,7 +109,10 @@ const RecipeForm = () => {
                     <FormProvider {...methods}>
 
 
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form
+
+                            onSubmit={handleSubmit(onSubmit)}
+                        >
                             {/* Title */}
                             <div className="mb-6">
                                 <RSInput

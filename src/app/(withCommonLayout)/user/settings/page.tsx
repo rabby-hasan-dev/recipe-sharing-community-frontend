@@ -10,14 +10,27 @@ import { useUser } from "@/src/context/cureentUser";
 import { useChangePassword } from "@/src/hooks/authHooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { changePasswordValidationSchema } from "@/src/schemas/loginValidation.schema";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 const Settings = () => {
     const { user } = useUser();
-    const { mutate: handlePasswordChange, isPending } = useChangePassword();
+    const { mutate: handlePasswordChange, isPending, data } = useChangePassword();
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         handlePasswordChange(data);
     }
+
+    useEffect(() => {
+        if (data && data?.success) {
+            toast.success(data?.message as string);
+        }
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+
+    }, [data]);
+
 
     return (
         <>

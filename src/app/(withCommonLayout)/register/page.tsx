@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -17,7 +17,7 @@ import { toast } from "sonner";
 export default function RegisterPage() {
     const router = useRouter();
     const [imageFiles, setImageFiles] = useState<File | null>(null)
-    const { mutate: handleUserRegistration, isPending, isSuccess } = useUserRagistration();
+    const { mutate: handleUserRegistration, isPending, isSuccess, data } = useUserRagistration();
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
 
@@ -43,6 +43,17 @@ export default function RegisterPage() {
     }
 
 
+    useEffect(() => {
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+
+    }, [data])
+
+
     if (!isPending && isSuccess) {
         router.push("/");
     }
@@ -58,12 +69,6 @@ export default function RegisterPage() {
                     <RSForm
                         resolver={zodResolver(registerValidationSchema)}
                         onSubmit={onSubmit}
-                        //! Only for development
-                        defaultValues={{
-                            username: "test-user",
-                            email: "rabby@gmail.com",
-                            password: "123456",
-                        }}
 
                     >
                         <div className="py-3">

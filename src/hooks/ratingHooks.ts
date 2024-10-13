@@ -23,13 +23,7 @@ export const useCreateRating = () => {
     return useMutation<CreateCommentResponse, Error, MutationVariables>({
         mutationKey: ["CREATE_RATING"],
         mutationFn: async ({ recipeId, ratingData }) => await CreateRating(recipeId, ratingData),
-        onSuccess: () => {
-            toast.success("Rating successfully");
-        },
-        onError: (error) => {
 
-            toast.error(error.message);
-        },
     });
 };
 

@@ -10,6 +10,7 @@ import RSForm from "@/src/components/form/RSForm";
 import RSInput from "@/src/components/form/RSInput";
 import RSTextarea from "@/src/components/form/RSTextarea";
 import { ChangeEvent, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 
 // Define the validation schema with Zod
@@ -24,7 +25,7 @@ const profileSchema = z.object({
 const EditMyProfilePage = () => {
 
     const [imageFiles, setImageFiles] = useState<File | null>(null)
-    const { mutate: updateProfile, isPending } = useGetMeAnUpdate();
+    const { mutate: updateProfile, isPending, isSuccess: isSuccessMutation } = useGetMeAnUpdate();
     const { data, isLoading, isSuccess } = useGetMe();
 
 
@@ -55,7 +56,15 @@ const EditMyProfilePage = () => {
 
     }
 
+    useEffect(() => {
+        if (data && data?.success) {
+            toast.success(data?.message as string);
+        }
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
 
+    }, [isSuccessMutation, data,]);
 
 
 

@@ -7,6 +7,7 @@ import { useUser } from "@/src/context/cureentUser";
 import { usePurcaseSubscriptions } from "@/src/hooks/subscriptionHooks";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 // Define types for the plan object
 interface Plan {
@@ -27,9 +28,6 @@ interface MembershipPlan {
 const MembershipPlans = () => {
     const { user } = useUser();
     const router = useRouter();
-    // if (!user?.email) {
-    //     router.push('/login')
-    // }
 
     const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
     const { mutate: createSubscription, data, isPending, isError, isSuccess, error } = usePurcaseSubscriptions();
@@ -39,9 +37,11 @@ const MembershipPlans = () => {
     useEffect(() => {
         if (!isPending && data?.data?.payment_url && isSuccess) {
             window.location.href = data.data.payment_url;
+            toast.success(data?.message as string);
         } else if (isError) {
 
-            console.error("Error:", error);
+            toast.error('Payment Session Faild')
+
         }
     }, [isPending, data, isSuccess, isError, error]);
 

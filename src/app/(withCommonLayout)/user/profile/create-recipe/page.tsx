@@ -8,8 +8,9 @@ import { Button } from "@nextui-org/button";
 import { Plus, TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FieldValues, FormProvider, SubmitHandler, useFieldArray, useForm, } from "react-hook-form";
+import { toast } from "sonner";
 
 const RecipeForm = () => {
 
@@ -22,7 +23,7 @@ const RecipeForm = () => {
 
     const methods = useForm();
     const { control, handleSubmit } = methods;
-    const { mutate: handleCreateRecipe, error: apiError, isError, isPending: createRecipePending, isSuccess } = useCreateRecipe();
+    const { mutate: handleCreateRecipe, error: apiError, isError, isPending: createRecipePending, isSuccess, data } = useCreateRecipe();
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -75,9 +76,20 @@ const RecipeForm = () => {
     }
 
 
+    useEffect(() => {
+
+        if (data && !data?.success) {
+            toast.error(data?.message as string);
+        }
+
+    }, [isSuccess, data]);
+
 
 
     if (!createRecipePending && isSuccess) {
+
+        toast.success(data?.message as string);
+
         router.push("/user/profile/my-recipes");
     }
 
