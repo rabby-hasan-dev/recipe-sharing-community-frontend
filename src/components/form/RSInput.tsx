@@ -6,7 +6,9 @@ import { useFormContext } from "react-hook-form";
 
 
 
-interface IProps extends IInput { }
+interface IProps extends IInput {
+  defaultvalue?: string
+}
 
 export default function RSInput({
   variant = "bordered",
@@ -17,6 +19,7 @@ export default function RSInput({
   name,
   placeholder,
   className,
+  defaultvalue,
 
 }: IProps) {
 
@@ -34,6 +37,7 @@ export default function RSInput({
       required={required}
       type={type}
       label={label}
+      defaultValue={defaultvalue}
       placeholder={placeholder}
       className={`className`}
     />

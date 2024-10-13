@@ -4,13 +4,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@nextui-org/button";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useGetMe, useGetMeAnUpdate } from "@/src/hooks/userHooks";
 import RSForm from "@/src/components/form/RSForm";
 import RSInput from "@/src/components/form/RSInput";
 import RSTextarea from "@/src/components/form/RSTextarea";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useUser } from "@/src/context/cureentUser";
 import { toast } from "sonner";
 
 
@@ -23,11 +22,12 @@ const profileSchema = z.object({
     bio: z.string().optional(),
 });
 
+
 const EditMyProfilePage = () => {
     const [imageFiles, setImageFiles] = useState<File | null>(null)
-    const { mutate: updateProfile, isPending, isSuccess, data } = useGetMeAnUpdate();
-    const { data: getmeData } = useGetMe();
-    const { setIsLoading } = useUser();
+    const { mutate: updateProfile, isPending, isSuccess, data: updateData } = useGetMeAnUpdate();
+    const { data, isLoading } = useGetMe();
+
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -40,11 +40,8 @@ const EditMyProfilePage = () => {
 
         formData.append('data', JSON.stringify(data));
 
-
-
         updateProfile(formData);
 
-        setIsLoading(true)
 
 
     };
@@ -56,18 +53,23 @@ const EditMyProfilePage = () => {
     }
 
 
+
+
     useEffect(() => {
-        if (data && data?.success) {
-            toast.success(data?.message as string);
+        if (updateData && updateData?.success) {
+            toast.success(updateData?.message as string);
         }
-        if (data && !data?.success) {
-            toast.error(data?.message as string);
+        if (updateData && !updateData?.success) {
+            toast.error(updateData?.message as string);
         }
 
-    }, [isSuccess, data,]);
+    }, [isSuccess, updateData,]);
 
 
-
+    if (isLoading) {
+        <p>Loading ...</p>
+    }
+    console.log(data?.data)
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg">
@@ -75,7 +77,7 @@ const EditMyProfilePage = () => {
 
             <RSForm onSubmit={onSubmit}
                 resolver={zodResolver(profileSchema)}
-                defaultValues={getmeData?.data}
+
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
@@ -84,43 +86,83 @@ const EditMyProfilePage = () => {
                         <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Personal Information</h3>
 
                         <div className="py-3">
-                            <RSInput
-                                name="firstName"
-                                label="First Name"
-                                type="text"
-                                placeholder="Enter your first name"
-                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                            />
+                            {
+                                data?.data?.firstName ? <RSInput
+                                    name="firstName"
+                                    label="First Name"
+                                    type="text"
+                                    defaultvalue={data?.data?.firstName}
+                                    placeholder="Enter your first name"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                /> : <RSInput
+                                    name="firstName"
+                                    label="First Name"
+                                    type="text"
+                                    defaultvalue={data?.data?.firstName}
+                                    placeholder="Enter your first name"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                />
+                            }
                         </div>
 
                         <div className="py-3">
-                            <RSInput
-                                name="lastName"
-                                label="Last Name"
-                                type="text"
-                                placeholder="Enter your last name"
-                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                            />
+                            {
+                                data?.data?.firstName ? <RSInput
+                                    name="lastName"
+                                    label="Last Name"
+                                    type="text"
+                                    defaultvalue={data?.data?.lastName}
+                                    placeholder="Enter your first name"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                /> : <RSInput
+                                    name="lastName"
+                                    label="Last Name"
+                                    type="text"
+                                    defaultvalue={data?.data?.lastName}
+                                    placeholder="Enter your first name"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                />
+                            }
                         </div>
 
                         <div className="py-3">
-                            <RSInput
-                                name="phone"
-                                label="Phone Number"
-                                type="number"
-                                placeholder="Enter your phone number"
-                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                            />
+                            {
+                                data?.data.phone ? <RSInput
+                                    defaultvalue={data?.data?.phone}
+                                    name="phone"
+                                    label="Phone Number"
+                                    type="number"
+                                    placeholder="Enter your phone number"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                /> : <RSInput
+                                    defaultvalue={data?.data?.phone}
+                                    name="phone"
+                                    label="Phone Number"
+                                    type="number"
+                                    placeholder="Enter your phone number"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                />
+                            }
                         </div>
 
                         <div className="py-3">
-                            <RSInput
-                                name="address"
-                                label="Address"
-                                type="text"
-                                placeholder="Enter your address"
-                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                            />
+                            {
+                                data?.data?.address ? <RSInput
+                                    defaultvalue={data?.data?.address}
+                                    name="address"
+                                    label="Address"
+                                    type="text"
+                                    placeholder="Enter your address"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                /> : <RSInput
+                                    defaultvalue={data?.data?.address}
+                                    name="address"
+                                    label="Address"
+                                    type="text"
+                                    placeholder="Enter your address"
+                                    className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                                />
+                            }
                         </div>
                     </div>
 
@@ -128,12 +170,21 @@ const EditMyProfilePage = () => {
                     <div className="border p-6 rounded-lg bg-white dark:bg-gray-700 shadow-md">
                         <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Bio</h3>
 
-                        <RSTextarea
-                            name="bio"
-                            label="Tell us about yourself"
-                            placeholder="Write a brief bio..."
-                            className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                        />
+                        {
+                            data?.data?.bio ? <RSTextarea
+                                name="bio"
+                                defaultValue={data?.data?.bio}
+                                label="Tell us about yourself"
+                                placeholder="Write a brief bio..."
+                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                            /> : <RSTextarea
+                                name="bio"
+                                defaultValue={data?.data?.bio}
+                                label="Tell us about yourself"
+                                placeholder="Write a brief bio..."
+                                className="bg-gray-100 dark:bg-gray-600 dark:text-white"
+                            />
+                        }
 
                         <div className="py-3 ">
                             <label

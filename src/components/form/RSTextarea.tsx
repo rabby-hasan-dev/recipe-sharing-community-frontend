@@ -5,7 +5,8 @@ import { IInput } from "@/src/types";
 
 interface IProps extends IInput {
   type?: string;
-  value?: string;
+
+  defaultValue?: string
 
 
 }
@@ -15,7 +16,8 @@ export default function RSTextarea({
   label,
   variant = "bordered",
   placeholder,
-  value,
+
+  defaultValue
 
 }: IProps) {
   const {
@@ -26,11 +28,12 @@ export default function RSTextarea({
   const currentValue = useWatch({ name });
   return (
     <Textarea {...register(name)}
+      defaultValue={defaultValue}
 
       label={label}
       placeholder={placeholder}
       minRows={6}
       variant={variant}
-      value={currentValue || ''} />
+    />
   );
 }

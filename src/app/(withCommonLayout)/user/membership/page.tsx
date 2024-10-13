@@ -47,7 +47,6 @@ const MembershipPlans = () => {
 
 
 
-
     const plans: Plan[] = [
         {
             title: "Monthly Plan",
@@ -89,9 +88,6 @@ const MembershipPlans = () => {
         <>
             {
                 isPending && !isSuccess && <Loading />
-            }
-            {
-                isError && <p>{error.message}</p>
             }
             <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 py-16 px-8 flex flex-col items-center">
                 <h2 className="text-5xl font-extrabold text-gray-900 dark:text-white mb-14 text-center leading-tight">
