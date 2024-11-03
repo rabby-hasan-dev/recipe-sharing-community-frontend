@@ -55,7 +55,7 @@ export default function RegisterPage() {
 
 
     if (!isPending && isSuccess) {
-        router.push("/");
+        router.push('/recipe-feeds');
     }
 
     return (

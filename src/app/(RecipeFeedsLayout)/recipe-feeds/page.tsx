@@ -5,18 +5,19 @@ import { getPublicRecipe } from "@/src/services/Feed";
 
 
 
-const HomePage = async () => {
-
+const RecipeFeedsHomePage = async () => {
 
     const publicFeedData = await getPublicRecipe();
     const publicFeed = publicFeedData?.data;
 
     return (
+        <div>
 
-        <RecipeFeed initialPublicFeed={publicFeed} />
+            <RecipeFeed initialPublicFeed={publicFeed} />
+        </div>
     );
 }
 
 
-export default HomePage;
+export default RecipeFeedsHomePage;
 

@@ -9,7 +9,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useUserLogin } from "@/src/hooks/authHooks";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/cureentUser";
@@ -27,7 +27,7 @@ const LoginPage = () => {
     });
     const { mutate: handleUserLogin, isPending, isSuccess, data, } = useUserLogin();
     const { setIsLoading: userLoading } = useUser();
-
+    const [showPassword, setShowPassword] = useState(false);
 
 
 
@@ -43,7 +43,7 @@ const LoginPage = () => {
                 router.push(redirect)
 
             } else {
-                router.push('/')
+                router.push('/recipe-feeds')
             }
 
         }
@@ -107,7 +107,21 @@ const LoginPage = () => {
                                 size="md"
                                 variant="bordered"
                                 label="Password"
-                                type="text"
+                                type={showPassword ? "text" : "password"}
+
+                                endContent={
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)} // Toggle visibility
+                                        className="text-gray-600 hover:text-gray-800 focus:outline-none"
+                                    >
+                                        {showPassword ? (
+                                            <span role="img" aria-label="Hide password">👁️</span>
+                                        ) : (
+                                            <span role="img" aria-label="Show password">🙈</span>
+                                        )}
+                                    </button>
+                                }
                             />
                             {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password.message as string}</p>}
 
