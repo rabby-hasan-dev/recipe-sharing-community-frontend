@@ -6,7 +6,7 @@ export const siteConfig = {
   navItems: [
     {
       label: "Recipe Feed",
-      href: "/",
+      href: "/recipe-feeds",
     },
     {
       label: "About Us",

@@ -48,7 +48,7 @@ const RecipeForm = () => {
             formData.append('file', image)
         }
 
-
+        console.log('admin create recipe=>', data)
         handleCreateRecipe(formData);
 
     };
@@ -96,9 +96,6 @@ const RecipeForm = () => {
         <>
             {
                 createRecipePending && !isSuccess && <Loading />
-            }
-            {
-                isError && <p>{apiError.message}</p>
             }
 
             <div className="flex flex-col items-center p-5 bg-gray-50 dark:bg-gray-900 min-h-screen">
@@ -217,9 +214,11 @@ const RecipeForm = () => {
                             {/* Is Premium */}
                             <div className="mb-6 flex items-center">
                                 <input
+
                                     type="checkbox"
                                     className="form-checkbox text-indigo-600 dark:text-indigo-400"
                                     name="isPremium"
+
                                 />
                                 <label className="ml-2 text-gray-700 dark:text-gray-300 font-medium">Premium Recipe</label>
                             </div>

@@ -89,11 +89,11 @@ const EditMyProfilePage = () => {
 
                             <div className="py-3">
                                 {
-                                    data?.data?.firstName ? <RSInput
+                                    data?.data?.name?.firstName ? <RSInput
                                         name="firstName"
                                         label="First Name"
                                         type="text"
-                                        defaultvalue={data?.data?.firstName}
+                                        defaultvalue={data?.data?.name?.firstName}
                                         placeholder="Enter your first name"
                                         className="bg-gray-100 dark:bg-gray-600 dark:text-white"
                                     /> : <RSInput
