@@ -7,7 +7,7 @@ import { Input, Textarea } from "@nextui-org/input";
 
 const ContactUsPage = () => {
     return (
-        <div className="">
+        <div className="my-10">
             {/* Header */}
             <div className="text-center mb-12">
                 <h1 className="text-4xl font-bold ">Contact Us</h1>
@@ -17,7 +17,7 @@ const ContactUsPage = () => {
             </div>
 
             {/* Form Section */}
-            <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {/* Contact Form */}
                 <Card className="p-8 shadow-lg ">
                     <h2 className="text-2xl font-medium mb-6">Get In Touch</h2>

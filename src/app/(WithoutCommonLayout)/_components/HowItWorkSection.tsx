@@ -6,7 +6,7 @@ const HowItWorkSection = () => {
 
             <section className="py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
                 <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gray-800 dark:text-white">How It Works</h2>
-                <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
+                <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 px-6">
 
                     {/* Step 1: Sign Up */}
                     <div className="text-center bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition duration-200">

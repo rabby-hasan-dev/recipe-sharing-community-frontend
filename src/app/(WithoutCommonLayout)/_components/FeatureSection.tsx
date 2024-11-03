@@ -6,7 +6,7 @@ const FeatureSection = () => {
 
             <section className="py-16 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
                 <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 text-gray-800 dark:text-white">Key Features</h2>
-                <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+                <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6">
                     {/* Card 1: Recipe Creation & Sharing */}
                     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition duration-200">
                         <img src="/icons/recipe-creation.svg" alt="Recipe Creation" className="w-12 mx-auto mb-4" />

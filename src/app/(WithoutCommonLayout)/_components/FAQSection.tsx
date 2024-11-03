@@ -6,7 +6,7 @@ const FAQSection = () => {
 
             <section className="py-16 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
                 <h2 className="text-3xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">Frequently Asked Questions</h2>
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-6">
                     <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow hover:shadow-lg transition mb-4">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 cursor-pointer">
                             How do I share a recipe?
