@@ -1,29 +1,33 @@
 "use client";
 
-import { loginValidationSchema } from "@/src/schemas/loginValidation.schema";
+
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useUserLogin } from "@/src/hooks/authHooks";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import Loading from "@/src/components/UI/Loading";
-import RSForm from "@/src/components/form/RSForm";
-import RSInput from "@/src/components/form/RSInput";
 import { useUser } from "@/src/context/cureentUser";
 import { toast } from "sonner";
+import { Input } from "@nextui-org/input";
+import { loginValidationSchema } from "@/src/schemas/loginValidation.schema";
 
 const LoginPage = () => {
     const searchParams = useSearchParams();
     const router = useRouter();
     const redirect = searchParams.get("redirect");
-
+    // Use zodResolver with the loginValidationSchema
+    const { register, setValue, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(loginValidationSchema), // Add this line
+    });
     const { mutate: handleUserLogin, isPending, isSuccess, data, } = useUserLogin();
     const { setIsLoading: userLoading } = useUser();
+
 
 
 
@@ -48,32 +52,86 @@ const LoginPage = () => {
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        console.log(data)
 
         handleUserLogin(data);
         userLoading(true);
 
 
+
     };
 
-    return (
-        <>
-            {
-                isPending && <Loading></Loading>
-            }
-            <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
-                <h3 className="my-2 text-2xl font-bold">Login with Recipe Sharing Community</h3>
-                <p className="mb-4">Welcome Back! Let&lsquo;s Get Started</p>
-                <div className="w-[35%]">
-                    <RSForm
-                        onSubmit={onSubmit}
-                        resolver={zodResolver(loginValidationSchema)}
 
+    // Function to autofill the login form
+    const autofillCredentials = (role: string) => {
+        if (role === 'user') {
+            setValue("email", "user@gmail.com");
+            setValue("password", "123456");
+        } else if (role === 'admin') {
+            setValue("email", "admin@gmail.com");
+            setValue("password", "123456");
+        }
+    };
+
+
+
+    return (
+
+
+        <>
+            {isPending && <Loading />}
+            <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-0">
+                <h3 className="my-2 text-2xl font-bold text-center md:text-3xl">Login with Recipe Sharing Community</h3>
+                <p className="mb-4 text-center text-sm md:text-base">Welcome Back! Let&lsquo;s Get Started</p>
+                <div className="w-full max-w-md"> {/* Adjust width with max-w-md for larger screens */}
+                    <form
+
+                        onSubmit={handleSubmit(onSubmit)}
                     >
                         <div className="py-3">
-                            <RSInput name="email" label="Email" type="email" />
+                            <Input
+                                {...register("email")}
+                                isInvalid={!!errors.email}
+                                size="md"
+                                variant="bordered"
+                                label="Email"
+                                type="email"
+
+                            />
+                            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message as string}</p>}
                         </div>
                         <div className="py-3">
-                            <RSInput name="password" label="Password" type="password" />
+                            <Input
+                                {...register("password")}
+                                isInvalid={!!errors.password}
+                                size="md"
+                                variant="bordered"
+                                label="Password"
+                                type="text"
+                            />
+                            {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password.message as string}</p>}
+
+                        </div>
+
+                        {/* User and Admin Credential Buttons */}
+                        <div className="flex flex-col sm:flex-row justify-between my-4 space-y-2 sm:space-y-0">
+                            <Button
+                                // type="button"
+                                size="sm"
+                                className="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white"
+                                onClick={() => autofillCredentials('user')}
+
+                            >
+                                User Credential
+                            </Button>
+                            <Button
+                                size="sm"
+                                type="button"
+                                className="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white"
+                                onClick={() => autofillCredentials('admin')}
+                            >
+                                Admin Credential
+                            </Button>
                         </div>
 
                         <Button
@@ -83,7 +141,7 @@ const LoginPage = () => {
                         >
                             Login
                         </Button>
-                    </RSForm>
+                    </form>
                     <div className="flex justify-between items-center py-2">
                         <Link href="/forgot-password" className="text-sm text-blue-500 hover:underline">
                             Forgot Password?
@@ -91,16 +149,18 @@ const LoginPage = () => {
                     </div>
 
                     <div className="text-center">
-                        Don&lsquo;t have account ? <Link href={"/register"}>Register</Link>
+                        Don&lsquo;t have account? <Link href={"/register"} className="text-blue-500 hover:underline">Register</Link>
                     </div>
-
                 </div>
             </div>
-
-
-
-
         </>
+
+
+
+
+
+
+
 
 
     );

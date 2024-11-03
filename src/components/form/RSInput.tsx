@@ -39,7 +39,7 @@ export default function RSInput({
       label={label}
       defaultValue={defaultvalue}
       placeholder={placeholder}
-      className={`className`}
+      className={className}
     />
   );
 }
