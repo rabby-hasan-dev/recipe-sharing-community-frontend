@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { ChangeUserStatus, CreateAdmin, DelteSingleUserByAdmin, GetAllPrimiumUser, getAllRecipeByAdmin, GetAllUserByAdmin, PublishRecipe } from "../services/Admin"
 import { FieldValues } from "react-hook-form"
 
@@ -40,28 +40,43 @@ export const useGetAllPremiumUser = () => {
 
 
 export const useChangeUserStatus = () => {
+    const queryClient = useQueryClient();
 
     return useMutation<any, Error, ChangeUserStatusMutation>({
         mutationKey: ["USER_STATUS"],
         mutationFn: async ({ userId, status }) => await ChangeUserStatus(userId, status),
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
+        },
     })
 
 }
 
 export const useCreateAdmin = () => {
+    const queryClient = useQueryClient();
 
     return useMutation<any, Error, FieldValues>({
         mutationKey: ["CREATE_ADMIN"],
         mutationFn: async (adminData) => await CreateAdmin(adminData),
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
+        },
 
     })
 
 }
 export const useDeleteUser = () => {
+    const queryClient = useQueryClient();
 
     return useMutation<any, Error, string>({
         mutationKey: ["DELETE_USER"],
         mutationFn: async (userId) => await DelteSingleUserByAdmin(userId),
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
+        },
 
     })
 
@@ -69,10 +84,15 @@ export const useDeleteUser = () => {
 
 
 export const usePublishRecipe = () => {
+    const queryClient = useQueryClient();
 
     return useMutation<any, Error, FieldValues>({
-        mutationKey: ["USER_RAGISTRATION"],
+        mutationKey: ["RECIPE_PUBLISH"],
         mutationFn: async (recipeData) => await PublishRecipe(recipeData),
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["GET_RECIPE"] });
+        },
 
     })
 

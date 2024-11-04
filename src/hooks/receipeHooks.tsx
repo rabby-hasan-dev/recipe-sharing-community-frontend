@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { CreateRecipe, DeleteRecipe, getAllRecipe, getAllRecipeByAuthor, getSpecificRecipe, UpdateRecipe } from "../services/Recipe"
+import { CreateRecipe, DeleteRecipe, getAllRecipe, getAllRecipeByAuthor, getAllRecipeBySearch, getSpecificRecipe, UpdateRecipe } from "../services/Recipe"
 
 
 
@@ -19,18 +19,28 @@ interface CreateRecipeResponse {
 
 
 export const useCreateRecipe = () => {
+    const queryClient = useQueryClient();
     return useMutation<CreateRecipeResponse, Error, FormData>({
         mutationKey: ["CREATE_RECIPE"],
         mutationFn: async (recipeData) => await CreateRecipe(recipeData),
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["GET_RECIPE"] });
+        },
 
     });
 };
 
 export const useUpdateRecipe = () => {
+    const queryClient = useQueryClient();
     return useMutation<CreateRecipeResponse, Error, MutationVariables>({
         mutationKey: ["UPDATE_RECIPE"],
         mutationFn: async ({ recipeId, recipeData }) => await UpdateRecipe(recipeId, recipeData),
 
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["GET_RECIPE"] });
+        },
     });
 };
 
@@ -51,6 +61,15 @@ export const useGetRecipe = () => {
     return useQuery<any, Error, any, string[]>({
         queryKey: ["GET_RECIPE"],
         queryFn: async () => await getAllRecipe(),
+
+    })
+}
+
+export const useGetAllRecipeBySearch = ({ searchTerm }: { searchTerm: string }) => {
+
+    return useQuery<any, Error, any, string[]>({
+        queryKey: ["GET_RECIPE"],
+        queryFn: async () => await getAllRecipeBySearch({ searchTerm }),
 
     })
 }

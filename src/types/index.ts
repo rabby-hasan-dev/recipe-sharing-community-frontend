@@ -8,7 +8,8 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
 
 export interface ICurrentUser {
   userId: string;
-  name: string
+  name: string;
+  isPremium: boolean;
   username: string;
   email: string;
   role: string;

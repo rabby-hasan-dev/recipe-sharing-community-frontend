@@ -1,12 +1,10 @@
 
-import FeedLayoutComponent from '@/src/components/modules/RecipeFeed/module/FeedLayoutComponent';
 import React from 'react';
 
 const RecipePage = () => {
     return (
         <div>
-
-            <FeedLayoutComponent />
+            recipe sepecific page
         </div>
     );
 };

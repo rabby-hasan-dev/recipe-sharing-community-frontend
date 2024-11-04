@@ -48,6 +48,25 @@ export const getAllRecipe = async () => {
     }
 };
 
+export const getAllRecipeBySearch = async ({ searchTerm }: { searchTerm: string }) => {
+
+
+    try {
+        const { data } = await axiosInstance.get(`/recipes`, {
+            params: {
+                searchTerm
+            }
+        });
+        return data;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
+
+    }
+};
+
 
 export const geSingleRecipe = async (recipeId: string) => {
     let fetchOptions = {};

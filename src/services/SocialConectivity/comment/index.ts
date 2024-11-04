@@ -11,7 +11,6 @@ export const CreateComment = async (recipeId: string, comment: FieldValues) => {
 
     try {
         const { data } = await axiosInstance.post(`/social-conectivity/${recipeId}/comments`, comment);
-        revalidateTag('commentTag')
         return data;
     } catch (error: any) {
         return {
@@ -41,7 +40,6 @@ export const EditComment = async (commentId: string, comment: FieldValues) => {
     try {
 
         const { data } = await axiosInstance.put(`/social-conectivity/comments/${commentId}`, comment);
-        revalidateTag('commentTag')
         return data;
     } catch (error: any) {
 
@@ -58,7 +56,6 @@ export const deleteComments = async (recipeId: string, commentId: string) => {
 
     try {
         const { data } = await axiosInstance.delete(`/social-conectivity/${recipeId}/comments/${commentId}`);
-        revalidateTag('commentTag')
         return data;
     } catch (error: any) {
         return {

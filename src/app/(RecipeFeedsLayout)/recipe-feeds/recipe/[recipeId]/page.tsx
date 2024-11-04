@@ -24,6 +24,8 @@ const RecipeDetailPage = async ({ params }: { params: { recipeId: string } }) =>
     return (
         <Container>
             {/* Recipe Card */}
+
+
             <Card className="shadow-lg border border-gray-300 rounded-lg overflow-hidden dark:border-gray-700 dark:bg-gray-800">
                 {/* Card Header */}
                 <CardHeader className="bg-gray-100 p-6 dark:bg-gray-900">
@@ -66,6 +68,7 @@ const RecipeDetailPage = async ({ params }: { params: { recipeId: string } }) =>
                     </div>
                 </CardBody>
             </Card>
+
         </Container>
 
 

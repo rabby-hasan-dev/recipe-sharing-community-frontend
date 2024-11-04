@@ -9,7 +9,6 @@ import { FieldValues } from "react-hook-form";
 export const CreateRating = async (recipeId: string, rating: FieldValues) => {
     try {
         const { data } = await axiosInstance.post(`/social-conectivity/${recipeId}/rating`, rating);
-        revalidateTag('ratings')
         return data;
     } catch (error: any) {
 

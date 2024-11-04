@@ -15,9 +15,6 @@ import { FieldValues } from "react-hook-form";
 export const CreateVotes = async (recipeId: string, vote: FieldValues) => {
     try {
         const { data } = await axiosInstance.put(`/social-conectivity/${recipeId}/votes`, vote);
-        revalidateTag('voteTag')
-
-
         return data;
 
 

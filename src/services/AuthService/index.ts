@@ -65,6 +65,7 @@ export const getCurrentUser = async () => {
         decodedToken = await jwtDecode(accessToken);
         return {
             userId: decodedToken.userId,
+            isPremium: decodedToken.isPremium,
             username: decodedToken.username,
             name: decodedToken.name,
             email: decodedToken.email,

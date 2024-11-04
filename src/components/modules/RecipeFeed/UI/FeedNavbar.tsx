@@ -7,8 +7,9 @@ import { BellIcon, MessageSquareIcon, HomeIcon, Cookie } from 'lucide-react';
 import { Navbar, NavbarItem, NavbarBrand, NavbarContent } from '@nextui-org/navbar';
 import NavbarDropdwon from '@/src/components/UI/NavbarDropdwon';
 import NextLink from "next/link";
-import SearchInput from './SerchInput';
+// import SearchInput from './SerchInput';
 import { ThemeSwitch } from '@/src/components/UI/theme-switch';
+import SearchInput from '@/src/app/(RecipeFeedsLayout)/_components/module/navbar/SearchInput';
 
 const FeedNavbar = () => {
 

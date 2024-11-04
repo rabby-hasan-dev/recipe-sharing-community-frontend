@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { GetMe, GetMeAnUpdate, GetSingleUser } from "../services/User"
 
 
@@ -23,11 +23,15 @@ export const useGetMe = () => {
 
 
 export const useGetMeAnUpdate = () => {
-
+    const queryClient = useQueryClient();
     return useMutation<any, Error, FormData>({
         mutationKey: ["USER_PROFILE_UPDATE"],
         mutationFn: async (meUpdateData) => {
             return await GetMeAnUpdate(meUpdateData)
+        },
+        onSuccess: () => {
+            // Invalidate and refetch
+            queryClient.invalidateQueries({ queryKey: ["GET_USERS"] });
         },
 
     })
