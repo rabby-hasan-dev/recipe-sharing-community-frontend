@@ -31,17 +31,7 @@ const FeedNavbar = () => {
 
             {/* Right Section: Icons and Profile */}
             <NavbarContent as="div" justify="end" className="flex items-center space-x-4">
-                <NavbarItem>
-                    <Link href="/recipe-feeds" aria-label="Home">
-                        <HomeIcon className="w-6 h-6 cursor-pointer transition-colors duration-150 hover:text-blue-600" />
-                    </Link>
-                </NavbarItem>
 
-                <NavbarItem>
-                    <Link href="#messages" aria-label="Messages">
-                        <MessageSquareIcon className="w-6 h-6 cursor-pointer transition-colors duration-150 hover:text-blue-600" />
-                    </Link>
-                </NavbarItem>
 
                 <NavbarItem>
                     <Link href="#notifications" aria-label="Notifications">
