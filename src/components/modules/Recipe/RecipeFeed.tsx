@@ -20,11 +20,6 @@ import { useRouter } from 'next/navigation';
 import { isPreemium } from '@/src/hooks/preemiumUserHook';
 import { toast } from 'sonner';
 
-interface RecipeFeedProps {
-    initialPublicFeed: IRecipe[];
-    initialPremiumFeed?: IRecipe[];
-}
-
 
 const getAuthToken = () => {
     return Cookies.get('accessToken'); // Assuming the token is stored as 'authToken' in cookies
@@ -41,7 +36,7 @@ const axiosClient = axios.create({
 
 
 
-export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
+export default function RecipeFeed() {
     const { user } = useUser();
     const { register, watch } = useForm();
     const searchTerm = useDebounce(watch('search'), 500);
@@ -145,7 +140,7 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
 
     return (
         <Container>
-            {/* <div className="mb-8 p-6 bg-white shadow-lg rounded-lg sticky top-0 z-20 border border-gray-200 dark:bg-black dark:border-gray-700 dark:text-white">
+            <div className="mb-8 p-6 bg-white shadow-lg rounded-lg sticky top-0 z-20 border border-gray-200 dark:bg-black dark:border-gray-700 dark:text-white">
                 <h2 className="text-4xl font-bold text-center mb-4 text-dark dark:text-light">
                     Discover Delicious Recipes
                 </h2>
@@ -177,7 +172,7 @@ export default function RecipeFeed({ initialPublicFeed, }: RecipeFeedProps) {
                         </Button>
                     </div>
                 </div>
-            </div> */}
+            </div>
 
             {/* Main Layout */}
             <div className="flex flex-col md:flex-row justify-between">

@@ -9,6 +9,7 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-o
 import { usePathname, useRouter } from 'next/navigation';
 
 
+
 const NavbarDropdwon = () => {
   const { user, setIsLoading: userLoading } = useUser();
   const router = useRouter();
@@ -28,6 +29,7 @@ const NavbarDropdwon = () => {
 
   }
 
+
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -36,6 +38,7 @@ const NavbarDropdwon = () => {
       {
         user?.role == 'user' ? <>
           <DropdownMenu aria-label="Static Actions">
+
             <DropdownItem onClick={() => handleNavigation('/user/profile/my-recipes')} >My Profile</DropdownItem>
             <DropdownItem onClick={() => handleNavigation('/user/profile/create-recipe')} >Create Recipe</DropdownItem>
             <DropdownItem onClick={() => handleNavigation("/user/settings")} >Settings</DropdownItem>

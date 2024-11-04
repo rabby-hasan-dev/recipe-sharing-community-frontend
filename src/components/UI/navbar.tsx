@@ -15,13 +15,11 @@ import NextLink from "next/link";
 import clsx from "clsx";
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/UI/theme-switch";
-import {
-  Logo,
-} from "@/src/components/icons";
-import NavbarDropdwon from "./NavbarDropdwon";
+
 import { Button } from "@nextui-org/button";
 import { useUser } from "@/src/context/cureentUser";
 import { Cookie } from "lucide-react";
+import { Avatar } from "@nextui-org/avatar";
 
 
 
@@ -65,20 +63,13 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>
         {
-          user?.email ? (
-            <NavbarItem className="hidden sm:flex gap-2">
-
-              <NavbarDropdwon></NavbarDropdwon>
-            </NavbarItem>
-          )
-            : (<NavbarItem className="hidden sm:flex gap-2">
-              <Link href="/login" >
-                <Button>Login</Button>
-              </Link>
-            </NavbarItem>
-            )
-
-
+          user?.email ? <NavbarItem>
+            <Avatar src={user?.profilePicture} />
+          </NavbarItem> : <NavbarItem className="hidden sm:flex gap-2">
+            <Link href="/login" >
+              <Button>Login</Button>
+            </Link>
+          </NavbarItem>
         }
 
       </NavbarContent>

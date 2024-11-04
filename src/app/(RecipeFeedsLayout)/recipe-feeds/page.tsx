@@ -1,23 +1,25 @@
 
 import RecipeFeed from "@/src/components/modules/Recipe/RecipeFeed";
+import FeedLayoutComponent from "@/src/components/modules/RecipeFeed/module/FeedLayoutComponent";
 
-import { getPublicRecipe } from "@/src/services/Feed";
 
 
 
 const RecipeFeedsHomePage = async () => {
 
-    const publicFeedData = await getPublicRecipe();
-    const publicFeed = publicFeedData?.data;
+
 
     return (
         <div>
-
-            <RecipeFeed initialPublicFeed={publicFeed} />
+            <FeedLayoutComponent />
         </div>
     );
 }
 
 
 export default RecipeFeedsHomePage;
+
+
+
+
 

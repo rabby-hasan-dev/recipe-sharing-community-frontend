@@ -8,6 +8,7 @@ import { Navbar, NavbarItem, NavbarBrand, NavbarContent } from '@nextui-org/navb
 import NavbarDropdwon from '@/src/components/UI/NavbarDropdwon';
 import NextLink from "next/link";
 import SearchInput from './SerchInput';
+import { ThemeSwitch } from '@/src/components/UI/theme-switch';
 
 const FeedNavbar = () => {
 
@@ -37,19 +38,22 @@ const FeedNavbar = () => {
                 </NavbarItem>
 
                 <NavbarItem>
-                    <Link href="/#messages" aria-label="Messages">
+                    <Link href="#messages" aria-label="Messages">
                         <MessageSquareIcon className="w-6 h-6 cursor-pointer transition-colors duration-150 hover:text-blue-600" />
                     </Link>
                 </NavbarItem>
 
                 <NavbarItem>
-                    <Link href="/#notifications" aria-label="Notifications">
+                    <Link href="#notifications" aria-label="Notifications">
                         <BellIcon className="w-6 h-6 cursor-pointer transition-colors duration-150 hover:text-blue-600" />
                     </Link>
                 </NavbarItem>
+                <NavbarItem>
+                    <ThemeSwitch />
+                </NavbarItem>
 
                 {/* Profile Icon and Dropdown */}
-                <NavbarItem className="flex gap-2">
+                <NavbarItem>
                     <NavbarDropdwon />
                 </NavbarItem>
             </NavbarContent>
