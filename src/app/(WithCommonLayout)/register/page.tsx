@@ -18,7 +18,7 @@ export default function RegisterPage() {
     const router = useRouter();
     const [imageFiles, setImageFiles] = useState<File | null>(null)
     const { mutate: handleUserRegistration, isPending, isSuccess, data } = useUserRagistration();
-
+    const [showPassword, setShowPassword] = useState(false);
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
 
 
@@ -83,7 +83,20 @@ export default function RegisterPage() {
                                 label="Password"
                                 name="password"
                                 size="sm"
-                                type="password"
+                                type={showPassword ? "text" : "password"}
+                                endContent={
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)} // Toggle visibility
+                                        className="text-gray-600 hover:text-gray-800 focus:outline-none"
+                                    >
+                                        {showPassword ? (
+                                            <span role="img" aria-label="Hide password">👁️</span>
+                                        ) : (
+                                            <span role="img" aria-label="Show password">🙈</span>
+                                        )}
+                                    </button>
+                                }
                             />
                         </div>
 

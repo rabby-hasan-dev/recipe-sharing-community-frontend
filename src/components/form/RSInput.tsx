@@ -2,12 +2,14 @@
 
 import { IInput } from "@/src/types";
 import { Input } from "@nextui-org/input";
+import { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
 
 
 interface IProps extends IInput {
-  defaultvalue?: string
+  defaultvalue?: string;
+  endContent?: ReactNode;
 }
 
 export default function RSInput({
@@ -20,6 +22,7 @@ export default function RSInput({
   placeholder,
   className,
   defaultvalue,
+  endContent,
 
 }: IProps) {
 
@@ -29,6 +32,7 @@ export default function RSInput({
 
   return (
     <Input
+      endContent={endContent}
       {...register(name)}
       errorMessage={errorMessage}
       isInvalid={isInvalid}

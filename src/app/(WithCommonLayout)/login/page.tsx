@@ -16,6 +16,8 @@ import { useUser } from "@/src/context/cureentUser";
 import { toast } from "sonner";
 import { Input } from "@nextui-org/input";
 import { loginValidationSchema } from "@/src/schemas/loginValidation.schema";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
     const searchParams = useSearchParams();
@@ -80,7 +82,7 @@ const LoginPage = () => {
 
         <>
             {isPending && <Loading />}
-            <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-0">
+            <div className="flex flex-col items-center justify-center h-[calc(100vh-100px)]  px-4 sm:px-0">
                 <h3 className="my-2 text-2xl font-bold text-center md:text-3xl">Login with Recipe Sharing Community</h3>
                 <p className="mb-4 text-center text-sm md:text-base">Welcome Back! Let&lsquo;s Get Started</p>
                 <div className="w-full max-w-md"> {/* Adjust width with max-w-md for larger screens */}
@@ -165,6 +167,44 @@ const LoginPage = () => {
                     <div className="text-center">
                         Don&lsquo;t have account? <Link href={"/register"} className="text-blue-500 hover:underline">Register</Link>
                     </div>
+
+                    <div className="flex flex-col items-center space-y-4 mb-10 mt-4">
+                        <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2">Sign in with</h2>
+                        <div className="flex justify-center space-x-6">
+                            <Button
+                                isIconOnly
+                                className="bg-white shadow-lg hover:shadow-xl rounded-full transition-transform duration-200 transform hover:scale-105"
+                                onClick={() => signIn("google", { callbackUrl: 'http://localhost:3000' })}
+                                aria-label="Sign in with Google"
+                            >
+                                <Image
+                                    src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png"
+                                    width={40}
+                                    height={40}
+                                    alt="Google logo"
+                                />
+                            </Button>
+                            <Button
+                                isIconOnly
+                                className="bg-white shadow-lg hover:shadow-xl rounded-full transition-transform duration-200 transform hover:scale-105"
+                                onClick={() => signIn("github", { callbackUrl: 'http://localhost:3000' })}
+                                aria-label="Sign in with GitHub"
+                            >
+                                <Image
+                                    src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                                    width={40}
+                                    height={40}
+                                    alt="GitHub logo"
+                                />
+                            </Button>
+                        </div>
+                        <div className="flex space-x-6 mt-2">
+                            <span className="text-sm text-gray-500 dark:text-gray-400">Google</span>
+                            <span className="text-sm text-gray-500 dark:text-gray-400">GitHub</span>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </>
