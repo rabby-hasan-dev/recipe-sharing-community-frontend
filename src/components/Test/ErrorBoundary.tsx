@@ -1,42 +1,34 @@
 import { Component, ReactNode } from "react";
 
-
 interface ErrorBoundaryProps {
-    fallback: ReactNode;
-    children: ReactNode;
+  fallback: ReactNode;
+  children: ReactNode;
 }
 
 interface ErrorBoundaryState {
-    hasError: boolean;
+  hasError: boolean;
 }
-
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
 
-    constructor(props: ErrorBoundaryProps) {
+    this.state = {
+      hasError: false,
+    };
+  }
 
-        super(props);
+  static getDrivedStateFormError() {
+    return { hasError: true };
+  }
 
-        this.state = {
-            hasError: false,
-        }
-
+  render(): ReactNode {
+    if (this.state.hasError) {
+      return this.props.fallback;
     }
 
-    static getDrivedStateFormError() {
-        return { hasError: true }
-    }
-
-    render(): ReactNode {
-
-        if (this.state.hasError) {
-            return this.props.fallback;
-        }
-        return this.props.children;
-    }
-
-
+    return this.props.children;
+  }
 }
-
 
 export default ErrorBoundary;

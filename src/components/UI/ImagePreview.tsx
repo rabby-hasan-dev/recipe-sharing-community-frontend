@@ -1,9 +1,9 @@
-'use client'
-
+"use client";
 import LightGallery from "lightgallery/react";
 
 import "lightgallery/css/lightgallery.css";
 import "lightgallery/css/lg-zoom.css";
+
 import "lightgallery/css/lg-thumbnail.css";
 
 import lgThumbnail from "lightgallery/plugins/thumbnail";
@@ -14,34 +14,34 @@ import Link from "next/link";
 import React from "react";
 
 interface IProps {
-    images: string[];
+  images: string[];
 }
 
 export default function ImagePreview({ images }: IProps) {
-    return (
-        <LightGallery
-            elementClassNames={` mt-2 gap-2 grid place-items-center 
+  return (
+    <LightGallery
+      elementClassNames={` mt-2 gap-2 grid place-items-center 
          ${images?.length === 1 ? "grid-cols-1" : "  md:grid-cols-2 "} `}
-            speed={500}
-            plugins={[lgThumbnail, lgZoom]}
+      plugins={[lgThumbnail, lgZoom]}
+      speed={500}
+    >
+      {images?.map((image, index) => (
+        <Link
+          key={index}
+          className={`w-full ${images?.length === 3 && index === 0 ? "col-span-2" : "col-span-1"
+            }`}
+          href={image}
         >
-            {images?.map((image, index) => (
-                <Link
-                    className={`w-full ${images?.length === 3 && index === 0 ? "col-span-2" : "col-span-1"
-                        }`}
-                    key={index}
-                    href={image}
-                >
-                    <Image
-                        className="h-[400px] w-full object-cover"
-                        src={image}
-                        height={500}
-                        width={500}
-                        alt={`image-${index}`}
-                        priority
-                    />
-                </Link>
-            ))}
-        </LightGallery>
-    );
+          <Image
+            priority
+            alt={`image-${index}`}
+            className="h-[400px] w-full object-cover"
+            height={500}
+            src={image}
+            width={500}
+          />
+        </Link>
+      ))}
+    </LightGallery>
+  );
 }

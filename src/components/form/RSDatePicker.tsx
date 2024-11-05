@@ -13,6 +13,7 @@ export default function RSDatePicker({
   return (
     <Controller
       name={name}
+
       render={({ field: { value, ...fields } }) => (
         <DatePicker
           className="min-w-full sm:min-w-[225px]"

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Navbar as NextUINavbar,
@@ -13,17 +13,13 @@ import { Link } from "@nextui-org/link";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
-import { siteConfig } from "@/src/config/site";
-import { ThemeSwitch } from "@/src/components/UI/theme-switch";
-
 import { Button } from "@nextui-org/button";
-import { useUser } from "@/src/context/cureentUser";
 import { Cookie } from "lucide-react";
 import { Avatar } from "@nextui-org/avatar";
 
-
-
-
+import { siteConfig } from "@/src/config/site";
+import { ThemeSwitch } from "@/src/components/UI/theme-switch";
+import { useUser } from "@/src/context/cureentUser";
 
 export const Navbar = () => {
   const { user } = useUser();
@@ -62,26 +58,25 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        {
-          user?.email ? <NavbarItem>
+        {user?.email ? (
+          <NavbarItem>
             <Avatar src={user?.profilePicture} />
-          </NavbarItem> : <NavbarItem className="hidden sm:flex gap-2">
-            <Link href="/login" >
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="hidden sm:flex gap-2">
+            <Link href="/login">
               <Button>Login</Button>
             </Link>
           </NavbarItem>
-        }
-
+        )}
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
 
       <NavbarMenu>
-
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>

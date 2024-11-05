@@ -1,11 +1,5 @@
-
-
 const UnFollowUser = () => {
-    return (
-        <div>
-            UnFollowUser
-        </div>
-    );
+  return <div>UnFollowUser</div>;
 };
 
 export default UnFollowUser;

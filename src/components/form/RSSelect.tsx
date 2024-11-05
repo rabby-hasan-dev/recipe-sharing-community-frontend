@@ -26,10 +26,10 @@ export default function RSSelect({
     <Select
       {...register(name)}
       className="min-w-full sm:min-w-[225px]"
+      errorMessage={errors.root?.message}
       isDisabled={disabled}
       label={label}
       variant={variant}
-      errorMessage={errors.root?.message}
     >
       {options.map((option) => (
         <SelectItem key={option.key}>{option.label}</SelectItem>

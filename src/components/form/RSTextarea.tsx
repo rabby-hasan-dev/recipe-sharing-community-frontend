@@ -6,9 +6,7 @@ import { IInput } from "@/src/types";
 interface IProps extends IInput {
   type?: string;
 
-  defaultValue?: string
-
-
+  defaultValue?: string;
 }
 
 export default function RSTextarea({
@@ -17,22 +15,23 @@ export default function RSTextarea({
   variant = "bordered",
   placeholder,
 
-  defaultValue
-
+  defaultValue,
 }: IProps) {
   const {
     register,
     formState: { errors },
   } = useFormContext();
 
-  const currentValue = useWatch({ name });
-  return (
-    <Textarea {...register(name)}
-      defaultValue={defaultValue}
+  // const currentValue = useWatch({ name });
 
+  return (
+    <Textarea
+      {...register(name)}
+      defaultValue={defaultValue}
+      errorMessage={errors.root?.message}
       label={label}
-      placeholder={placeholder}
       minRows={6}
+      placeholder={placeholder}
       variant={variant}
     />
   );

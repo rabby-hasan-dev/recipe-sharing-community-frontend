@@ -4,8 +4,6 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
-
-
 export interface ICurrentUser {
   userId: string;
   name: string;
@@ -16,9 +14,7 @@ export interface ICurrentUser {
   profilePicture?: string;
   status: string;
   phoneNumber: string;
-
 }
-
 
 interface IName {
   firstName: string;
@@ -50,8 +46,6 @@ export interface IUser {
   updatedAt: string;
   __v: number;
 }
-
-
 
 export interface IInput {
   variant?: "flat" | "bordered" | "faded" | "underlined";

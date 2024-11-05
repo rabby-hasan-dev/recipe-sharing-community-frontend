@@ -47,5 +47,4 @@ export const siteConfig = {
       href: "/contact",
     },
   ],
-
 };

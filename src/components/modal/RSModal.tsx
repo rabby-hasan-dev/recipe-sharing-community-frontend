@@ -1,18 +1,18 @@
 import { Button } from "@nextui-org/button";
 import {
-    Modal,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
 } from "@nextui-org/modal";
 import { ReactNode } from "react";
 
 interface IProps {
-    buttonText: string | ReactNode;
-    title: string;
-    children: ReactNode;
-    buttonVariant?:
+  buttonText: string | ReactNode;
+  title: string;
+  children: ReactNode;
+  buttonVariant?:
     | "light"
     | "solid"
     | "bordered"
@@ -21,50 +21,48 @@ interface IProps {
     | "shadow"
     | "ghost"
     | undefined;
-    buttonClassName?: string;
-    buttonIsIconOnly?: boolean;
-    buttonSize?: "sm" | "lg" | "md"
+  buttonClassName?: string;
+  buttonIsIconOnly?: boolean;
+  buttonSize?: "sm" | "lg" | "md";
 }
 
 export default function RSModal({
-    buttonText,
-    title,
-    children,
-    buttonVariant = "light",
-    buttonClassName,
-    buttonIsIconOnly,
-    buttonSize
-
+  buttonText,
+  title,
+  children,
+  buttonVariant = "light",
+  buttonClassName,
+  buttonIsIconOnly,
+  buttonSize,
 }: IProps) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    return (
-        <>
-            <Button
-                size={buttonSize}
-                isIconOnly={buttonIsIconOnly}
-                className={buttonClassName}
-                variant={buttonVariant}
-                onPress={onOpen}
-            >
-                {buttonText}
-            </Button>
-            <Modal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                size="lg"
-                scrollBehavior="outside"
-            >
-                <ModalContent>
-                    {(onClose) => (
-                        <>
-                            <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
-                            <ModalBody>{children}</ModalBody>
-
-                        </>
-                    )}
-                </ModalContent>
-            </Modal>
-        </>
-    );
+  return (
+    <>
+      <Button
+        className={buttonClassName}
+        isIconOnly={buttonIsIconOnly}
+        size={buttonSize}
+        variant={buttonVariant}
+        onPress={onOpen}
+      >
+        {buttonText}
+      </Button>
+      <Modal
+        isOpen={isOpen}
+        scrollBehavior="outside"
+        size="lg"
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent>
+          {() => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
+              <ModalBody>{children}</ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+  );
 }
