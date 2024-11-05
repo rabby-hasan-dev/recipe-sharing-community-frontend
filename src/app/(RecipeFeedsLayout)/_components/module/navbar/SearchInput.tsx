@@ -8,16 +8,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { SearchIcon } from "@/src/components/icons";
 import { useGetAllRecipeBySearch } from "@/src/hooks/receipeHooks";
+import { useSearch } from "@/src/context/searchState";
 
 
 export default function SearchInput() {
-    const [searchTerm, setSearchTerm] = useState<string>("");
+    const { searchQuery, setSearchQuery } = useSearch()
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
     // Fetch recipe with the searchTerm
-    const { data: allRecipe, refetch } = useGetAllRecipeBySearch({ searchTerm });
+    const { data: allRecipe, refetch } = useGetAllRecipeBySearch({ searchTerm: searchQuery });
 
 
     const recipes = allRecipe?.data;
@@ -28,7 +29,7 @@ export default function SearchInput() {
         }, 500);
 
         return () => clearTimeout(debounce);
-    }, [searchTerm, refetch]);
+    }, [searchQuery, refetch]);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -64,9 +65,9 @@ export default function SearchInput() {
             <Input
                 aria-label="Search"
                 ref={inputRef}
-                value={searchTerm}
+                value={searchQuery}
                 onChange={(e) => {
-                    setSearchTerm(e.target.value);
+                    setSearchQuery(e.target.value);
                     setIsDropdownOpen(true);
                 }}
                 onFocus={() => setIsDropdownOpen(true)}
@@ -91,7 +92,7 @@ export default function SearchInput() {
 
             {/* Search Results Dropdown */}
             <AnimatePresence>
-                {isDropdownOpen && searchTerm && (
+                {isDropdownOpen && searchQuery && (
                     <motion.div
                         ref={dropdownRef}
                         initial={{ opacity: 0, y: -10 }}

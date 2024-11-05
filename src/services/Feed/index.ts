@@ -35,4 +35,48 @@ export const getPrimiumRecipe = async () => {
 }
 
 
+interface RecipeParams {
+    feedType: 'premium' | 'freemium' | '';
+    page?: number;
+    sort?: string;
+    search?: string;
+}
+
+
+interface RecipeResponse {
+    success: boolean;
+    data?: any;
+    message?: string;
+}
+
+
+export const UnivarsalRecipe = async ({ feedType, page, sort, search }: RecipeParams) => {
+
+    console.log({ feedType, page, sort, search })
+    try {
+        const endpoint = feedType === "premium" ? "/feed/premium" : "/feed";
+        const { data } = await axiosInstance.get(endpoint, {
+            params: { page, sort, search },
+
+        });
+
+        console.log('inside server universsal==>', data)
+
+
+        return data;
+    } catch (error: any) {
+        console.log(error)
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
+
+    }
+
+}
+
+
+
+
+
 

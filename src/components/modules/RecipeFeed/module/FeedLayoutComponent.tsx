@@ -1,45 +1,20 @@
 
 'use client'
 import { useUser } from '@/src/context/cureentUser';
-import { useGetRecipe } from '@/src/hooks/receipeHooks';
 import { IRecipe } from '@/src/types/recipe.types';
 import { Avatar } from '@nextui-org/avatar';
 import { Button } from '@nextui-org/button';
-
 import { Select, SelectItem } from '@nextui-org/select';
-import { ArrowDownWideNarrow, HomeIcon, MessageSquareIcon, PlusIcon, User2Icon, Users } from 'lucide-react';
+import { ArrowDownWideNarrow, HomeIcon, MessageSquareIcon, PlusIcon, Users } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import RecipeCard from '../../Recipe/RecipeCard';
 import { Tooltip } from '@nextui-org/tooltip';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '@nextui-org/spinner';
-import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
-import axiosInstance from '@/src/lib/AxiosInstance';
-import { isPreemium } from '@/src/hooks/preemiumUserHook';
-import Cookies from 'js-cookie';
-import axios from 'axios';
-import envConfig from '@/src/config/envConfig';
-
-
-
-
-
-const getAuthToken = () => {
-    return Cookies.get('accessToken'); // Assuming the token is stored as 'authToken' in cookies
-};
-
-// Create a new Axios instance for client-side requests
-const axiosClient = axios.create({
-    baseURL: envConfig.baseApi,  // Set your API base URL
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-
-
+import { useSearch } from '@/src/context/searchState';
+import { useRecipeFeed } from '@/src/hooks/useRecipe.hooks';
+import CreateRecipeModal from '@/src/app/(RecipeFeedsLayout)/_components/module/modal/CreateRecipeModal';
 
 
 
@@ -48,115 +23,10 @@ export default function FeedLayoutComponent() {
     const [showLeftSidebar, setShowLeftSidebar] = useState(false);
     const [showRightSidebar, setShowRightSidebar] = useState(false);
     const { user } = useUser();
-    const { data } = useGetRecipe();
-    const recipeFeeds = data?.data || [];
-    const recipeFeedMetaData = data?.meta;
 
-
-    const [items, setItems] = useState<IRecipe[]>([]);
-    const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
-    const [selectedSort, setSelectedSort] = useState<string>('-upVoteCount');
-    const [selectedFeed, setSelectedFeed] = useState<string>('');
-    const router = useRouter()
-
-
-
-
-
-    const fetchData = async () => {
-        if (loading) return;
-
-        setLoading(true);
-        try {
-            // Get the token from storage
-            const token = getAuthToken();
-
-            // Set token in Authorization header if available
-            if (token) {
-                axiosClient.defaults.headers['Authorization'] = token;
-            }
-
-            let response;
-
-            // Perform the API call depending on the selected feed
-            if (selectedFeed === 'premium') {
-                response = await axiosClient.get('/feed/premium', {
-                    params: {
-                        page,
-                        sort: selectedSort,
-                    },
-                });
-            } else {
-                response = await axiosClient.get('/feed', {
-                    params: {
-
-                        page,
-                        sort: selectedSort,
-                    },
-                });
-            }
-
-            // Handle the response
-            const FeedData = response?.data;
-            if (FeedData?.data) {
-                // Update the items with the fetched data
-                setItems((prevItems) => [...prevItems, ...FeedData?.data]);
-
-                // Check if there are no more results
-                if (FeedData?.data?.length === 0) {
-                    setHasMore(false);
-                } else {
-                    // Increment the page number for pagination
-                    setPage((prevPage) => prevPage + 1);
-                }
-            } else {
-                console.error('Error: No data found in response');
-                setHasMore(false);  // Stop fetching if no data is found
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);  // Log errors for debugging
-        } finally {
-            setLoading(false);  // Set loading state to false after the request
-        }
-    };
-
-    // Reset and fetch new data when search query changes
-    useEffect(() => {
-        setItems([]); // Reset items
-        setPage(1);   // Reset page
-        setHasMore(true); // Reset hasMore flag
-
-        fetchData();  // Fetch data with new search query
-
-
-
-    }, [selectedSort, selectedFeed]);
-
-
-    const handleFilterPrimiumRecipe = async (feedType: string) => {
-
-        if (feedType === 'premium') {
-            const preemiumUser = await isPreemium(user?.userId as string)
-            if (!preemiumUser) {
-                toast.error("You are not a Preemium Member. Please! Got Preemium MemberShip")
-                router.push('/user/profile/my-recipes')
-            }
-
-        }
-
-        setSelectedFeed(feedType)
-    }
-
-
-
-
-
-
-
-
-
+    const { setSelectedSort } = useSearch();
+    const { items, hasMore, fetchData, loading, handleSelectFeed }
+        = useRecipeFeed({ user });
 
 
 
@@ -250,21 +120,23 @@ export default function FeedLayoutComponent() {
                     <ul className="space-y-2">
                         <li>
                             <Button
-                                onClick={() => handleFilterPrimiumRecipe('freemium')}
+                                onClick={() => handleSelectFeed('freemium')}
                                 className="w-full text-left dark:text-white"
                             >
                                 Freemium Recipes
                             </Button>
                         </li>
                         {
-                            user?.isPremium ? <li>
-                                <Button
-                                    onClick={() => handleFilterPrimiumRecipe('premium')}
-                                    className="w-full text-left dark:text-white"
-                                >
-                                    Premium Recipes
-                                </Button>
-                            </li> : <>
+                            user?.isPremium ? <>
+                                <li>
+                                    <Button
+                                        onClick={() => handleSelectFeed('premium')}
+                                        className="w-full text-left dark:text-white"
+                                    >
+                                        Premium Recipes
+                                    </Button>
+                                </li>
+                            </> : <>
 
                                 <div className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white p-8 rounded-md shadow-lg mt-8">
                                     <div className="text-center">
@@ -317,16 +189,7 @@ export default function FeedLayoutComponent() {
                             src='https://img.freepik.com/premium-photo/stylish-man-flat-vector-profile-picture-ai-generated_606187-310.jpg?semt=ais_hybrid'
                         />
                         <Tooltip content="Create Recipe">
-                            <Button
-                                isIconOnly
-                                variant="faded"
-                                className="flex items-center"
-                                size='sm'
-                            >
-
-                                <PlusIcon />
-
-                            </Button>
+                            <CreateRecipeModal />
                         </Tooltip>
 
                     </div>
@@ -339,6 +202,7 @@ export default function FeedLayoutComponent() {
                             id="sortOptions"
                             variant="flat"
                             placeholder="Select"
+                            onSelectionChange={(e) => setSelectedSort(e.currentKey as string)}
                         >
                             <SelectItem key="latest">Latest</SelectItem>
                             <SelectItem key="popular">Popular</SelectItem>
@@ -349,12 +213,6 @@ export default function FeedLayoutComponent() {
 
                 <h1 className="text-2xl font-bold  mb-4">Recipe Feed</h1>
 
-                {/* <div className="space-y-4">
-
-                    {
-                        recipeFeeds?.map((recipe: IRecipe) => <RecipeCard key={recipe._id} recipe={recipe} />)
-                    }
-                </div> */}
 
                 <div className="space-y-4">
 

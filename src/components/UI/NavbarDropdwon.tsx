@@ -40,7 +40,6 @@ const NavbarDropdwon = () => {
           <DropdownMenu aria-label="Static Actions">
 
             <DropdownItem onClick={() => handleNavigation('/user/profile/my-recipes')} >My Profile</DropdownItem>
-            <DropdownItem onClick={() => handleNavigation('/user/profile/create-recipe')} >Create Recipe</DropdownItem>
             <DropdownItem onClick={() => handleNavigation("/user/settings")} >Settings</DropdownItem>
             <DropdownItem onClick={handleLogout} className="text-danger" color="danger">
               Logout

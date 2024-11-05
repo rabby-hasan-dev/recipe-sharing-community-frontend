@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { CreateRecipe, DeleteRecipe, getAllRecipe, getAllRecipeByAuthor, getAllRecipeBySearch, getSpecificRecipe, UpdateRecipe } from "../services/Recipe"
+import { UnivarsalRecipe } from "../services/Feed";
+
 
 
 
@@ -14,6 +16,13 @@ interface MutationVariables {
 interface CreateRecipeResponse {
     message: string;
     success: boolean;
+}
+
+interface RecipeParams {
+    feedType: 'premium' | 'freemium' | '';
+    page?: number;
+    sort?: string;
+    search?: string;
 }
 
 
@@ -89,6 +98,16 @@ export const useGetAllRecipeByAuthor = (recipeId: string) => {
     return useQuery<any, Error, any, string[]>({
         queryKey: ["GET_All_RECIPE_BY_RECIPE"],
         queryFn: async () => await getAllRecipeByAuthor(recipeId),
+
+    })
+}
+
+
+export const useUnivarsalRecipe = ({ feedType, page, sort, search }: RecipeParams) => {
+
+    return useQuery<any, Error, any, any>({
+        queryKey: ["GET_UNIVERSAL_RECIPE"],
+        queryFn: async () => await UnivarsalRecipe({ feedType, page, sort, search }),
 
     })
 }
