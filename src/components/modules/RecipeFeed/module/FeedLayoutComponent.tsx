@@ -14,7 +14,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Spinner } from '@nextui-org/spinner';
 import { useSearch } from '@/src/context/searchState';
 import { useRecipeFeed } from '@/src/hooks/useRecipe.hooks';
-import CreateRecipeModal from '@/src/app/(RecipeFeedsLayout)/_components/module/modal/CreateRecipeModal';
+import CreateRecipeModal from '@/src/app/(WithAuthLayout)/_components/module/modal/CreateRecipeModal';
 
 
 

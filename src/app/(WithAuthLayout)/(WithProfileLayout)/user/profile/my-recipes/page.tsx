@@ -1,6 +1,7 @@
 
 "use client";
-import EditableRecipeCard from "@/src/components/modules/Dashboard/EditableRecipeCardUser";
+
+import EditableRecipeCard from "@/src/components/modules/Recipe/EditableRecipeCard";
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/cureentUser";
 import { useGetAllRecipeByAuthor } from "@/src/hooks/receipeHooks";

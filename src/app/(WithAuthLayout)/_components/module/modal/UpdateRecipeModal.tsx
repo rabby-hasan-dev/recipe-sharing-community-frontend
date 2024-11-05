@@ -1,6 +1,6 @@
 
 'use client';
-import { PlusIcon } from "lucide-react";
+import { Edit, PlusIcon } from "lucide-react";
 import RSModal from "@/src/components/modal/RSModal";
 import { Button } from "@nextui-org/button";
 import { Plus, TrashIcon } from "lucide-react";
@@ -11,7 +11,7 @@ import RSInput from "@/src/components/form/RSInput";
 import { useGetSingleRecipe, useUpdateRecipe } from "@/src/hooks/receipeHooks";
 import { Spinner } from "@nextui-org/spinner";
 
-const UpdateRecipeModal = () => {
+const UpdateRecipeModal = ({ recipeId }: { recipeId: string }) => {
 
     const [imageFiles, setImageFiles] = useState<File[] | []>([])
     const [imagePreviews, setImagePreviews] = useState<string[] | []>([])
@@ -19,8 +19,8 @@ const UpdateRecipeModal = () => {
     const methods = useForm();
     const { control, handleSubmit } = methods;
     const { mutate: handleUpdateRecipe, isPending: UpdateRecipePending, isSuccess, data } = useUpdateRecipe();
-    const { data: singleRecipe, } = useGetSingleRecipe('ff');
-
+    const { data: singleRecipe, } = useGetSingleRecipe(recipeId);
+    console.log(singleRecipe);
     const { fields, append, remove } = useFieldArray({
         control,
         name: "ingredients",
@@ -89,7 +89,7 @@ const UpdateRecipeModal = () => {
     return (
 
         <RSModal
-            buttonText={<PlusIcon />}
+            buttonText={<Edit />}
             title="Create Recipe"
             buttonIsIconOnly={true}
             buttonVariant="faded"

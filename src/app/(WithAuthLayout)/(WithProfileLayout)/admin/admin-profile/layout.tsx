@@ -2,7 +2,6 @@
 import MyProfile from "@/src/components/modules/Dashboard/User/MyProfile/MyProfile";
 import { useGetMe } from "@/src/hooks/userHooks";
 import { Button } from "@nextui-org/button";
-import { Spinner } from "@nextui-org/spinner";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -13,9 +12,6 @@ const UserDashboardLayout = ({ children, }: { children: ReactNode }) => {
 
     return (
         <>
-            {
-                isPending && !isSuccess && < Spinner />
-            }
             <div className="container mx-auto p-6">
                 {/* Profile Header */}
                 <MyProfile user={user?.data} isPending={isPending} isSuccess={isSuccess} />
@@ -50,7 +46,7 @@ const UserDashboardLayout = ({ children, }: { children: ReactNode }) => {
                             <p className="mb-4 text-gray-700 dark:text-gray-300">
                                 Check who is joining our membership!
                             </p>
-                            <Link href="/admin/dashboard/subscriptions">
+                            <Link href="/dashboard/subscriptions">
                                 <Button color="success" className="w-full">Find Premium Member</Button>
                             </Link>
                         </div>
@@ -61,7 +57,7 @@ const UserDashboardLayout = ({ children, }: { children: ReactNode }) => {
                             <p className="mb-4 text-gray-700 dark:text-gray-300">
                                 Share your culinary creativity by adding a new recipe to your collection.
                             </p>
-                            <Link href="/admin/admin-profile/create-recipe">
+                            <Link href="#">
                                 <Button color="primary" className="text-white w-full">Create Recipe</Button>
                             </Link>
                         </div>

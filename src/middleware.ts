@@ -5,7 +5,7 @@ import { getCurrentUser } from './services/AuthService';
 
 type Role = keyof typeof roleBasedRoutes;
 
-const authRoutes = ['/login', '/register']
+const authRoutes = ['/login', '/register', '/']
 
 const roleBasedRoutes = {
     user: [/^\/user/, /^\/recipe-feeds/], // regular expreession after profile/ match
@@ -49,7 +49,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: ['/login', '/register', '/user/:page*', '/admin/:page*', '/recipe-feeds/:page*',],
-
 }
 
 

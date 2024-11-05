@@ -8,7 +8,6 @@ const RecipePage = () => {
 
     return (
         <div>
-
             <FeedLayoutComponent />
         </div>
     );

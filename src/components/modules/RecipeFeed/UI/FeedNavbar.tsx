@@ -9,7 +9,7 @@ import NavbarDropdwon from '@/src/components/UI/NavbarDropdwon';
 import NextLink from "next/link";
 // import SearchInput from './SerchInput';
 import { ThemeSwitch } from '@/src/components/UI/theme-switch';
-import SearchInput from '@/src/app/(RecipeFeedsLayout)/_components/module/navbar/SearchInput';
+import SearchInput from '@/src/app/(WithAuthLayout)/_components/module/navbar/SearchInput';
 
 const FeedNavbar = () => {
 

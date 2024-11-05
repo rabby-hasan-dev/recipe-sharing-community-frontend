@@ -6,14 +6,14 @@ import { Heart, MessageSquare } from "lucide-react";
 import { Avatar } from "@nextui-org/avatar";
 
 import Link from "next/link";
-import VoteButton from "../Recipe/Button/VoteButton";
-import CommentButton from "../Recipe/Button/CommentButton";
-import DetailButton from "../Recipe/Button/DetailButton";
+import VoteButton from "./Button/VoteButton";
+import CommentButton from "./Button/CommentButton";
+import DetailButton from "./Button/DetailButton";
 import ImagePreview from "../../UI/ImagePreview";
-import EditableRecipeDelelteButton from "./EditableRecipeDelelteButton";
 import UpdateRecipeModal from "@/src/app/(WithAuthLayout)/_components/module/modal/UpdateRecipeModal";
+import EditableRecipeDelelteButton from "../Dashboard/EditableRecipeDelelteButton";
 
-const EditableRecipeCardUser = ({ recipe }: { recipe: IRecipe }) => {
+const EditableRecipeCard = ({ recipe }: { recipe: IRecipe }) => {
     const { title, description, isPremium, author, upVoteCount, downVoteCount, totalRatings, totalComment, images, _id } = recipe || {};
 
     return (
@@ -62,7 +62,7 @@ const EditableRecipeCardUser = ({ recipe }: { recipe: IRecipe }) => {
     );
 };
 
-export default EditableRecipeCardUser;
+export default EditableRecipeCard;
 
 
 

@@ -1,9 +1,9 @@
-import CallActionSection from "./_components/CallActionSection";
-import FAQSection from "./_components/FAQSection";
-import FeatureSection from "./_components/FeatureSection";
-import HeroSection from "./_components/HeroSection";
-import HowItWorkSection from "./_components/HowItWorkSection";
-import MembershipSection from "./_components/MembershipSection";
+import CallActionSection from "./_components/module/Home/CallActionSection";
+import FAQSection from "./_components/module/Home/FAQSection";
+import FeatureSection from "./_components/module/Home/FeatureSection";
+import HeroSection from "./_components/module/Home/HeroSection";
+import HowItWorkSection from "./_components/module/Home/HowItWorkSection";
+import MembershipSection from "./_components/module/Home/MembershipSection";
 
 
 
