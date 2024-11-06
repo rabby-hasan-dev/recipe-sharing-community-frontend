@@ -12,7 +12,7 @@ import RSForm from "@/src/components/form/RSForm";
 import RSInput from "@/src/components/form/RSInput";
 import RSTextarea from "@/src/components/form/RSTextarea";
 
-// Define the validation schema with Zod
+
 const profileSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
@@ -26,19 +26,28 @@ const EditMyProfilePage = () => {
   const {
     mutate: updateProfile,
     isPending,
-    isSuccess,
-    data: updateData,
-  } = useGetMeAnUpdate();
+    isSuccess, data: updateData, } = useGetMeAnUpdate();
   const { data, isLoading } = useGetMe();
+
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const formData = new FormData();
+
+    const profileData = {
+      name: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+      },
+      phone: data.phone,
+      address: data.address,
+      bio: data.bio,
+    }
 
     if (imageFiles !== null) {
       formData.append("file", imageFiles);
     }
 
-    formData.append("data", JSON.stringify(data));
+    formData.append("data", JSON.stringify(profileData));
 
     updateProfile(formData);
   };
@@ -70,7 +79,10 @@ const EditMyProfilePage = () => {
           Edit Profile
         </h2>
 
-        <RSForm resolver={zodResolver(profileSchema)} onSubmit={onSubmit}>
+        <RSForm
+          resolver={zodResolver(profileSchema)}
+
+          onSubmit={onSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {/* Personal Information Section */}
             <div className="border p-6 rounded-lg bg-white dark:bg-gray-700 shadow-md">
@@ -91,7 +103,7 @@ const EditMyProfilePage = () => {
                 ) : (
                   <RSInput
                     className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                    defaultvalue={data?.data?.firstName}
+                    defaultvalue={data?.data?.name?.firstName}
                     label="First Name"
                     name="firstName"
                     placeholder="Enter your first name"
@@ -100,11 +112,13 @@ const EditMyProfilePage = () => {
                 )}
               </div>
 
+
+
               <div className="py-3">
-                {data?.data?.firstName ? (
+                {data?.data?.name?.firstName ? (
                   <RSInput
                     className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                    defaultvalue={data?.data?.lastName}
+                    defaultvalue={data?.data?.name?.lastName}
                     label="Last Name"
                     name="lastName"
                     placeholder="Enter your first name"
@@ -113,7 +127,7 @@ const EditMyProfilePage = () => {
                 ) : (
                   <RSInput
                     className="bg-gray-100 dark:bg-gray-600 dark:text-white"
-                    defaultvalue={data?.data?.lastName}
+                    defaultvalue={data?.data?.name?.lastName}
                     label="Last Name"
                     name="lastName"
                     placeholder="Enter your first name"

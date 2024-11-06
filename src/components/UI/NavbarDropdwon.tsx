@@ -59,7 +59,8 @@ const NavbarDropdwon = () => {
           <DropdownMenu aria-label="Static Actions">
             <DropdownItem
               onClick={() =>
-                handleNavigation("/admin/admin-profile/my-recipes")
+                handleNavigation("/user/profile/my-recipes")
+                // handleNavigation("/admin/admin-profile/my-recipes")
               }
             >
               My Profile

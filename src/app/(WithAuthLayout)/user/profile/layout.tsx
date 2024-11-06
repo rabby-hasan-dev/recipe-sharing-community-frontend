@@ -5,9 +5,12 @@ import { ReactNode } from "react";
 
 import { useGetMe } from "@/src/hooks/userHooks";
 import MyProfile from "@/src/components/modules/Dashboard/User/MyProfile/MyProfile";
+import CreateRecipeModal from "../../_components/module/modal/CreateRecipeModal";
+import { useUser } from "@/src/context/cureentUser";
 
 const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
   const { data: user, isPending, isSuccess } = useGetMe();
+  const { user: CurrentUser } = useUser();
 
   return (
     <>
@@ -18,7 +21,6 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
           isSuccess={isSuccess}
           user={user?.data}
         />
-
         {/* Profile Navigation Bar */}
         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md flex justify-center mb-6">
           <Link href="/user/profile/my-recipes">
@@ -46,21 +48,40 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                 {user?.data?.bio || "No bio available."}
               </p>
             </div>
+            {
+              CurrentUser?.role === "admin" ? <>
+                <div className="bg-blue-50 dark:bg-blue-800 p-4 rounded-lg shadow-md mb-6 text-center">
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                    Find Premium Member
+                  </h3>
+                  <p className="mb-4 text-gray-700 dark:text-gray-300">
+                    Check who is joining our membership!
+                  </p>
+                  <Link href="/dashboard/subscriptions">
+                    <Button className="w-full" color="success">
+                      Find Premium Member
+                    </Button>
+                  </Link>
+                </div>
+              </> : <>
+                <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg shadow-md mb-6 text-center">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    Become a Member
+                  </h3>
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">
+                    Enjoy exclusive content and features by joining our membership!
+                  </p>
+                  <Link href="/membership">
+                    <Button className="w-full" color="success">
+                      Get Membership
+                    </Button>
+                  </Link>
+                </div>
 
-            {/* Membership Section */}
-            <div className="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg shadow-md mb-6 text-center">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Become a Member
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
-                Enjoy exclusive content and features by joining our membership!
-              </p>
-              <Link href="/user/membership">
-                <Button className="w-full" color="success">
-                  Get Membership
-                </Button>
-              </Link>
-            </div>
+              </>
+            }
+
+
 
             {/* Create Recipe Section */}
             <div className="bg-green-50 dark:bg-green-900 p-4 rounded-lg shadow-md mb-6 text-center">
@@ -71,11 +92,10 @@ const UserDashboardLayout = ({ children }: { children: ReactNode }) => {
                 Share your culinary creativity by adding a new recipe to your
                 collection.
               </p>
-              <Link href="#">
-                <Button className="text-white w-full" color="primary">
-                  Create Recipe
-                </Button>
-              </Link>
+              <div className="text-white w-full bg-primary hover:bg-primary-dark cursor-pointer p-2 rounded-lg flex items-center justify-center"
+              >
+                <CreateRecipeModal /> <span className="ml-2">Create Recipe</span>
+              </div>
             </div>
 
             {/* Contact Information */}

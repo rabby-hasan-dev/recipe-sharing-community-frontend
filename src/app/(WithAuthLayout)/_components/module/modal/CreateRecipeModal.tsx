@@ -19,12 +19,14 @@ import RSInput from "@/src/components/form/RSInput";
 import { useCreateRecipe } from "@/src/hooks/receipeHooks";
 import RSModal from "@/src/components/modal/RSModal";
 
+
 const CreateRecipeModal = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
 
   const { user, setIsLoading } = useUser();
   const router = useRouter();
+
 
   const methods = useForm();
   const { control, handleSubmit } = methods;
@@ -41,7 +43,7 @@ const CreateRecipeModal = () => {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+
 
     const formData = new FormData();
 
@@ -125,6 +127,8 @@ const CreateRecipeModal = () => {
               type="textarea"
             />
           </div>
+
+
 
           {/* Image URL */}
           <div className="mb-6">
@@ -223,17 +227,7 @@ const CreateRecipeModal = () => {
             </label>
           </div>
 
-          {/* Is Published */}
-          <div className="mb-6 flex items-center">
-            <input
-              className="form-checkbox text-indigo-600 dark:text-indigo-400"
-              name="isPublished"
-              type="checkbox"
-            />
-            <label className="ml-2 text-gray-700 dark:text-gray-300 font-medium">
-              Publish Recipe
-            </label>
-          </div>
+
 
           {/* Submit Button */}
           <Button
@@ -251,7 +245,7 @@ const CreateRecipeModal = () => {
           </Button>
         </form>
       </FormProvider>
-    </RSModal>
+    </RSModal >
   );
 };
 

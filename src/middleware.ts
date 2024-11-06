@@ -10,7 +10,7 @@ const authRoutes = ["/login", "/register", "/"];
 
 const roleBasedRoutes = {
   user: [/^\/user/, /^\/recipe-feeds/], // regular expreession after profile/ match
-  admin: [/^\/admin/, /^\/recipe-feeds/],
+  admin: [/^\/admin/, /^\/recipe-feeds/, /^\/dashboard/, /^\/user/,],
   superAdmin: [/^\/admin/, /^\/user/, /^\/recipe-feeds/],
 };
 
@@ -51,5 +51,6 @@ export const config = {
     "/user/:page*",
     "/admin/:page*",
     "/recipe-feeds/:page*",
+    "/dashboard/:page*"
   ],
 };

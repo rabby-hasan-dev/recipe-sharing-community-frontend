@@ -88,10 +88,11 @@ export const useGetSingleRecipe = (recipeId: string) => {
   });
 };
 
-export const useGetAllRecipeByAuthor = (recipeId: string) => {
+export const useGetAllRecipeByAuthor = (userId: string) => {
+
   return useQuery<any, Error, any, string[]>({
     queryKey: ["GET_All_RECIPE_BY_RECIPE"],
-    queryFn: async () => await getAllRecipeByAuthor(recipeId),
+    queryFn: async () => await getAllRecipeByAuthor(userId),
   });
 };
 

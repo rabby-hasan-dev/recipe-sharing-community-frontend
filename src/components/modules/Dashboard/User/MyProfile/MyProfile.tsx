@@ -3,8 +3,7 @@
 import { Avatar } from "@nextui-org/avatar";
 import { CircleArrowLeft } from "lucide-react";
 import Link from "next/link";
-
-import Loading from "@/src/components/UI/Loading";
+import { Spinner } from "@nextui-org/spinner";
 
 const MyProfile = ({
   user,
@@ -15,9 +14,14 @@ const MyProfile = ({
   isPending: boolean;
   isSuccess: boolean;
 }) => {
+
+  const userDisplayName = user?.name?.firstName && user?.name?.lastName
+    ? `${user.name.firstName} ${user.name.lastName}`
+    : user?.username || "Unknown User";
   return (
     <>
-      {isPending && !isSuccess && <Loading />}
+      {isPending && !isSuccess && <Spinner />}
+
 
       <div className="bg-white dark:bg-gray-900 p-6 md:p-8 lg:p-10 rounded-lg shadow-lg flex flex-col items-center space-y-6 mb-6 w-full  mx-auto transition duration-300">
         {/* Back Button */}
@@ -36,7 +40,7 @@ const MyProfile = ({
             src={user?.profilePicture}
           />
           <h2 className="text-2xl md:text-3xl font-bold mt-4 text-gray-900 dark:text-white text-center">
-            {user?.name || user?.username || "Unknown User"}
+            {userDisplayName}
           </h2>
           <p className="text-sm md:text-base text-gray-500 dark:text-gray-300 mt-2 text-center px-4">
             {user?.bio || "No bio available."}

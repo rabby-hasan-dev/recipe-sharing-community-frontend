@@ -6,7 +6,7 @@ import React from "react";
 
 const DetailButton = ({ id }: { id: string }) => {
   return (
-    <Link href={`/recipe-feeds/recipe/${id}`}>
+    <Link href={`/recipe-feeds/${id}`}>
       <Button className="bg-black text-tiny text-white" radius="full" size="sm">
         Details
       </Button>

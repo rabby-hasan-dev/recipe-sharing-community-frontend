@@ -174,7 +174,7 @@ export default function FeedLayoutComponent() {
                       premium member.
                     </p>
                     <div className="flex justify-center space-x-4">
-                      <Link href="#membership">
+                      <Link href="/membership">
                         <Button className="bg-yellow-400 text-indigo-900 font-semibold py-2 px-4 rounded-lg hover:bg-yellow-300 transition duration-300">
                           Become a Premium Member
                         </Button>
